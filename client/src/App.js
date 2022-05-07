@@ -1,4 +1,3 @@
-import './App.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,8 +7,8 @@ import {
 import { useSelector } from "react-redux";
 
 import Test from './pages/test';
-
-
+import Navbar from './components/navbar';
+import Footer from "./components/footer";
 
 function App() {
 
@@ -25,9 +24,11 @@ function App() {
   return (
     <>
       <Router>
+        <Navbar />
         <Routes>
           <Route path='/' element={<Test />} />
         </Routes>
+        <Footer />
       </Router>
     </>
   );

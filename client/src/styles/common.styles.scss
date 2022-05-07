@@ -1,0 +1,17 @@
+body{
+    position:relative;
+}
+.content-body{
+    padding: 10px;
+    min-height: 100vh;
+    // position: relative;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #000000;
+}
