@@ -1,5 +1,6 @@
 .navbar {
     height: 20vh;
+    color:#fff;     
     background-color: #000;
     position: relative;
 }
@@ -15,8 +16,15 @@
     align-items: center;
     justify-content: center;
 }
-.row{
+.nav-bottom-row{
     width: 50vh;
     height: 6vh;
     // background-color: white;
+}
+.nav-bottom-col{
+    color: #fff;
+    border-width: 2px #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

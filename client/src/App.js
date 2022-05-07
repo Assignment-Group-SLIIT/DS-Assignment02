@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import Test from './pages/test';
 import Navbar from './components/navbar';
 import Footer from "./components/footer";
+import Signin from "./pages/signin";
+
 
 function App() {
 
@@ -27,6 +29,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Test />} />
+          <Route path='/signin' element={<Signin />} />
         </Routes>
         <Footer />
       </Router>

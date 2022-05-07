@@ -1,0 +1,69 @@
+// .signin-row{
+//     width: 100%;
+//     min-height: 90vh;
+//     // background-color: red;
+// }
+
+// .signin-col-image{
+//     width: 100%;
+//     min-height: 90vh;
+//     // display: flex;
+//     // align-items: center;
+//     // justify-content: center;
+//     background-image: url("https: //i.ibb.co/mcFfLCV/roberto-nickson-MA82m-PIZe-GI-unsplash.jpg");
+//     background-size: cover;
+//     background-position: center center;
+// }
+
+// .signin-col-form{
+//     width: 100%;
+//     min-height: 90vh;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     background-color: black;
+// }
+
+.form-style input {
+    border: 0;
+    height: 50px;
+    border-radius: 0;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.form-style input:focus {
+    border-bottom: 1px solid #007bff;
+    box-shadow: none;
+    outline: 0;
+    background-color: #ebebeb;
+}
+
+.sideline {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ccc;
+}
+
+button {
+    height: 50px;
+}
+
+.sideline:before,
+.sideline:after {
+    content: '';
+    border-top: 1px solid #ebebeb;
+    margin: 0 20px 0 0;
+    flex: 1 0 20px;
+}
+
+.sideline:after {
+    margin: 0 0 0 20px;
+}
+.img-fluid{
+    min-height: 73vh;
+    max-height: 100vh;
+    width: 100%;
+}
