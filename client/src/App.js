@@ -10,7 +10,7 @@ import Test from './pages/test';
 import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
-
+import Signup from "./pages/signup";
 
 function App() {
 
@@ -30,6 +30,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Test />} />
           <Route path='/signin' element={<Signin />} />
+          <Route path='/signup' element={<Signup />} />
         </Routes>
         <Footer />
       </Router>
