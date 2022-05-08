@@ -95,6 +95,14 @@ function ViewReservation(reservation) {
                                         {reservation.data.reserverName}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th class="text-left" scope="row">
+                                        Total Payment
+                                    </th>
+                                    <td class="text-left">
+                                        {reservation.data.totalPayment}
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>

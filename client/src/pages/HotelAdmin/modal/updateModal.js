@@ -66,7 +66,8 @@ function UpdateReservation(reservation) {
             reservationPrice,
             paymentStatus,
             reserverName,
-            mustPayOnline: priorPay
+            mustPayOnline: priorPay,
+            totalPayment: totalPayment
         }
 
         updateRoomReservationDetails(hName, roomNo, updatedReservation).
@@ -85,14 +86,14 @@ function UpdateReservation(reservation) {
     function getDateDiff() {
         var startDate = moment(reservationStartDate).format('YYYY-MMMM-DD');
         var endDate = moment(reservationEndDate).format('YYYY-MMMM-DD');
-        var getStartDate = moment(startDate , 'YYYY-MMMM-DD');
+        var getStartDate = moment(startDate, 'YYYY-MMMM-DD');
         var getEndDate = moment(endDate, 'YYYY-MMMM-DD');
         const diffDuration = getEndDate.diff(getStartDate, 'days');
         return (diffDuration);
     }
 
     function getTotalPayment() {
-        const totalPrice =  reservationPrice * getDateDiff();
+        const totalPrice = reservationPrice * getDateDiff();
         return totalPrice;
     }
 
@@ -103,7 +104,7 @@ function UpdateReservation(reservation) {
 
     useEffect(() => {
         totPayment()
-    }, )
+    })
 
     console.log(getDateDiff())
 
@@ -263,8 +264,9 @@ function UpdateReservation(reservation) {
                                             <input type="date" required id="reservationEndDate" className="form-control"
                                                 name="reservationEndDate"
                                                 value={reservationEndDate}
-                                                onChange={(e) => { setReservationEndDate(e.target.value); 
-                                                // totPayment()
+                                                onChange={(e) => {
+                                                    setReservationEndDate(e.target.value);
+                                                    // totPayment()
                                                 }}
                                             />
                                         </div>
@@ -310,7 +312,7 @@ function UpdateReservation(reservation) {
                                             />
                                         </div>
 
-                            
+
                                     </div>
                                 </div>
                             </div>
