@@ -3,36 +3,44 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-import React, { Fragment } from "react";
 
 import Test from './pages/test';
 import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
+
 import PrivateRoute from "./utils/PrivateRoute";
+import { Fragment } from "react";
+import Landingpage from "./pages/landingpage";
+import NotFound from "./pages/notFound";
+
 
 function App() {
 
   return (
     <>
       <Router>
+
         <Fragment>
           <Navbar />
 
           <Routes>
-            <Route path='/' element={<PrivateRoute />} >
+            {/* <Route path='/' element={<PrivateRoute />} > */}
 
-              {/* <Route path='/signup' element={<Signup />} /> */}
-              <Route path='/test' element={<Test />} />
-            </Route>
+            {/* <Route path='/signup' element={<Signup />} /> */}
+
+            {/* </Route> */}
+            <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-
+            <Route path='/' element={<Landingpage />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
-
           <Footer />
+
         </Fragment>
+
       </Router>
     </>
   );

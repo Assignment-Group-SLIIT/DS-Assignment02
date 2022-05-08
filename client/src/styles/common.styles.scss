@@ -2,9 +2,13 @@ body{
     position:relative;
 }
 .content-body{
-    padding: 5px;
+    // padding: 5px;
     min-height: 100vh;
-    // position: relative;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
 }
 
 footer {
@@ -13,5 +17,6 @@ footer {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
-    background-color: #000000;
+    background-color: #202020 !important;
+    color: #4a9abb !important;
 }

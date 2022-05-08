@@ -19,6 +19,8 @@ const Signin = () => {
 
             if (response.ok) {
                 setUserSession(response.data.token, response.data)
+                setUserName('')
+                setPassword('')
             } else {
                 // console.log(response.error.response.data.status)
             }
