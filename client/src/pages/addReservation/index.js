@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Stepone from './stepone'
 import Steptwo from './steptwo'
 import Stepthree from './stepthree'
-import DatePicker from 'react-datetime';
 
 const Index = () => {
     const [step, setStep] = useState(1)

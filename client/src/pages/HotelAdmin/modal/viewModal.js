@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 function ViewReservation(reservation) {
 
     return (
-        <div>
+        <div className="content-body">
             <Modal.Header >
                 <Modal.Title>Reserved Hotel Room Detail</Modal.Title>
                 <button className="btn btn-close" onClick={reservation.onHide}></button>
@@ -93,6 +93,14 @@ function ViewReservation(reservation) {
                                     </th>
                                     <td class="text-left">
                                         {reservation.data.reserverName}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-left" scope="row">
+                                        Total Payment
+                                    </th>
+                                    <td class="text-left">
+                                        {reservation.data.totalPayment}
                                     </td>
                                 </tr>
 
