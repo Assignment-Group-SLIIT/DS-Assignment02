@@ -34,9 +34,9 @@ function App() {
           <Route path='/signup' element={<Signup />} />
           <Route path='*' element={<NotFound />} />
           {/* <Route path='*' element={<Test />} /> */}
-        </Routes>
+        </Routes >
         <Footer />
-      </Router>
+      </Router >
     </>
   );
 }
