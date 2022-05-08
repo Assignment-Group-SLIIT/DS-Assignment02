@@ -43,9 +43,9 @@ function HotelRooms() {
        setModalDeleteConfirm(true);
     }
 
-
-    function onDelete() {
-            deleteRoom("Little Star","B241").then((response) => {
+    function onDelete(modalDataDelete) {
+        
+            deleteRoom(modalDataDelete.hotelName, modalDataDelete.roomNo).then((response) => {
                 if(response.ok){
                     alert("Successfully deleted").then(() =>{
                         window.location.reload();

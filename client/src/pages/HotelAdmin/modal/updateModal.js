@@ -47,6 +47,8 @@ function UpdateReservation(reservation) {
     const [mustPayOnline, setMustPayOnline] = useState("");
     const [priorPay, setPriorPay] = useState(false);
 
+    const [totalPayment, setTotalPayment] = useState("");
+
     // console.log(reservationStartDate)
 
     const sendData = (e) => {
@@ -81,6 +83,31 @@ function UpdateReservation(reservation) {
 
             })
     }
+
+    function getDateDiff() {
+        var startDate = moment(reservationStartDate).format('YYYY-MMMM-DD');
+        var endDate = moment(reservationEndDate).format('YYYY-MMMM-DD');
+        var getStartDate = moment(startDate , 'YYYY-MMMM-DD');
+        var getEndDate = moment(endDate, 'YYYY-MMMM-DD');
+        const diffDuration = getEndDate.diff(getStartDate, 'days');
+        return (diffDuration);
+    }
+
+    function getTotalPayment() {
+        const totalPrice =  reservationPrice * getDateDiff();
+        return totalPrice;
+    }
+
+    function totPayment() {
+        var value = getTotalPayment();
+        setTotalPayment(value);
+    }
+
+    useEffect(() => {
+        totPayment()
+    }, )
+
+    console.log(getDateDiff())
 
     return (
 
@@ -238,7 +265,9 @@ function UpdateReservation(reservation) {
                                             <input type="date" required id="reservationEndDate"
                                                 name="reservationEndDate"
                                                 value={reservationEndDate}
-                                                onChange={(e) => { setReservationEndDate(e.target.value); }}
+                                                onChange={(e) => { setReservationEndDate(e.target.value); 
+                                                // totPayment()
+                                                }}
                                             />
                                         </div>
 
@@ -266,6 +295,31 @@ function UpdateReservation(reservation) {
 
                                             />
                                         </div>
+
+                                        <div className="form-group col-md-4 ">
+                                            <label class="form-label-emp" for="totalPaymnet">Total Reserved Price</label>
+                                            <input
+
+                                                id="totalPaymnet"
+                                                type="number"
+                                                className="form-control "
+                                                placeholder="0"
+                                                value={totalPayment}
+                                                onChange={(e) => {
+                                                    setTotalPayment(e.target.value);
+                                                }}
+
+                                            />
+                                        </div>
+
+                            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <br></br>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
                                         <div className="form-group col-md-4 ">
                                             <label class="form-label-emp" for="paymentStatus">Payment Status</label>
