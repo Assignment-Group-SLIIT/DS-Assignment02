@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
-import { getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { deleteRoom, getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
     // const [search, setSearch] = useState("");
     const [handleReserveHote, setHandleReserveHotel] = useState([]);
+
     const [modalData, setData] = useState([]);
     const [modalShow, setModalShow] = useState(false);
 
     const [modalDataUpdate, setModalDataUpdate] = useState([]);
     const [modalUpdate, setModalUpdate] = useState(false);
 
-    // const [modalDataDelete, setModalDataDelete] = useState([]);
-    // const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-    // const [modalDelete, setModalDelete] = useState(false);
+    const [modalDataDelete, setModalDataDelete] = useState([]);
+    const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
-    // const [modalLoading, setModalLoading] = useState(false);
-    // const [refresgPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
         getAllRoomsOfAHotel("Little Star").then((response) => {
+            console.log("data", response)
             if (response.ok) {
                 setHandleReserveHotel(response.data);
             }
@@ -29,28 +28,42 @@ function HotelRooms() {
 
     }, []);
 
-
+    const handleViewOnClick = () => {
+        setModalShow(true);
+    }
+    
     const openModal = (reservation) => {
         setData(reservation);
         handleViewOnClick();
     }
 
-    const handleViewOnClick = () => {
-        setModalShow(true);
-    }
 
     const openModalDelete = (data) => {
-        //   setModalDataDelete(data);
-        //  setModalDeleteConfirm(true);
+       setModalDataDelete(data);
+       setModalDeleteConfirm(true);
     }
+
+
+    function onDelete() {
+            deleteRoom("Little Star","B241").then((response) => {
+                if(response.ok){
+                    alert("Successfully deleted").then(() =>{
+                        window.location.reload();
+                    })
+                }
+            })
+        }
+
+    // const openModalDelete = (data) => {
+    //     //   setModalDataDelete(data);
+    //     //  setModalDeleteConfirm(true);
+    // }
 
     const openModalUpdate = (data) => {
         console.log("request came for modal updateeeeeee", data);
         setModalDataUpdate(data);
         setModalUpdate(true);
     }
-
-
 
     return (
         <div className="page-component-body">
@@ -61,6 +74,7 @@ function HotelRooms() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
+               
                 <ViewReservation
                     data={modalData}
                     onHide={() => setModalShow(false)
@@ -73,8 +87,6 @@ function HotelRooms() {
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
                     </div>
-
-
                 </div>
                 <div class="row table-head-search">
                     <div className="col-md-8"></div>
@@ -92,16 +104,13 @@ function HotelRooms() {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th>Room No</th>
-                            <th>Reservation Date</th>
-                            <th>Reservation End Date</th>
+                            <th>Reserved From</th>
+                            <th>Reserved To</th>
                             <th>Customer Name</th>
                             <th>Payment Status</th>
                             <th>Status</th>
@@ -124,83 +133,43 @@ function HotelRooms() {
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
-                                        </button>
-                                        {/* <Link class="btn btn-danger btn-sm" onClick={() => openModalDelete(reservation)} role="button"> remove</Link>  */}
-                                    </td>
-                                </tr>
+                                         </button>
+                                         <button onClick={() => openModalDelete(reservation)}>remove</button>
+                                    </td> 
+                                  </tr>
                             );
                         })}
                     </tbody>
                 </table>
             </div>
-            {/* 
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Deletion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Are you want to delete this item ?</p>
-
-                </Modal.Body>
+                    <div className="modal-delete">
+                        <Modal.Header>
+                            <Modal.Title>Confirm Deletion</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Are you want to remove this room from being reserved?</p>
+                        </Modal.Body>
+                    </div>
+               
                 <Modal.Footer>
                     <div className="row">
                         <div className="col -6">
-                            <button type="submit" className="btn btn-delete" onClick={() => { setModalDelete(true); setModalDeleteConfirm(false); }}>
+                            <button type="submit" className="btn btn-delete" onClick={() => { onDelete(modalDataDelete); }}>
                                 Confirm
                             </button>
                         </div>
-                        <div className="col-6 text-right" onClick={() => setModalDeleteConfirm(false)}>
+                        <div className="col-6   text-right" onClick={() => setModalDeleteConfirm(false)}>
                             <button type="reset" className="btn btn-reset">
                                 cancel
                             </button>
                         </div>
                     </div>
                 </Modal.Footer>
+                
             </Modal>
-
-            {/* open delete form */}
-            {/* <Modal
-                show={modalDelete}
-                onHide={() => setModalDelete(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <DeleteModal
-                    data={modalDataDelete}
-                    onHide={() => setModalDelete(false)}
-                />
-            </Modal>
-
-            <Modal show={modalLoading} size="sm"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered>
-                <Modal.Body>
-                    <div class="d-flex justify-content-center mt-2">
-                        <div class="spinner-grow text-danger" role="status">
-                        </div>
-                        <div class="spinner-grow text-danger" role="status">
-                        </div><div class="spinner-grow text-danger" role="status">
-                        </div>
-
-                        <span class="sr-only">something went wrong...</span>
-                    </div>
-                    <div class="d-flex justify-content-center mt-4 h5"> something went wrong</div>
-
-                </Modal.Body>
-                <Modal.Footer>
-
-                    <div className="col py-3 text-center">
-                        <button type="submit" className="btn btn-delete" onClick={() => { window.location.reload() }}>
-                            Try again
-                        </button>
-                    </div>
-                </Modal.Footer>
-            </Modal>
-
-            {/*Update modal for room reservation*/}
             <Modal
                 show={modalUpdate}
                 onHide={() => setModalUpdate(false)}
@@ -213,9 +182,6 @@ function HotelRooms() {
                     onHide={() => setModalUpdate(false)}
                 />
             </Modal>
-
-
-
         </div >
     )
 }
