@@ -58,6 +58,10 @@ const hotelRoomSchema = new Schema({
     reserverName: {
         type: String,
 
+    },
+    mustPayOnline: {
+        type: Boolean,
+
     }
 })
 

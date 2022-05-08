@@ -9,6 +9,8 @@ import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
+import Addreservation from "./pages/addReservation";
+
 import HotelRooms from "./pages/HotelAdmin/viewHotel";
 import PrivateRoute from "./utils/PrivateRoute";
 import { Fragment } from "react";
@@ -30,6 +32,7 @@ function App() {
             {/* <Route path='/signup' element={<Signup />} /> */}
 
             {/* </Route> */}
+            <Route path='/addreservation' element={<Addreservation />} />
             <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />

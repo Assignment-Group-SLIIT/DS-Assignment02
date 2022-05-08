@@ -41,6 +41,19 @@ const searchTaxiDetails = async (user, date, res) => {
     })
 }
 
+
+const searchAllTaxiDetailsofUser = async (user, res) => {
+    await TaxiReservation.find({
+        user: user,
+    }).then((taxiRes) => {
+        return res.json(taxiRes)
+
+    }).catch((err) => {
+        // console.log(err);
+        return res.status(300).send({ status: "No such taxi reservation", error: err.message });
+    })
+}
+
 const updateTaxiReservation = async (user, date, { reservation }, res) => {
 
     const updateTaxiReservation = {
@@ -75,4 +88,4 @@ const cancelReservation = async (user, date, res) => {
         })
 }
 
-module.exports = { reserveTaxi, searchTaxiDetails, updateTaxiReservation, cancelReservation }
+module.exports = { reserveTaxi, searchTaxiDetails, updateTaxiReservation, cancelReservation, searchAllTaxiDetailsofUser }

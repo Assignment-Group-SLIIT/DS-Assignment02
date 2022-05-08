@@ -1,4 +1,4 @@
-const { reserveTaxi, searchTaxiDetails, updateTaxiReservation, cancelReservation } = require("../apis/taxiAPI");
+const { reserveTaxi, searchTaxiDetails, updateTaxiReservation, cancelReservation, searchAllTaxiDetailsofUser } = require("../apis/taxiAPI");
 
 const router = require("express").Router();
 
@@ -7,6 +7,11 @@ router.route("/").post((req, res) => {
     const reservation = req.body;
     const createReservation = reserveTaxi({ reservation }, res)
     // console.log(res)
+})
+
+router.route("/:user").get((req, res) => {
+    const user = req.params.user;
+    const reservationDet = searchAllTaxiDetailsofUser(user, res)
 })
 
 router.route("/:user/:date").get((req, res) => {
