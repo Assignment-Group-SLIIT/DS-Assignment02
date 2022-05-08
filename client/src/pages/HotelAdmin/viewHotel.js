@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
-import { deleteRoom, getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { deleteRoom, getAllAvailableRoomsOfAHotel, getAllReservedRoomsOfAHotel, getAllRoomofAHotelByDate, getAllRoomsOfAHotel, getRoomDetailsByDate } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
-    // const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("");
     const [handleReserveHote, setHandleReserveHotel] = useState([]);
 
     const [modalData, setData] = useState([]);
@@ -31,7 +31,7 @@ function HotelRooms() {
     const handleViewOnClick = () => {
         setModalShow(true);
     }
-    
+
     const openModal = (reservation) => {
         setData(reservation);
         handleViewOnClick();
@@ -39,30 +39,52 @@ function HotelRooms() {
 
 
     const openModalDelete = (data) => {
-       setModalDataDelete(data);
-       setModalDeleteConfirm(true);
+        setModalDataDelete(data);
+        setModalDeleteConfirm(true);
     }
 
 
     function onDelete() {
-            deleteRoom("Little Star","B241").then((response) => {
-                if(response.ok){
-                    alert("Successfully deleted").then(() =>{
-                        window.location.reload();
-                    })
-                }
-            })
-        }
+        deleteRoom("Little Star", "B241").then((response) => {
+            if (response.ok) {
+                alert("Successfully deleted").then(() => {
+                    window.location.reload();
+                })
+            }
+        })
+    }
 
-    // const openModalDelete = (data) => {
-    //     //   setModalDataDelete(data);
-    //     //  setModalDeleteConfirm(true);
-    // }
 
     const openModalUpdate = (data) => {
         console.log("request came for modal updateeeeeee", data);
         setModalDataUpdate(data);
         setModalUpdate(true);
+    }
+
+    const searchRooms = (e) => {
+        e.preventDefault();
+        if (search == 'Available') {
+            getAllAvailableRoomsOfAHotel("Little Star")
+                .then((response) => {
+                    setHandleReserveHotel(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        } else if (search == 'Reserved') {
+            getAllReservedRoomsOfAHotel("Little Star")
+                .then((response) => {
+                    setHandleReserveHotel(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        } else if (!isNaN(search.charAt(0))) {
+            getAllRoomofAHotelByDate("Little Star", search)
+                .then((response) => {
+                    setHandleReserveHotel(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        }
     }
 
     return (
@@ -74,7 +96,7 @@ function HotelRooms() {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-               
+
                 <ViewReservation
                     data={modalData}
                     onHide={() => setModalShow(false)
@@ -94,9 +116,9 @@ function HotelRooms() {
                     <div className="col">
                         <div class="input-group input-group-search">
                             <div class="searchbar">
-                                <form >
+                                <form onSubmit={(e) => searchRooms(e)}>
                                     <input class="search_input" type="text" name="search" placeholder="Search..."
-                                        // value={search} onChange={(event) => { setSearch(event.target.value) }} 
+                                        value={search} onChange={(event) => { setSearch(event.target.value) }}
                                         require />
                                     <button class="btn search_icon" type="submit" id="submit" name="submit">
                                         <i class="fa fa-search"></i></button>
@@ -133,10 +155,10 @@ function HotelRooms() {
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
-                                         </button>
-                                         <button onClick={() => openModalDelete(reservation)}>remove</button>
-                                    </td> 
-                                  </tr>
+                                        </button>
+                                        <button onClick={() => openModalDelete(reservation)}>remove</button>
+                                    </td>
+                                </tr>
                             );
                         })}
                     </tbody>
@@ -145,15 +167,15 @@ function HotelRooms() {
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
-                    <div className="modal-delete">
-                        <Modal.Header>
-                            <Modal.Title>Confirm Deletion</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <p>Are you want to remove this room from being reserved?</p>
-                        </Modal.Body>
-                    </div>
-               
+                <div className="modal-delete">
+                    <Modal.Header>
+                        <Modal.Title>Confirm Deletion</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you want to remove this room from being reserved?</p>
+                    </Modal.Body>
+                </div>
+
                 <Modal.Footer>
                     <div className="row">
                         <div className="col -6">
@@ -168,7 +190,7 @@ function HotelRooms() {
                         </div>
                     </div>
                 </Modal.Footer>
-                
+
             </Modal>
             <Modal
                 show={modalUpdate}

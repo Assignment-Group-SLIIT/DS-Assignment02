@@ -222,7 +222,7 @@ function UpdateReservation(reservation) {
 
                                         <div class="col-4 mr-2"  >
                                             <label for="reservationStartDate" class="form-label-emp">Reservation From</label>
-                                            <input type="date" required id="reservationStartDate"
+                                            <input type="date" required id="reservationStartDate" className="form-control"
                                                 name="reservationStartDate"
                                                 value={reservationStartDate}
                                                 onChange={(e) => {
@@ -233,7 +233,7 @@ function UpdateReservation(reservation) {
 
                                         <div class="col-4 mr-2"  >
                                             <label for="reservationEndDate" class="form-label-emp">Reservation To</label>
-                                            <input type="date" required id="reservationEndDate"
+                                            <input type="date" required id="reservationEndDate" className="form-control"
                                                 name="reservationEndDate"
                                                 value={reservationEndDate}
                                                 onChange={(e) => { setReservationEndDate(e.target.value); }}
