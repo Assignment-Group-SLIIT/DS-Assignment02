@@ -103,17 +103,14 @@ function HotelRooms() {
 
                 <table class="table table-hover">
                     <thead class="thead-dark">
-                        <tr>
-                            <th>Hotel Name</th>
+                        <tr>           
                             <th>Room No</th>
-                            <th>Floor</th>
-                            <th>Type</th>
                             <th>Reservation Date</th>
                             <th>Reservation End Date</th>
                             <th>Customer Name</th>
-                            <th>Price</th>
                             <th>Payment Status</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     {/* <tbody>

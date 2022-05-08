@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <Router>
-
         <Fragment>
           <Navbar />
 
@@ -37,6 +36,7 @@ function App() {
             <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/' element={<Landingpage />} />
             <Route path='*' element={<NotFound />} />
+            <Route path='/viewRooms' element={<HotelRooms />} />
           </Routes>
           <Footer />
 
