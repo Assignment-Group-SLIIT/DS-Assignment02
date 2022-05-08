@@ -1,18 +1,33 @@
 import React, { useState } from 'react'
+import { loginUser } from '../services/UserServices'
+import { setUserSession } from '../utils/token'
 
 const Signin = () => {
-    const [email, setEmail] = useState("")
+
+    const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
 
     const signInFunc = (e) => {
-        e.preventdefault()
+        e.preventDefault()
 
         const payload = {
-            email,
+            username,
             password,
         }
 
-        console.log("payload>>", payload)
+        loginUser(payload).then((response) => {
+
+            if (response.ok) {
+                setUserSession(response.data.token, response.data)
+                setUserName('')
+                setPassword('')
+            } else {
+                // console.log(response.error.response.data.status)
+            }
+        }).catch((error) => {
+            console.error(error)
+        })
+
     }
 
     return (
@@ -33,7 +48,7 @@ const Signin = () => {
                         <div class="form-style">
                             <>
                                 <div class="form-group pb-3">
-                                    <input type="email" placeholder="email" className="form-control" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                    <input type="text" placeholder="username" className="form-control" id="username" value={username} onChange={(e) => { setUserName(e.target.value) }} />
                                 </div>
                                 <div class="form-group pb-3">
                                     <input type="password" placeholder="Password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
@@ -47,7 +62,7 @@ const Signin = () => {
                                 </div>
                             </>
                             <div class="pt-4 text-center">
-                                New to this platform? <a href="#">Sign Up</a>
+                                New to this platform? <a href="/signup">Sign Up</a>
                             </div>
                         </div>
                     </div>
