@@ -61,8 +61,11 @@ const hotelRoomSchema = new Schema({
     },
     mustPayOnline: {
         type: Boolean,
-
+    },
+    totalPayment: {
+        type: Number,
     }
+
 })
 
 const HotelRoom = mongoose.model("HotelRoom", hotelRoomSchema);
