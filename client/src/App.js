@@ -4,13 +4,13 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Test from './pages/test';
 import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
+import HotelRooms from "./pages/HotelAdmin/viewHotel";
 
 function App() {
 
@@ -31,6 +31,8 @@ function App() {
           <Route path='/' element={<Test />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
+
+          <Route path='/viewRooms' element={<HotelRooms />} />
         </Routes>
         <Footer />
       </Router>
