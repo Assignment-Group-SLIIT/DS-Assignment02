@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
 import { getAllAvailableRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
     // const [search, setSearch] = useState("");
@@ -34,44 +35,44 @@ function HotelRooms() {
  
 
     const openModal = (reservation) => {
-        setData(reservation);
-        handleViewOnClick();
+       // setData(reservation);
+        //handleViewOnClick();
     }
 
     const handleViewOnClick = () => {
        // console.log("req came for modal");
 //console.log(modalData, "data came for modalllllll");
-        setModalShow(true);
+      //  setModalShow(true);
     }
 
     const openModalDelete = (data) => {
-        setModalDataDelete(data);
-        setModalDeleteConfirm(true);
+     //   setModalDataDelete(data);
+      //  setModalDeleteConfirm(true);
     }
 
     const openModalUpdate = (data) => {
 
        // console.log("request came for modal updateeeeeee", data);
-        setModalDataUpdate(data);
-        setModalUpdate(true);
+       // setModalDataUpdate(data);
+       // setModalUpdate(true);
 
     }
 
 
 
-    return(
+    return (
         <div className="page-component-body">
             <Modal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
+                // show={modalShow}
+                // onHide={() => setModalShow(false)}
+                // size="lg"
+                // aria-labelledby="contained-modal-title-vcenter"
+                // centered
             >
-                <TestModal
+                {/* <TestModal
                     data={modalData}
                     onHide={() => setModalShow(false)}
-                />
+                /> */}
             </Modal>
             <br />
             <div className="table-emp ">
@@ -79,7 +80,7 @@ function HotelRooms() {
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
                     </div>
-                   
+
 
                 </div>
                 <div class="row table-head-search">
@@ -139,7 +140,7 @@ function HotelRooms() {
                     </tbody>
                 </table>
             </div>
-{/* 
+            {/* 
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
@@ -218,7 +219,7 @@ function HotelRooms() {
                     data={modalDataUpdate}
                     onHide={() => setModalUpdate(false)}
                 />
-            </Modal> */} 
+            </Modal> */}
 
 
 

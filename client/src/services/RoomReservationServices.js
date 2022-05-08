@@ -30,7 +30,7 @@ export const createRoomReservation = async (roomPayload) => {
 export const getAllRoomsOfAHotel = async (hotelName) => {
 
     try {
-        const response = await axios.post(BASE_URL + "/" + hotelName, {
+        const response = await axios.get(BASE_URL + "/" + hotelName, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
@@ -53,7 +53,7 @@ export const getAllRoomsOfAHotel = async (hotelName) => {
 export const getAllRoomsOfAReserver = async (reserver) => {
 
     try {
-        const response = await axios.post(BASE_URL + "/reserver/" + reserver, {
+        const response = await axios.get(BASE_URL + "/reserver/" + reserver, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",

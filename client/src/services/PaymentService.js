@@ -1,5 +1,5 @@
-const axios = require('axios')
 import { getToken } from '../utils/token';
+const axios = require('axios')
 
 const BASE_URL = `http://localhost:4000/payments`
 
@@ -29,7 +29,7 @@ export const createAPayment = async (paymentPayload) => {
 export const getPaymentDetails = async (user, date) => {
 
     try {
-        const response = await axios.post(`${BASE_URL}/${user}/${date}`, {
+        const response = await axios.get(`${BASE_URL}/${user}/${date}`, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
