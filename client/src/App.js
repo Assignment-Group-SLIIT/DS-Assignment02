@@ -14,6 +14,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { Fragment } from "react";
 import Landingpage from "./pages/landingpage";
 import NotFound from "./pages/notFound";
+import ForgetPassword from "./pages/forgetPassword";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             <Route path='/' element={<Landingpage />} />
             <Route path='*' element={<NotFound />} />
             <Route path='/viewRooms' element={<HotelRooms />} />
+            <Route path='/forgetPassword' element={<ForgetPassword />} />
           </Routes>
           <Footer />
 

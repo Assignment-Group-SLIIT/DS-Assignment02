@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/UserServices';
+import { Dropdown, DropdownType, Row, Col } from 'react-bootstrap';
 
 const Signup = () => {
 
@@ -10,6 +11,15 @@ const Signup = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
+    const [hotelName, setHotelName] = useState("")
+    const [user, setUser] = useState("")
+
+    console.log("hotel Name", user)
+
+    const handleSelect = (e) => {
+        console.log(e);
+        setUser(e)
+    }
 
     const signUpFunc = (e) => {
         e.preventDefault()
@@ -60,46 +70,38 @@ const Signup = () => {
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Password</label>
-                                    <input type="password" placeholder="Password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} required />
+                                    <input type="password" placeholder="Password" className="form-control" id="password" value={hotelName} onChange={(e) => { setPassword(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Re-enter the Password</label>
                                     <input type="password" placeholder="Password" className="form-control" id="password" value={repassword} onChange={(e) => { setRepassword(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
-                                    <div className=''>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label htmlFor="password" className="form-label mt-2">User</label>
+                                        </div>
+                                        <div class="col">
+                                            <Dropdown
+                                                onSelect={handleSelect}
+                                            >
+                                                <Dropdown.Toggle id="dropdown-basic" className='signup-dropdown-btn'>
+                                                    Select
+                                                </Dropdown.Toggle>
 
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class=".col-sm">
-                                                    <label htmlFor="password" className="form-label">Re-enter the Password</label>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                            Small button
-                                                        </button>
-                                                        <ul class="dropdown-menu">
-                                                            ...
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                <Dropdown.Menu >
+                                                    <Dropdown.Item eventKey="option-1">Customer</Dropdown.Item>
+                                                    <Dropdown.Item eventKey="option-2" >Admin</Dropdown.Item>
 
-                                            </div>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
                                         </div>
 
-                                        {/* <div class="dropdown">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown button
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </div> */}
-
                                     </div>
+                                </div>
+                                <div class="form-group pb-3">
+                                    <label htmlFor="HotelName" className="form-label">Hotel Name</label>
+                                    <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={password} onChange={(e) => { setHotelName(e.target.value) }} required />
                                 </div>
                                 <div class="pb-2">
                                     <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
