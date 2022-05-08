@@ -4,10 +4,12 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
+import { getAllAvailableRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
     // const [search, setSearch] = useState("");
-    // const [handleReserveHotel, setHandleReserveHotel] = useState([]);
+    const [handleReserveHote, setHandleReserveHotel] = useState([]);
     // const [modalData, setData] = useState([]);
     // const [modalShow, setModalShow] = useState(false);
 
@@ -22,60 +24,63 @@ function HotelRooms() {
     // const [refresgPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
+        getAllAvailableRoomsOfAHotel("Little Star").then((response) => {
+            console.log("data",response)
+            if(response.ok){
+                setHandleReserveHotel(response.data);
+            }
+        });
+
+    },[]);
+ 
+
+    const openModal = (reservation) => {
+       // setData(reservation);
+        //handleViewOnClick();
+    }
+
+    const handleViewOnClick = () => {
+       // console.log("req came for modal");
+//console.log(modalData, "data came for modalllllll");
+      //  setModalShow(true);
+    }
+
+    const openModalDelete = (data) => {
+     //   setModalDataDelete(data);
+      //  setModalDeleteConfirm(true);
+    }
+
+    const openModalUpdate = (data) => {
+
+       // console.log("request came for modal updateeeeeee", data);
+       // setModalDataUpdate(data);
+       // setModalUpdate(true);
+
+    }
 
 
-    },);
 
-
-
-    // const openModal = (reservation) => {
-    //     setData(reservation);
-    //     handleViewOnClick();
-    // }
-
-    // const handleViewOnClick = () => {
-    //     console.log("req came for modal");
-    //     console.log(modalData, "data came for modalllllll");
-    //     setModalShow(true);
-    // }
-
-    // const openModalDelete = (data) => {
-    //     setModalDataDelete(data);
-    //     setModalDeleteConfirm(true);
-    // }
-
-    // const openModalUpdate = (data) => {
-
-    //     console.log("request came for modal updateeeeeee", data);
-    //     setModalDataUpdate(data);
-    //     setModalUpdate(true);
-
-    // }
-
-
-
-    return(
+    return (
         <div className="page-component-body">
-            {/* <Header></Header>
             <Modal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
+                // show={modalShow}
+                // onHide={() => setModalShow(false)}
+                // size="lg"
+                // aria-labelledby="contained-modal-title-vcenter"
+                // centered
             >
-                <TestModal
+                {/* <TestModal
                     data={modalData}
                     onHide={() => setModalShow(false)}
-                />
-            </Modal> */}
+                /> */}
+            </Modal>
             <br />
             <div className="table-emp ">
                 <div class="row table-head mt-3">
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
                     </div>
-                   
+
 
                 </div>
                 <div class="row table-head-search">
@@ -100,51 +105,42 @@ function HotelRooms() {
 
                 <table class="table table-hover">
                     <thead class="thead-dark">
-                        <tr>
-                            <th>Hotel Name</th>
+                        <tr>           
                             <th>Room No</th>
-                            <th>Floor</th>
-                            <th>Type</th>
                             <th>Reservation Date</th>
                             <th>Reservation End Date</th>
                             <th>Customer Name</th>
-                            <th>Price</th>
                             <th>Payment Status</th>
                             <th>Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    {/* <tbody>
+                    <tbody>
                         {handleReserveHote.map((reservation) => {
-                            return ( */}
-                                {/* // <tr > */}
-                                    {/* <td onClick={() => openModal(reservation)} data-toggle="tooltip" data-placement="right" title="Click to view details" className="view-td"> */}
-                                        {/*<Link class="link" to={`/rental/getRentalByID/${reservation.hotelName}`}>*/}{/*</Link>*/}
-                                        {/* </td> */}
-                                    {/* // <td >{reservation.roomNo}</td>
-                                    // <td >{reservation.floor}</td>
-                                    // <td >{reservation.type}</td>
-                                    // <td >{reservation.reservationStartDate}</td>
-                                    // <td >{reservation.reservationEndDate}</td>
-                                    // <td >{reservation.reserverName}</td> 
-                                        <td >{reservation.reservationPrice}</td>
-                                        <td >{reservation.paymentStatus}</td>
-                                         <td >{reservation.status}</td>*/}
-                                    {/* <td>
-                                        <button
+                            return (
+                                <tr>
+                                    <td >{reservation.roomNo}</td>
+                                    <td >{reservation.reservationStartDate}</td>
+                                    <td >{reservation.reservationEndDate}</td>
+                                    <td >{reservation.reserverName}</td> 
+                                    <td >{reservation.paymentStatus}</td>
+                                    <td >{reservation.status}</td>
+                                    <td>
+                                        {/* <button
                                             class="btn btn-light btn-sm"
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
                                         </button>
-                                        <Link class="btn btn-danger btn-sm" onClick={() => openModalDelete(reservation)} role="button"> remove</Link>
-                                    </td> */}
-                                 {/* </tr>
+                                        <Link class="btn btn-danger btn-sm" onClick={() => openModalDelete(reservation)} role="button"> remove</Link> */}
+                                    </td> 
+                                  </tr>
                             );
                         })}
-                    </tbody> */}
+                    </tbody>
                 </table>
             </div>
-{/* 
+            {/* 
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
@@ -223,7 +219,7 @@ function HotelRooms() {
                     data={modalDataUpdate}
                     onHide={() => setModalUpdate(false)}
                 />
-            </Modal> */} 
+            </Modal> */}
 
 
 
