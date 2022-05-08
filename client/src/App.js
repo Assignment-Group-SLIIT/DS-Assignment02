@@ -4,13 +4,14 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Test from './pages/test';
 import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
+import Landingpage from "./pages/landingpage";
+import NotFound from "./pages/notFound";
 
 function App() {
 
@@ -28,9 +29,11 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Test />} />
+          <Route path='/' element={<Landingpage />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='*' element={<NotFound />} />
+          {/* <Route path='*' element={<Test />} /> */}
         </Routes>
         <Footer />
       </Router>
