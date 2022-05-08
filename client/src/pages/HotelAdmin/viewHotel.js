@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
+import { getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
 
 function HotelRooms() {
     // const [search, setSearch] = useState("");
@@ -22,9 +23,11 @@ function HotelRooms() {
     // const [refresgPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
+        getAllRoomsOfAHotel('Little Star').then((response) => {
+            console.log(response.data)
+        })
 
-
-    },);
+    }, []);
 
 
 
@@ -54,7 +57,7 @@ function HotelRooms() {
 
 
 
-    return(
+    return (
         <div className="page-component-body">
             {/* <Header></Header>
             <Modal
@@ -75,7 +78,7 @@ function HotelRooms() {
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
                     </div>
-                   
+
 
                 </div>
                 <div class="row table-head-search">
@@ -116,11 +119,11 @@ function HotelRooms() {
                     {/* <tbody>
                         {handleReserveHote.map((reservation) => {
                             return ( */}
-                                {/* // <tr > */}
-                                    {/* <td onClick={() => openModal(reservation)} data-toggle="tooltip" data-placement="right" title="Click to view details" className="view-td"> */}
-                                        {/*<Link class="link" to={`/rental/getRentalByID/${reservation.hotelName}`}>*/}{/*</Link>*/}
-                                        {/* </td> */}
-                                    {/* // <td >{reservation.roomNo}</td>
+                    {/* // <tr > */}
+                    {/* <td onClick={() => openModal(reservation)} data-toggle="tooltip" data-placement="right" title="Click to view details" className="view-td"> */}
+                    {/*<Link class="link" to={`/rental/getRentalByID/${reservation.hotelName}`}>*/}{/*</Link>*/}
+                    {/* </td> */}
+                    {/* // <td >{reservation.roomNo}</td>
                                     // <td >{reservation.floor}</td>
                                     // <td >{reservation.type}</td>
                                     // <td >{reservation.reservationStartDate}</td>
@@ -129,7 +132,7 @@ function HotelRooms() {
                                         <td >{reservation.reservationPrice}</td>
                                         <td >{reservation.paymentStatus}</td>
                                          <td >{reservation.status}</td>*/}
-                                    {/* <td>
+                    {/* <td>
                                         <button
                                             class="btn btn-light btn-sm"
                                             onClick={() => openModalUpdate(reservation)}
@@ -138,13 +141,13 @@ function HotelRooms() {
                                         </button>
                                         <Link class="btn btn-danger btn-sm" onClick={() => openModalDelete(reservation)} role="button"> remove</Link>
                                     </td> */}
-                                 {/* </tr>
+                    {/* </tr>
                             );
                         })}
                     </tbody> */}
                 </table>
             </div>
-{/* 
+            {/* 
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
@@ -223,7 +226,7 @@ function HotelRooms() {
                     data={modalDataUpdate}
                     onHide={() => setModalUpdate(false)}
                 />
-            </Modal> */} 
+            </Modal> */}
 
 
 

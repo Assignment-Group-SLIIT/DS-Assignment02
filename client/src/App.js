@@ -9,7 +9,7 @@ import Navbar from './components/navbar';
 import Footer from "./components/footer";
 import Signin from "./pages/signin";
 import Signup from "./pages/signup";
-
+import HotelRooms from "./pages/HotelAdmin/viewHotel";
 import PrivateRoute from "./utils/PrivateRoute";
 import { Fragment } from "react";
 import Landingpage from "./pages/landingpage";
@@ -34,6 +34,7 @@ function App() {
             <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
+            <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/' element={<Landingpage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
