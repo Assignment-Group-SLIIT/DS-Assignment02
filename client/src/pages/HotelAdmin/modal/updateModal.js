@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import moment from 'moment'
+import { updateRoomReservationDetails } from "../../../services/RoomReservationServices";
+
 
 
 function UpdateReservation(reservation) {
@@ -11,6 +13,7 @@ function UpdateReservation(reservation) {
     useEffect(() => {
         try {
             setRetrievedValues();
+
         } catch (error) {
             console.log(error)
         }
@@ -22,7 +25,7 @@ function UpdateReservation(reservation) {
         setFloor(reservation.data.floor)
         setType(reservation.data.type)
         setStatus(reservation.data.status)
-        setReservationStartDate(reservation.data.reservationStartDate)
+        setReservationStartDate(moment(reservation.data.reservationStartDate).format("YYYY-MM-DD"))
         setReservationEndDate(reservation.data.reservationEndDate)
         setReservationPrice(reservation.data.reservationPrice)
         setPaymentStatus(reservation.data.paymentStatus)
@@ -35,13 +38,49 @@ function UpdateReservation(reservation) {
     const [roomNo, setRoomNo] = useState("");
     const [floor, setFloor] = useState("");
     const [type, setType] = useState("");
-    const [reservationStartDate, setReservationStartDate] = useState("");
+    const [reservationStartDate, setReservationStartDate] = useState('');
     const [reservationEndDate, setReservationEndDate] = useState("");
     const [reservationPrice, setReservationPrice] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
     const [reserverName, setReserverName] = useState("");
     const [status, setStatus] = useState("");
     const [mustPayOnline, setMustPayOnline] = useState("");
+    const [priorPay, setPriorPay] = useState(false);
+
+    // console.log(reservationStartDate)
+
+    const sendData = (e) => {
+        e.preventDefault();
+
+        if (mustPayOnline == 'true') {
+            setPriorPay(true)
+        }
+
+        const updatedReservation = {
+            hName,
+            roomNo,
+            floor,
+            type,
+            status,
+            reservationStartDate,
+            reservationEndDate,
+            reservationPrice,
+            paymentStatus,
+            reserverName,
+            mustPayOnline: priorPay
+        }
+
+        updateRoomReservationDetails(hName, roomNo, updatedReservation).
+            then((response) => {
+                if (response.ok) {
+                    console.log(response)
+                } else {
+                    console.log(response)
+                }
+            }).catch((error) => {
+
+            })
+    }
 
     return (
 
@@ -49,7 +88,7 @@ function UpdateReservation(reservation) {
 
             <div class="container input-main-form-emp">
                 <div class="tab-content-emp" id="myTabContent">
-                    <form >
+                    <form id="reservation updateForm" action="post" className="form" onSubmit={(e) => sendData(e)}>
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
@@ -59,36 +98,27 @@ function UpdateReservation(reservation) {
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-3">
-                                    <label class="customersize2" for="customer">Customer Details :</label>
+                                <div class="col-md-6">
+                                    <label class="form-label" for="cName">Customer name :</label>
+                                    <input
+                                        required
+                                        id="cName"
+                                        type="text"
+                                        className="form-control "
+                                        value={reserverName}
+                                        // disabled
+                                        onChange={(e) => {
+                                            setReserverName(e.target.value);
+                                        }}
+                                    />
+
                                 </div>
                             </div>
 
-                            <div className="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <br></br>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
-                                        <div className="form-group col-md-6 ">
-                                            <label class="form-label" for="cName">Customer name :</label>
-                                            <input
-                                                required
-                                                id="cName"
-                                                type="text"
-                                                className="form-control "
-                                                value={reserverName}
-                                                disabled
-                                                onChange={(e) => {
-                                                    setReserverName(e.target.value);
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-row">
                                 <div class="col-md-3">
-                                    <label class="customersize2" for="Vehicle">Reservation Hotel Details </label>
+                                    <label class="customersize2" for="roomReserve">Reservation Hotel Details </label>
                                 </div>
                             </div>
 
@@ -99,10 +129,10 @@ function UpdateReservation(reservation) {
                                     <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
                                         <div class="col-4">
-                                            <label for="rStatus" class="form-label-emp">Hotel Name</label>
+                                            <label for="hName" class="form-label-emp">Hotel Name</label>
                                             <input
                                                 required
-                                                id="cName"
+                                                id="hName"
                                                 type="text"
                                                 className="form-control "
                                                 value={hName}
@@ -113,10 +143,10 @@ function UpdateReservation(reservation) {
                                             />
                                         </div>
                                         <div class="col-4 mr-2"  >
-                                            <label for="rFrom" class="form-label-emp">Room No</label>
+                                            <label for="roomNo" class="form-label-emp">Room No</label>
                                             <input
                                                 required
-                                                id="cName"
+                                                id="roomNo"
                                                 type="text"
                                                 className="form-control "
                                                 value={roomNo}
@@ -127,10 +157,10 @@ function UpdateReservation(reservation) {
                                             />
                                         </div>
                                         <div class="col-4" >
-                                            <label for="rTo" class="form-label-emp">Floor</label>
+                                            <label for="floor" class="form-label-emp">Floor</label>
                                             <input
                                                 required
-                                                id="cName"
+                                                id="floor"
                                                 type="text"
                                                 className="form-control "
                                                 value={floor}
@@ -153,33 +183,32 @@ function UpdateReservation(reservation) {
                                     <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
                                         <div class="col-4" >
-                                            <label for="rTo" class="form-label-emp">Type</label>
-                                            <input
-                                                required
-                                                id="cName"
-                                                type="text"
-                                                className="form-control "
+                                            <label for="type" class="form-label-emp">Room Type</label>
+                                            <select class="form-select form-control"
+                                                name="type" id="type" required
                                                 value={type}
-                                                disabled
                                                 onChange={(e) => {
                                                     setType(e.target.value);
                                                 }}
-                                            />
+                                            >
+                                                <option id="Single" >Single</option>
+                                                <option id="Double">Double</option>
+                                                <option id="Family" >Family</option>
+                                                <option id="Luxuary" >Luxuary</option>
+                                            </select>
 
                                         </div>
                                         <div class="col-4" >
-                                            <label for="rTo" class="form-label-emp">Status</label>
+                                            <label for="status" class="form-label-emp">Status</label>
                                             <select class="form-select form-control"
-                                                name="rStatus" id="rStatus" required
+                                                name="status" id="status" required
                                                 value={status}
                                                 onChange={(e) => {
                                                     setStatus(e.target.value);
-                                                    // UpdatedPenaltyDays();
-                                                    // UpdatedRemainder();
                                                 }}
                                             >
-                                                <option id="pending" >Available</option>
-                                                <option id="completed">Reserved</option>
+                                                <option id="Available" >Available</option>
+                                                <option id="Reserved">Reserved</option>
                                             </select>
 
                                         </div>
@@ -194,25 +223,22 @@ function UpdateReservation(reservation) {
                                     <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
                                         <div class="col-4 mr-2"  >
-                                            <label for="returnDate" class="form-label-emp">Reservation From</label>
-                                            <input type="date" required id="returnDate"
-                                                name="returnDate"
+                                            <label for="reservationStartDate" class="form-label-emp">Reservation From</label>
+                                            <input type="date" required id="reservationStartDate"
+                                                name="reservationStartDate"
                                                 value={reservationStartDate}
-                                                onChange={(e) => { setReservationStartDate(e); }}
-                                            // timeFormat={false}
-                                            // isValidDate={disablePastDt}
-                                            // onClose={calculateCharges}
+                                                onChange={(e) => {
+                                                    setReservationStartDate(e.target.value);
+                                                }}
                                             />
                                         </div>
 
                                         <div class="col-4 mr-2"  >
-                                            <label for="vehicle" class="form-label-emp">Reservation To</label>
-                                            <input type="date" required id="rto"
-                                                name="rto"
+                                            <label for="reservationEndDate" class="form-label-emp">Reservation To</label>
+                                            <input type="date" required id="reservationEndDate"
+                                                name="reservationEndDate"
                                                 value={reservationEndDate}
-                                                onChange={(e) => { setReservationEndDate(e); }}
-                                            // timeFormat={false}
-                                            // readonly="readonly"
+                                                onChange={(e) => { setReservationEndDate(e.target.value); }}
                                             />
                                         </div>
 
@@ -225,36 +251,46 @@ function UpdateReservation(reservation) {
                                     <br></br>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md"  >
 
-                                        <div className="form-group col-md-6 ">
-                                            <label class="form-label-emp" for="penaltyDays">Payment</label>
+                                        <div className="form-group col-md-4 ">
+                                            <label class="form-label-emp" for="reservationPrice">Room Price</label>
                                             <input
 
-                                                id="penaltyDays"
+                                                id="reservationPrice"
                                                 type="number"
                                                 className="form-control "
                                                 placeholder="0"
                                                 value={reservationPrice}
                                                 onChange={(e) => {
                                                     setReservationPrice(e.target.value);
-                                                    //calculateCharges();
                                                 }}
 
                                             />
                                         </div>
 
-                                        <div className="form-group col-md-6 ">
-                                            <label class="form-label-emp" for="penaltyCharges">Payment Status</label>
+                                        <div className="form-group col-md-4 ">
+                                            <label class="form-label-emp" for="paymentStatus">Payment Status</label>
                                             <select class="form-select form-control"
-                                                name="rStatus" id="rStatus" required
-                                            // value={paymentStatus}
-                                            // onChange={(e) => {
-                                            //     setPaymentStatus(e.target.value);
-                                            //     UpdatedPenaltyDays();
-                                            //     UpdatedRemainder();
-                                            //}}
+                                                name="paymentStatus" id="paymentStatus" required
+                                                value={paymentStatus}
+                                                onChange={(e) => {
+                                                    setPaymentStatus(e.target.value);
+                                                }}
                                             >
-                                                <option id="pending" >Completed</option>
-                                                <option id="completed">Pending</option>
+                                                <option id="Completed" >Completed</option>
+                                                <option id="Pending">Pending</option>
+                                            </select>
+                                        </div>
+                                        <div className="form-group col-md-4 ">
+                                            <label class="form-label-emp" for="mustPayOnline">Require prior payments</label>
+                                            <select class="form-select form-control"
+                                                name="mustPayOnline" id="mustPayOnline" required
+                                                value={mustPayOnline}
+                                                onChange={(e) => {
+                                                    setMustPayOnline(e.target.value);
+                                                }}
+                                            >
+                                                <option id='true' >True</option>
+                                                <option id='false'>False</option>
                                             </select>
                                         </div>
                                     </div>
@@ -265,7 +301,7 @@ function UpdateReservation(reservation) {
                                     <button type="submit" className="btn btn-ok">UPDATE</button>
                                 </div>
                                 <div className="col py-3 text-center">
-                                    <button type="reset" className="btn btn-reset"> CANCEL</button>
+                                    <button type="reset" className="btn btn-reset" onClick={reservation.onHide}> CANCEL</button>
                                 </div>
                             </div>
 

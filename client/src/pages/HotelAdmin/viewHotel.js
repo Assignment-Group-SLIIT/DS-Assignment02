@@ -1,10 +1,7 @@
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
-import { getAllAvailableRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
@@ -24,7 +21,7 @@ function HotelRooms() {
     // const [refresgPage, setRefreshPage] = useState(false);
 
     useEffect(() => {
-        getAllAvailableRoomsOfAHotel("Little Star").then((response) => {
+        getAllRoomsOfAHotel("Little Star").then((response) => {
             if (response.ok) {
                 setHandleReserveHotel(response.data);
             }
