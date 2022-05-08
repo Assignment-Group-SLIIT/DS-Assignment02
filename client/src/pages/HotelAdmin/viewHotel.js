@@ -20,6 +20,7 @@ function HotelRooms() {
 
     useEffect(() => {
         getAllRoomsOfAHotel("Little Star").then((response) => {
+            console.log("data", response)
             if (response.ok) {
                 setHandleReserveHotel(response.data);
             }
@@ -51,13 +52,12 @@ function HotelRooms() {
                     })
                 }
             })
+        }
 
-
-
-    const openModalDelete = (data) => {
-        //   setModalDataDelete(data);
-        //  setModalDeleteConfirm(true);
-    }
+    // const openModalDelete = (data) => {
+    //     //   setModalDataDelete(data);
+    //     //  setModalDeleteConfirm(true);
+    // }
 
     const openModalUpdate = (data) => {
         console.log("request came for modal updateeeeeee", data);
@@ -168,9 +168,22 @@ function HotelRooms() {
                         </div>
                     </div>
                 </Modal.Footer>
+                
+            </Modal>
+            <Modal
+                show={modalUpdate}
+                onHide={() => setModalUpdate(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <UpdateReservation
+                    data={modalDataUpdate}
+                    onHide={() => setModalUpdate(false)}
+                />
             </Modal>
         </div >
     )
 }
-}
+
 export default HotelRooms;
