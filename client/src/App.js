@@ -2,7 +2,6 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
 } from "react-router-dom";
 
 import Test from './pages/test';
@@ -14,31 +13,38 @@ import HotelRooms from "./pages/HotelAdmin/viewHotel";
 import Landingpage from "./pages/landingpage";
 import NotFound from "./pages/notFound";
 
+
+import PrivateRoute from "./utils/PrivateRoute";
+import { Fragment } from "react";
+import Landingpage from "./pages/landingpage";
+import NotFound from "./pages/notFound";
+
+
 function App() {
 
-  // const { isLoggedIn, user } = useSelector((state) => state.auth);
-
-  // const SignInWrapper = ({ children, isLogged }) => {
-  //   return isLogged ? <Navigate to="/loadinginformation" replace /> : children;
-  // };
-
-  // const PrivateRoute = ({ children, isLogged }) => {
-  //   return isLogged ? children : <Navigate to="/signin" replace />;
-  // };
   return (
     <>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Landingpage />} />
-          <Route path='/signin' element={<Signin />} />
-          <Route path='/signup' element={<Signup />} />
+        <Fragment>
+          <Navbar />
 
-          <Route path='/viewRooms' element={<HotelRooms />} />
-          <Route path='*' element={<NotFound />} />
-          {/* <Route path='*' element={<Test />} /> */}
-        </Routes>
-        <Footer />
+          <Routes>
+            {/* <Route path='/' element={<PrivateRoute />} > */}
+
+            {/* <Route path='/signup' element={<Signup />} /> */}
+
+            {/* </Route> */}
+            <Route path='/test' element={<Test />} />
+            <Route path='/signin' element={<Signin />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/' element={<Landingpage />} />
+            <Route path='*' element={<NotFound />} />
+            <Route path='/viewRooms' element={<HotelRooms />} />
+          </Routes>
+          <Footer />
+
+        </Fragment>
+
       </Router>
     </>
   );

@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/UserServices';
 
 const Signup = () => {
+
+    let history = useNavigate();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("")
@@ -8,16 +12,31 @@ const Signup = () => {
     const [repassword, setRepassword] = useState("")
 
     const signUpFunc = (e) => {
-        e.preventdefault()
+        e.preventDefault()
 
-        const payload = {
-            username,
-            email,
-            password,
-            role: 'customer'
+        if (password === repassword) {
+            const payload = {
+                username,
+                email,
+                password,
+                role: 'customer'
+            }
+
+            registerUser(payload).then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    history('/signin')
+                } else {
+                    console.log(response)
+                }
+            }).catch((error) => {
+                console.error(error)
+            })
+        } else {
+            console.log("Passwords mismatch")
         }
 
-        console.log("payload>>", payload)
+
     }
 
     return (
@@ -33,26 +52,26 @@ const Signup = () => {
                             <>
                                 <div class="form-group pb-3 border-primary">
                                     <label htmlFor="username" className="form-label">Username</label>
-                                    <input type="text" placeholder="username" className="form-control" id="username" value={username} onChange={(e) => { setUsername(e.target.value) }} />
+                                    <input type="text" placeholder="username" className="form-control" id="username" value={username} onChange={(e) => { setUsername(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="email" className="form-label">Email address</label>
-                                    <input type="email" placeholder="email" className="form-control" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                    <input type="email" placeholder="email" className="form-control" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Password</label>
-                                    <input type="password" placeholder="Password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                                    <input type="password" placeholder="Password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Re-enter the Password</label>
-                                    <input type="password" placeholder="Password" className="form-control" id="password" value={repassword} onChange={(e) => { setRepassword(e.target.value) }} />
+                                    <input type="password" placeholder="Password" className="form-control" id="password" value={repassword} onChange={(e) => { setRepassword(e.target.value) }} required />
                                 </div>
                                 <div class="pb-2">
                                     <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
                                 </div>
                             </>
                             <div className="pt-4 text-center">
-                                Already have an account? <a href="#">Sign in</a>
+                                Already have an account? <a href='/signin'>Sign in</a>
                             </div>
                         </div>
                     </div>
