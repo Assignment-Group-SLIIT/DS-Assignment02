@@ -1,5 +1,5 @@
 let HotelRoom = require("../models/HotelRoom");
-
+let moment = require("moment")
 const createReservation = ({ room }, res) => {
 
     const hotelName = room.hotelName;
@@ -7,11 +7,12 @@ const createReservation = ({ room }, res) => {
     const floor = room.floor;
     const type = room.type;
     const status = room.status;
-    const reservationStartDate = room.reservationStartDate;
-    const reservationEndDate = room.reservationEndDate;
+    const reservationStartDate = moment(room.reservationStartDate).format('YYYY-MM-DD');
+    const reservationEndDate = moment(room.reservationEndDate).format('YYYY-MM-DD');
     const reservationPrice = room.reservationPrice;
     const paymentStatus = room.paymentStatus;
     const reserverName = room.reserverName;
+    const mustPayOnline = room.mustPayOnline;
 
 
     const newReservation = new HotelRoom({
@@ -24,7 +25,8 @@ const createReservation = ({ room }, res) => {
         reservationEndDate: reservationEndDate,
         reservationPrice: reservationPrice,
         paymentStatus: paymentStatus,
-        reserverName: reserverName
+        reserverName: reserverName,
+        mustPayOnline: mustPayOnline
     })
 
     newReservation.save().then(() => {
@@ -131,7 +133,8 @@ const updateRoomReservation = async (hotel, roomNo, { room }, res) => {
         reservationEndDate: room.reservationEndDate,
         reservationPrice: room.reservationPrice,
         paymentStatus: room.paymentStatus,
-        reserverName: room.reserverName
+        reserverName: room.reserverName,
+        mustPayOnline: mustPayOnline
     }
 
 
