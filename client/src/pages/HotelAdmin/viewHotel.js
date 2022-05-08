@@ -4,27 +4,20 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
-import { getAllAvailableRoomsOfAHotel } from "../../services/RoomReservationServices";
+import { deleteRoom, getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 
 function HotelRooms() {
     // const [search, setSearch] = useState("");
     const [handleReserveHote, setHandleReserveHotel] = useState([]);
-    // const [modalData, setData] = useState([]);
-    // const [modalShow, setModalShow] = useState(false);
 
-    // const [modalDataUpdate, setModalDataUpdate] = useState([]);
-    // const [modalUpdate, setModalUpdate] = useState(false);
+    const [modalShow, setModalShow] = useState(false);
 
-    // const [modalDataDelete, setModalDataDelete] = useState([]);
-    // const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
-    // const [modalDelete, setModalDelete] = useState(false);
-
-    // const [modalLoading, setModalLoading] = useState(false);
-    // const [refresgPage, setRefreshPage] = useState(false);
+    const [modalDataDelete, setModalDataDelete] = useState([]);
+    const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
     useEffect(() => {
-        getAllAvailableRoomsOfAHotel("Little Star").then((response) => {
+        getAllRoomsOfAHotel("Little Star").then((response) => {
             console.log("data",response)
             if(response.ok){
                 setHandleReserveHotel(response.data);
@@ -39,40 +32,33 @@ function HotelRooms() {
         //handleViewOnClick();
     }
 
-    const handleViewOnClick = () => {
-       // console.log("req came for modal");
-//console.log(modalData, "data came for modalllllll");
-      //  setModalShow(true);
-    }
 
     const openModalDelete = (data) => {
-     //   setModalDataDelete(data);
-      //  setModalDeleteConfirm(true);
-    }
-
-    const openModalUpdate = (data) => {
-
-       // console.log("request came for modal updateeeeeee", data);
-       // setModalDataUpdate(data);
-       // setModalUpdate(true);
-
+       setModalDataDelete(data);
+       setModalDeleteConfirm(true);
     }
 
 
+    function onDelete() {
+            deleteRoom("Little Star","B241").then((response) => {
+                if(response.ok){
+                    alert("Successfully deleted").then(() =>{
+                        window.location.reload();
+                    })
+                }
+            })
+    }
 
     return (
         <div className="page-component-body">
             <Modal
-                // show={modalShow}
-                // onHide={() => setModalShow(false)}
-                // size="lg"
-                // aria-labelledby="contained-modal-title-vcenter"
-                // centered
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
             >
-                {/* <TestModal
-                    data={modalData}
-                    onHide={() => setModalShow(false)}
-                /> */}
+               
             </Modal>
             <br />
             <div className="table-emp ">
@@ -80,8 +66,6 @@ function HotelRooms() {
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
                     </div>
-
-
                 </div>
                 <div class="row table-head-search">
                     <div className="col-md-8"></div>
@@ -99,16 +83,13 @@ function HotelRooms() {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>           
                             <th>Room No</th>
-                            <th>Reservation Date</th>
-                            <th>Reservation End Date</th>
+                            <th>Reserved From</th>
+                            <th>Reserved To</th>
                             <th>Customer Name</th>
                             <th>Payment Status</th>
                             <th>Status</th>
@@ -131,8 +112,8 @@ function HotelRooms() {
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
-                                        </button>
-                                        <Link class="btn btn-danger btn-sm" onClick={() => openModalDelete(reservation)} role="button"> remove</Link> */}
+                                        // </button>*/}
+                                         <button onClick={() => openModalDelete(reservation)}>remove</button>
                                     </td> 
                                   </tr>
                             );
@@ -140,25 +121,26 @@ function HotelRooms() {
                     </tbody>
                 </table>
             </div>
-            {/* 
             <Modal show={modalDeleteConfirm} size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Deletion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Are you want to delete this item ?</p>
-
-                </Modal.Body>
+                    <div className="modal-delete">
+                        <Modal.Header>
+                            <Modal.Title>Confirm Deletion</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <p>Are you want to remove this room from being reserved?</p>
+                        </Modal.Body>
+                    </div>
+               
                 <Modal.Footer>
                     <div className="row">
                         <div className="col -6">
-                            <button type="submit" className="btn btn-delete" onClick={() => { setModalDelete(true); setModalDeleteConfirm(false); }}>
+                            <button type="submit" className="btn btn-delete" onClick={() => { onDelete(modalDataDelete); }}>
                                 Confirm
                             </button>
                         </div>
-                        <div className="col-6 text-right" onClick={() => setModalDeleteConfirm(false)}>
+                        <div className="col-6   text-right" onClick={() => setModalDeleteConfirm(false)}>
                             <button type="reset" className="btn btn-reset">
                                 cancel
                             </button>
@@ -166,63 +148,6 @@ function HotelRooms() {
                     </div>
                 </Modal.Footer>
             </Modal>
-
-            {/* open delete form */}
-            {/* <Modal
-                show={modalDelete}
-                onHide={() => setModalDelete(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <DeleteModal
-                    data={modalDataDelete}
-                    onHide={() => setModalDelete(false)}
-                />
-            </Modal>
-
-            <Modal show={modalLoading} size="sm"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered>
-                <Modal.Body>
-                    <div class="d-flex justify-content-center mt-2">
-                        <div class="spinner-grow text-danger" role="status">
-                        </div>
-                        <div class="spinner-grow text-danger" role="status">
-                        </div><div class="spinner-grow text-danger" role="status">
-                        </div>
-
-                        <span class="sr-only">something went wrong...</span>
-                    </div>
-                    <div class="d-flex justify-content-center mt-4 h5"> something went wrong</div>
-
-                </Modal.Body>
-                <Modal.Footer>
-
-                    <div className="col py-3 text-center">
-                        <button type="submit" className="btn btn-delete" onClick={() => { window.location.reload() }}>
-                            Try again
-                        </button>
-                    </div>
-                </Modal.Footer>
-            </Modal>
-
-            {/*Update modal for rental*/}
-            {/* <Modal
-                show={modalUpdate}
-                onHide={() => setModalUpdate(false)}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <RentalUpdateModal
-                    data={modalDataUpdate}
-                    onHide={() => setModalUpdate(false)}
-                />
-            </Modal> */}
-
-
-
         </div >
     )
 }
