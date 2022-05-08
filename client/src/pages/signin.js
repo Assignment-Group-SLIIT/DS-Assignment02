@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { loginUser } from '../services/UserServices'
 import { setUserSession } from '../utils/token'
+import { useNavigate } from 'react-router-dom'
 
 const Signin = () => {
+
+    let history = useNavigate();
 
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
@@ -21,6 +24,7 @@ const Signin = () => {
                 setUserSession(response.data.token, response.data)
                 setUserName('')
                 setPassword('')
+                history("/")
             } else {
                 // console.log(response.error.response.data.status)
             }
