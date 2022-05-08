@@ -1,0 +1,23 @@
+.buttongroup{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.addReservation-container{
+    position: absolute;
+    width: 60%;
+    right: 20%;
+    min-height: 90vh;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    border: 0.1rem solid #0076bd;
+}
+
+.step-container{
+    min-height: 75vh;
+    // background-color: red ;
+}

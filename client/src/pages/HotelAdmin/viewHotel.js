@@ -1,7 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
 import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
 import { deleteRoom, getAllRoomsOfAHotel } from "../../services/RoomReservationServices";
@@ -11,25 +8,32 @@ function HotelRooms() {
     // const [search, setSearch] = useState("");
     const [handleReserveHote, setHandleReserveHotel] = useState([]);
 
+    const [modalData, setData] = useState([]);
     const [modalShow, setModalShow] = useState(false);
+
+    const [modalDataUpdate, setModalDataUpdate] = useState([]);
+    const [modalUpdate, setModalUpdate] = useState(false);
 
     const [modalDataDelete, setModalDataDelete] = useState([]);
     const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
+
     useEffect(() => {
         getAllRoomsOfAHotel("Little Star").then((response) => {
-            console.log("data",response)
-            if(response.ok){
+            if (response.ok) {
                 setHandleReserveHotel(response.data);
             }
         });
 
-    },[]);
- 
+    }, []);
 
+    const handleViewOnClick = () => {
+        setModalShow(true);
+    }
+    
     const openModal = (reservation) => {
-       // setData(reservation);
-        //handleViewOnClick();
+        setData(reservation);
+        handleViewOnClick();
     }
 
 
@@ -47,6 +51,18 @@ function HotelRooms() {
                     })
                 }
             })
+
+
+
+    const openModalDelete = (data) => {
+        //   setModalDataDelete(data);
+        //  setModalDeleteConfirm(true);
+    }
+
+    const openModalUpdate = (data) => {
+        console.log("request came for modal updateeeeeee", data);
+        setModalDataUpdate(data);
+        setModalUpdate(true);
     }
 
     return (
@@ -59,6 +75,11 @@ function HotelRooms() {
                 centered
             >
                
+                <ViewReservation
+                    data={modalData}
+                    onHide={() => setModalShow(false)
+                    }
+                />
             </Modal>
             <br />
             <div className="table-emp ">
@@ -86,7 +107,7 @@ function HotelRooms() {
                 </div>
                 <table class="table table-hover">
                     <thead class="thead-dark">
-                        <tr>           
+                        <tr>
                             <th>Room No</th>
                             <th>Reserved From</th>
                             <th>Reserved To</th>
@@ -100,19 +121,19 @@ function HotelRooms() {
                         {handleReserveHote.map((reservation) => {
                             return (
                                 <tr>
-                                    <td >{reservation.roomNo}</td>
+                                    <td onClick={() => openModal(reservation)}>{reservation.roomNo}</td>
                                     <td >{reservation.reservationStartDate}</td>
                                     <td >{reservation.reservationEndDate}</td>
-                                    <td >{reservation.reserverName}</td> 
+                                    <td >{reservation.reserverName}</td>
                                     <td >{reservation.paymentStatus}</td>
                                     <td >{reservation.status}</td>
                                     <td>
-                                        {/* <button
+                                        <button
                                             class="btn btn-light btn-sm"
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
-                                        // </button>*/}
+                                         </button>
                                          <button onClick={() => openModalDelete(reservation)}>remove</button>
                                     </td> 
                                   </tr>
@@ -151,5 +172,5 @@ function HotelRooms() {
         </div >
     )
 }
-
+}
 export default HotelRooms;
