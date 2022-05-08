@@ -7,9 +7,6 @@ import { updateRoomReservationDetails } from "../../../services/RoomReservationS
 
 function UpdateReservation(reservation) {
 
-    // console.log(reservation)
-    // const { hotelName } = useParams();
-
     useEffect(() => {
         try {
             setRetrievedValues();
@@ -73,12 +70,13 @@ function UpdateReservation(reservation) {
         updateRoomReservationDetails(hName, roomNo, updatedReservation).
             then((response) => {
                 if (response.ok) {
-                    console.log(response)
+                    alert("Successfully Updated the Room Reservation Details")
+                    window.location.reload();
                 } else {
                     console.log(response)
                 }
             }).catch((error) => {
-
+                console.error(error)
             })
     }
 
