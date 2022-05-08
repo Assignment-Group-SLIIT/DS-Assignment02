@@ -12,12 +12,9 @@ import Signup from "./pages/signup";
 import HotelRooms from "./pages/HotelAdmin/viewHotel";
 import Landingpage from "./pages/landingpage";
 import NotFound from "./pages/notFound";
-
-
 import PrivateRoute from "./utils/PrivateRoute";
 import { Fragment } from "react";
-import Landingpage from "./pages/landingpage";
-import NotFound from "./pages/notFound";
+
 
 
 function App() {

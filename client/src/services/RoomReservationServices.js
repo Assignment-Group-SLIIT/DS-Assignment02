@@ -1,5 +1,6 @@
-const axios = require('axios')
 import { getToken } from '../utils/token';
+const axios = require('axios')
+
 
 const BASE_URL = `http://localhost:4000/rooms`
 
@@ -75,7 +76,7 @@ export const getAllRoomsOfAReserver = async (reserver) => {
 export const getAllAvailableRoomsOfAHotel = async (hotelName) => {
 
     try {
-        const response = await axios.post(BASE_URL + "/" + hotelName + "/available", {
+        const response = await axios.get(BASE_URL + "/" + hotelName + "/available", {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
@@ -98,7 +99,7 @@ export const getAllAvailableRoomsOfAHotel = async (hotelName) => {
 export const getAllReservedRoomsOfAHotel = async (hotelName) => {
 
     try {
-        const response = await axios.post(BASE_URL + "/" + hotelName + "/reserved", {
+        const response = await axios.get(BASE_URL + "/" + hotelName + "/reserved", {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
@@ -121,7 +122,7 @@ export const getAllReservedRoomsOfAHotel = async (hotelName) => {
 export const getRoomDetailsByDate = async (hotelName, room, date) => {
 
     try {
-        const response = await axios.post(`${BASE_URL}/${hotelName}/${room}/${date}`, {
+        const response = await axios.get(`${BASE_URL}/${hotelName}/${room}/${date}`, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
@@ -144,7 +145,7 @@ export const getRoomDetailsByDate = async (hotelName, room, date) => {
 export const getHotelRoomId = async (hotelName, room) => {
 
     try {
-        const response = await axios.post(`${BASE_URL}/${hotelName}/${room}`, {
+        const response = await axios.get(`${BASE_URL}/${hotelName}/${room}`, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",
