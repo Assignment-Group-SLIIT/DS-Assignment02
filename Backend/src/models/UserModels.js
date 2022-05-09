@@ -23,6 +23,10 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
+    hotelName: {
+        type: String,
+        required: true,
+    },
 });
 
 UserSchema.set('toJSON', {

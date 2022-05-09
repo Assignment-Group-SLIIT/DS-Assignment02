@@ -12,9 +12,9 @@ const Signup = () => {
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
     const [hotelName, setHotelName] = useState("")
-    const [user, setUser] = useState("")
+    const [role, setUser] = useState("")
 
-    console.log("hotel Name", user)
+    console.log("hotel Name", role)
 
     const handleSelect = (e) => {
         console.log(e);
@@ -29,8 +29,10 @@ const Signup = () => {
                 username,
                 email,
                 password,
-                role: 'customer'
+                role,
+                hotelName
             }
+            console.log("payload>>", payload);
 
             registerUser(payload).then((response) => {
                 console.log(response)
@@ -70,7 +72,7 @@ const Signup = () => {
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Password</label>
-                                    <input type="password" placeholder="Password" className="form-control" id="password" value={hotelName} onChange={(e) => { setPassword(e.target.value) }} required />
+                                    <input type="password" placeholder="Password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Re-enter the Password</label>
@@ -90,8 +92,8 @@ const Signup = () => {
                                                 </Dropdown.Toggle>
 
                                                 <Dropdown.Menu >
-                                                    <Dropdown.Item eventKey="option-1">Customer</Dropdown.Item>
-                                                    <Dropdown.Item eventKey="option-2" >Admin</Dropdown.Item>
+                                                    <Dropdown.Item eventKey="customer">Customer</Dropdown.Item>
+                                                    <Dropdown.Item eventKey="admin" >Admin</Dropdown.Item>
 
                                                 </Dropdown.Menu>
                                             </Dropdown>
@@ -101,7 +103,7 @@ const Signup = () => {
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="HotelName" className="form-label">Hotel Name</label>
-                                    <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={password} onChange={(e) => { setHotelName(e.target.value) }} required />
+                                    <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} required />
                                 </div>
                                 <div class="pb-2">
                                     <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
