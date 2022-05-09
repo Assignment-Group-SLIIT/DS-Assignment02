@@ -36,7 +36,6 @@ function App() {
             <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/' element={<Landingpage />} />
             <Route path='*' element={<NotFound />} />
             <Route path='/viewRooms' element={<HotelRooms />} />

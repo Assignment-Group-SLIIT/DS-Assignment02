@@ -142,6 +142,29 @@ export const getRoomDetailsByDate = async (hotelName, room, date) => {
 
 }
 
+export const getAllRoomofAHotelByDate = async (hotelName, date) => {
+
+    try {
+        const response = await axios.get(`${BASE_URL}/hotel/date/${hotelName}/${date}`, {
+            headers: {
+                'Access-Control-Allow-Origin': "*",
+                'Access-Control-Allow-Headers': "Content-Type",
+                'Authorization': 'Bearer ' + getToken()
+            }
+        });
+        return {
+            ok: true,
+            data: response.data
+        }
+    } catch (error) {
+        return {
+            ok: false,
+            error: error
+        }
+    }
+
+}
+
 export const getHotelRoomId = async (hotelName, room) => {
 
     try {

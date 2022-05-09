@@ -13,6 +13,7 @@ const createReservation = ({ room }, res) => {
     const paymentStatus = room.paymentStatus;
     const reserverName = room.reserverName;
     const mustPayOnline = room.mustPayOnline;
+    const totalPayment = room.totalPayment;
 
 
     const newReservation = new HotelRoom({
@@ -22,11 +23,12 @@ const createReservation = ({ room }, res) => {
         type: type,
         status: status,
         reservationStartDate: reservationStartDate,
-        reservationEndDate: reservationEndDate,
-        reservationPrice: reservationPrice,
+        reservationEndDate: moment(reservationEndDate).format('YYYY-MM-DD'),
+        reservationPrice: moment(reservationPrice).format('YYYY-MM-DD'),
         paymentStatus: paymentStatus,
         reserverName: reserverName,
-        mustPayOnline: mustPayOnline
+        mustPayOnline: mustPayOnline,
+        totalPayment: totalPayment
     })
 
     newReservation.save().then(() => {
@@ -92,6 +94,20 @@ const getRoomDetails = (hotel, roomNo, date, res) => {
     })
 }
 
+const getRoomsOfHotelDate = (hotel, date, res) => {
+
+    HotelRoom.find({
+        hotelName: { $regex: "^" + hotel + ".*", $options: 'i' },
+        reservationStartDate: date,
+
+    }).then((rooms) => {
+        return res.json(rooms)
+
+    }).catch((err) => {
+        console.log(err);
+        return res.status(300).send({ status: "Cannot get the room details", error: err.message });
+    })
+}
 
 const getRoomID = async (hotel, roomNo, res) => {
     await HotelRoom.findOne({
@@ -134,7 +150,8 @@ const updateRoomReservation = async (hotel, roomNo, { room }, res) => {
         reservationPrice: room.reservationPrice,
         paymentStatus: room.paymentStatus,
         reserverName: room.reserverName,
-        mustPayOnline: mustPayOnline
+        mustPayOnline: room.mustPayOnline,
+        totalPayment: room.totalPayment
     }
 
 
@@ -160,4 +177,4 @@ const removeHotelRoom = async (hotel, roomNo, res) => {
         })
 }
 
-module.exports = { createReservation, getAllRooms, getAllAvailableRooms, getAllReservedRooms, getRoomDetails, updateRoomReservation, getRoomID, removeHotelRoom, getRoomByUser }
+module.exports = { createReservation, getAllRooms, getAllAvailableRooms, getAllReservedRooms, getRoomDetails, updateRoomReservation, getRoomID, removeHotelRoom, getRoomByUser, getRoomsOfHotelDate }

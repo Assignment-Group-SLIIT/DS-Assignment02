@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { createReservation, getAllRooms, getAllAvailableRooms, getAllReservedRooms, getRoomDetails, updateRoomReservation, getRoomID, removeHotelRoom, getRoomByUser } = require('../apis/hotelRoomAPI')
+const { createReservation, getAllRooms, getAllAvailableRooms, getAllReservedRooms, getRoomDetails, updateRoomReservation, getRoomID, removeHotelRoom, getRoomByUser, getRoomsOfHotelDate } = require('../apis/hotelRoomAPI')
 
 
 router.route("/").post((req, res) => {
@@ -45,6 +45,13 @@ router.route("/:hotelName/:room").get((req, res) => {
     const hotel = req.params.hotelName;
     const roomNo = req.params.room;
     const roomDetails = getRoomID(hotel, roomNo, res)
+    // console.log(res)
+})
+
+router.route("/hotel/date/:hotelName/:date").get((req, res) => {
+    const hotel = req.params.hotelName;
+    const date = req.params.date;
+    const roomDetails = getRoomsOfHotelDate(hotel, date, res)
     // console.log(res)
 })
 
