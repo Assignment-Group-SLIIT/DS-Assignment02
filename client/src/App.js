@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,11 +12,12 @@ import Signin from "./pages/signin";
 import Signup from "./pages/signup";
 import Addreservation from "./pages/addReservation";
 
+
 import HotelRooms from "./pages/HotelAdmin/viewHotel";
 import PrivateRoute from "./utils/PrivateRoute";
-import { Fragment } from "react";
 import Landingpage from "./pages/landingpage";
 import NotFound from "./pages/notFound";
+import ViewHotel from "./pages/viewHotel";
 
 function App() {
 
@@ -38,6 +40,7 @@ function App() {
             <Route path='/' element={<Landingpage />} />
             <Route path='*' element={<NotFound />} />
             <Route path='/viewRooms' element={<HotelRooms />} />
+            <Route path='/viewHotel' element={<ViewHotel />} />
           </Routes>
           <Footer />
 

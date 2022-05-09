@@ -5,7 +5,21 @@ const AddReservation = () => {
     const [progress, setProgress] = useState(0)
 
     //step one
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [contactNo, setContactNo] = useState("");
     const [dateFrom, setDateFrom] = useState(new Date());
+    const [dateTo, setDateTo] = useState(new Date());
+
+    //step two
+    const [paymentAmnt, setPaymentAmnt] = useState(0);
+    const [cardOwner, setCardOwner] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiryMonth, setExpiryMonth] = useState(0);
+    const [expiryYear, setExpiryYear] = useState(0);
+    const [cvv, setCvv] = useState("");
+
 
     const increaseStepFunc = () => {
         setStep(step + 1)
@@ -50,14 +64,14 @@ const AddReservation = () => {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="first">First Name</label>
-                                        <input type="text" className="form-control" placeholder="" id="first" />
+                                        <input type="text" className="form-control" placeholder="" id="first" value={firstName} onChange={(e) => { setFirstName(e.target.value) }} />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="last">Last Name</label>
-                                        <input type="text" className="form-control" placeholder="" id="last" />
+                                        <input type="text" className="form-control" placeholder="" id="last" value={lastName} onChange={(e) => { setLastName(e.target.value) }} />
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +81,7 @@ const AddReservation = () => {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="company">Email</label>
-                                        <input type="email" className="form-control" placeholder="email" id="company" />
+                                        <input type="email" className="form-control" placeholder="email" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                                     </div>
 
 
@@ -77,7 +91,7 @@ const AddReservation = () => {
 
                                     <div className="form-group">
                                         <label for="phone">Phone Number</label>
-                                        <input type="tel" className="form-control" id="phone" placeholder="phone" />
+                                        <input type="tel" className="form-control" id="phone" placeholder="phone" value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} />
                                     </div>
                                 </div>
                             </div>
@@ -87,14 +101,14 @@ const AddReservation = () => {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="email">Reservation from</label>
-                                        <input type="date" className="form-control" id="fromdate" placeholder="from" />
+                                        <input type="date" className="form-control" id="fromdate" placeholder="from" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value) }} />
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label for="email">Reservation to</label>
-                                        <input type="date" className="form-control" id="todate" placeholder="to" />
+                                        <input type="date" className="form-control" id="todate" placeholder="to" value={dateTo} onChange={(e) => { setDateTo(e.target.value) }} />
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +116,7 @@ const AddReservation = () => {
                     )}
                     {step === 2 && (
                         <div className="container step-container">
-                            <h2 className='mb-4'>Reservation Details</h2>
+                            <h2 className='mb-4'>Payment Details</h2>
                             <div class="row">
                                 <div class="col-lg-12">
                                     {/* <!-- credit card info--> */}
@@ -111,15 +125,15 @@ const AddReservation = () => {
                                             <label>Payment amount</label>
                                             <h2>$100.00</h2>
                                         </div>
-                                        <div class="form-group"> <label for="username">
+                                        <div class="form-group"> <label for="cardOwner">
                                             <h6>Card Owner</h6>
                                         </label>
-                                            <input type="text" name="username" placeholder="Card Owner Name" required class="form-control " /> </div>
+                                            <input type="text" name="cardOwner" placeholder="Card Owner Name" required class="form-control " value={cardOwner} onChange={(e) => { setCardOwner(e.target.value) }} /> </div>
                                         <div class="form-group"> <label for="cardNumber">
                                             <h6>Card number</h6>
                                         </label>
                                             <div class="input-group">
-                                                <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required />
+                                                <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -128,8 +142,8 @@ const AddReservation = () => {
                                                     <h6>Expiration Date</h6>
                                                 </span></label>
                                                     <div class="input-group">
-                                                        <input type="number" placeholder="MM" name="" class="form-control" required />
-                                                        <input type="number" placeholder="YY" name="" class="form-control" required />
+                                                        <input type="number" placeholder="MM" name="" class="form-control" required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
+                                                        <input type="number" placeholder="YY" name="" class="form-control" required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +151,7 @@ const AddReservation = () => {
                                                 <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
                                                     <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
                                                 </label>
-                                                    <input type="text" required class="form-control" /> </div>
+                                                    <input type="text" required class="form-control" value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -149,49 +163,76 @@ const AddReservation = () => {
                         <div className="container step-container-step03">
                             <h2 className='mb-3'>Summary</h2>
                             <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <div className="form-group">
-                                        <label for="first">First Name</label>
+                                        <strong for="first">First Name</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{firstName}</label>
                                     </div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <div className="form-group">
-                                        <label for="last">Last Name</label>
+                                        <strong for="last">Last Name</strong>
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <div className="form-group">
-                                        <label for="company">Email</label>
-                                    </div>
-
-
-                                </div>
-
-                                <div className="col-md-6">
-
-                                    <div className="form-group">
-                                        <label for="phone">Phone Number</label>
-
+                                        <label for="company">{lastName}</label>
                                     </div>
                                 </div>
                             </div>
 
 
                             <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <div className="form-group">
-                                        <label for="email">Reservation from</label>
+                                        <strong for="company">Email</strong>
+                                    </div>
+
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{email}</label>
                                     </div>
                                 </div>
 
-                                <div className="col-md-6">
+                                <div className="col-md-3">
                                     <div className="form-group">
-                                        <label for="email">Reservation to</label>
+                                        <strong for="phone">Phone Number</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{contactNo}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation from</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        {/* <label for="company">{dateFrom}</label> */}
+                                    </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation to</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        {/* <label for="company">{dateTo}</label> */}
                                     </div>
                                 </div>
                             </div>
@@ -202,11 +243,11 @@ const AddReservation = () => {
                                         <p class="card_numer">**** **** **** 6258</p>
                                         <div class="card__space-75">
                                             <span class="card__label">Card holder</span>
-                                            <p class="card__info">John Doe</p>
+                                            <p class="card__info">{cardOwner}</p>
                                         </div>
                                         <div class="card__space-25">
                                             <span class="card__label">Expires</span>
-                                            <p class="card__info">10/25</p>
+                                            <p class="card__info">{expiryMonth}/{expiryYear}</p>
                                         </div>
                                     </div>
 
