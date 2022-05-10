@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../services/UserServices';
-import { Dropdown, DropdownType, Row, Col } from 'react-bootstrap';
+import { registerUser } from '../../services/UserServices';
 
-const Signup = () => {
 
-    let history = useNavigate();
+const AdminSignup = () => {
+
+
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
     const [hotelName, setHotelName] = useState("")
-    const [role, setUser] = useState("")
-
-    console.log("hotel Name", role)
-
-    const handleSelect = (e) => {
-        console.log(e);
-        setUser(e)
-    }
+    const [role, setRole] = useState("")
 
     const signUpFunc = (e) => {
         e.preventDefault()
@@ -32,12 +24,12 @@ const Signup = () => {
                 role,
                 hotelName
             }
-            console.log("payload>>", payload);
 
             registerUser(payload).then((response) => {
                 console.log(response)
                 if (response.ok) {
-                    history('/signin')
+                    alert("New User created successfully")
+                    window.location.reload();
                 } else {
                     console.log(response)
                 }
@@ -45,7 +37,7 @@ const Signup = () => {
                 console.error(error)
             })
         } else {
-            console.log("Passwords mismatch")
+            alert("Passwords mismatch")
         }
 
 
@@ -54,12 +46,10 @@ const Signup = () => {
     return (
         <>
             <div className="content-body">
-                <div className="row m-5 no-gutters shadow-lg">
-                    <div className="col-md-6 d-none d-md-block">
-                        <img src="https://i.ibb.co/mcFfLCV/roberto-nickson-MA82m-PIZe-GI-unsplash.jpg" className="img-fluid-signup" />
-                    </div>
+                <div className="row m-5 no-gutters shadow-lg  justify-content-md-center">
+
                     <div className="col-md-6 bg-white p-5">
-                        <h3 className="pb-3">Sign-up Form</h3>
+                        <h3 className="pb-3">Admin Sign-up Form</h3>
                         <div className="form-style">
                             <>
                                 <div class="form-group pb-3 border-primary">
@@ -84,19 +74,16 @@ const Signup = () => {
                                             <label htmlFor="password" className="form-label mt-2">User</label>
                                         </div>
                                         <div class="col">
-                                            <Dropdown
-                                                onSelect={handleSelect}
+                                            <select class="form-select form-control"
+                                                name="role" id="role" required
+                                                value={role}
+                                                onChange={(e) => {
+                                                    setRole(e.target.value);
+                                                }}
                                             >
-                                                <Dropdown.Toggle id="dropdown-basic" className='signup-dropdown-btn'>
-                                                    Select
-                                                </Dropdown.Toggle>
-
-                                                <Dropdown.Menu >
-                                                    <Dropdown.Item eventKey="customer">Customer</Dropdown.Item>
-                                                    <Dropdown.Item eventKey="admin" >Admin</Dropdown.Item>
-
-                                                </Dropdown.Menu>
-                                            </Dropdown>
+                                                <option id="Customer" >Customer</option>
+                                                <option id="Hotel Admin">Hotel Admin</option>
+                                            </select>
                                         </div>
 
                                     </div>
@@ -120,4 +107,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default AdminSignup
