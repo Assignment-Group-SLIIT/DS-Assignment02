@@ -19,6 +19,9 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    hotelName: {
+        type: String,
+    },
     date: {
         type: Date,
         default: Date.now(),
