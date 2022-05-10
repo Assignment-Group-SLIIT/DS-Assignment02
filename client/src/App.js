@@ -17,6 +17,8 @@ import { Fragment } from "react";
 import Landingpage from "./pages/landingpage";
 import NotFound from "./pages/notFound";
 import ForgetPassword from "./pages/forgetPassword";
+import AdminSignup from "./pages/HotelAdmin/AdminSignup"
+import AdminProfile from "./pages/HotelAdmin/AdminProfile";
 
 function App() {
 
@@ -40,6 +42,8 @@ function App() {
             <Route path='*' element={<NotFound />} />
             <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/forgetPassword' element={<ForgetPassword />} />
+            <Route path='/adminSignup' element={<AdminSignup />} />
+            <Route path='/adminProfile' element={<AdminProfile />} />
           </Routes>
           <Footer />
 
