@@ -1,6 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { HOTELS } from './utils/hotels';
+
+
 
 const Landingpage = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className="content-body">
@@ -27,19 +32,21 @@ const Landingpage = () => {
                             <div data-aos="fade-right">
                                 <article class="postcard light blue">
                                     <a class="postcard__img_link" href="#">
-                                        <img class="postcard__img" src="https://picsum.photos/1000/1000" alt="Image Title" />
+                                        <img class="postcard__img" src="https://images.trvl-media.com/hotels/7000000/6160000/6153200/6153159/4e471bb0.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="Image Title" />
                                     </a>
                                     <div class="postcard__text t-dark">
-                                        <h1 class="postcard__title blue"><a href="#">Title</a></h1>
+                                        <h1 class="postcard__title blue"><a href="#">{HOTELS[0].hotelname}</a></h1>
                                         <div class="postcard__subtitle small">
                                             <time datetime="2020-05-25 12:00:00">
-                                                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                                <i class="fas fa-calendar-alt mr-2"></i>Availability:  <strong>{HOTELS[0].status}</strong>
                                             </time>
                                         </div>
                                         <div class="postcard__bar"></div>
-                                        <div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+                                        <div class="postcard__preview-txt">{HOTELS[0].description}</div>
                                         <ul class="postcard__tagbox">
-                                            <li class="tag__item"><i class="fas fa-tag mr-2"></i>View Details</li>
+                                            <li class="tag__item" onClick={() => {
+                                                navigate("/viewHotel", { state: { id: 0 } })
+                                            }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
@@ -48,19 +55,19 @@ const Landingpage = () => {
                             <div data-aos="fade-left">
                                 <article class="postcard light red">
                                     <a class="postcard__img_link" href="#">
-                                        <img class="postcard__img" src="https://picsum.photos/501/500" alt="Image Title" />
+                                        <img class="postcard__img" src="https://images.trvl-media.com/hotels/18000000/17400000/17399600/17399512/7fe80c66.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="Image Title" />
                                     </a>
                                     <div class="postcard__text t-dark">
-                                        <h1 class="postcard__title red"><a href="#">Title</a></h1>
+                                        <h1 class="postcard__title red"><a href="#">{HOTELS[1].hotelname}</a></h1>
                                         <div class="postcard__subtitle small">
                                             <time datetime="2020-05-25 12:00:00">
-                                                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                                <i class="fas fa-calendar-alt mr-2"></i>Availability:  <strong>{HOTELS[0].status}</strong>
                                             </time>
                                         </div>
                                         <div class="postcard__bar"></div>
-                                        <div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+                                        <div class="postcard__preview-txt">{HOTELS[1].description}</div>
                                         <ul class="postcard__tagbox">
-                                            <li class="tag__item"><i class="fas fa-tag mr-2"></i>View Details</li>
+                                            <li class="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 1 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
@@ -69,19 +76,19 @@ const Landingpage = () => {
                             <div data-aos="fade-right">
                                 <article class="postcard light green">
                                     <a class="postcard__img_link" href="#">
-                                        <img class="postcard__img" src="https://picsum.photos/500/501" alt="Image Title" />
+                                        <img class="postcard__img" src="https://images.trvl-media.com/hotels/35000000/34360000/34351100/34351088/aac03ea1.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="Image Title" />
                                     </a>
                                     <div class="postcard__text t-dark">
-                                        <h1 class="postcard__title green"><a href="#">Title</a></h1>
+                                        <h1 class="postcard__title green"><a href="#">{HOTELS[2].hotelname}</a></h1>
                                         <div class="postcard__subtitle small">
                                             <time datetime="2020-05-25 12:00:00">
-                                                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                                <i class="fas fa-calendar-alt mr-2"></i>Availability:  <strong>{HOTELS[0].status}</strong>
                                             </time>
                                         </div>
                                         <div class="postcard__bar"></div>
-                                        <div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+                                        <div class="postcard__preview-txt">{HOTELS[2].description}</div>
                                         <ul class="postcard__tagbox">
-                                            <li class="tag__item"><i class="fas fa-tag mr-2"></i>View Details</li>
+                                            <li class="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 2 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
@@ -90,19 +97,19 @@ const Landingpage = () => {
                             <div data-aos="fade-left">
                                 <article class="postcard light yellow">
                                     <a class="postcard__img_link" href="#">
-                                        <img class="postcard__img" src="https://picsum.photos/501/501" alt="Image Title" />
+                                        <img class="postcard__img" src="https://images.trvl-media.com/hotels/10000000/9090000/9082700/9082652/424313ad.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="Image Title" />
                                     </a>
                                     <div class="postcard__text t-dark">
-                                        <h1 class="postcard__title yellow"><a href="#">Title</a></h1>
+                                        <h1 class="postcard__title yellow"><a href="#">{HOTELS[3].hotelname}</a></h1>
                                         <div class="postcard__subtitle small">
                                             <time datetime="2020-05-25 12:00:00">
-                                                <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                                                <i class="fas fa-calendar-alt mr-2"></i>Availability:  <strong>{HOTELS[0].status}</strong>
                                             </time>
                                         </div>
                                         <div class="postcard__bar"></div>
-                                        <div class="postcard__preview-txt">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero. Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!</div>
+                                        <div class="postcard__preview-txt">{HOTELS[3].description}</div>
                                         <ul class="postcard__tagbox">
-                                            <li class="tag__item"><i class="fas fa-tag mr-2"></i>View Details</li>
+                                            <li class="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 3 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>

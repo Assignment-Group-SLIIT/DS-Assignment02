@@ -37,14 +37,6 @@ $main-blue: #0076bd !default;
 $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 
 /* This pen */
-body {
-    font-family: "Baloo 2", cursive;
-    font-size: 16px;
-    color: #ffffff;
-    text-rendering: optimizeLegibility;
-    font-weight: initial;
-}
-
 .dark {
     background: #110f16;
 }
@@ -70,6 +62,7 @@ a:hover {
 .postcard {
     flex-wrap: wrap;
     display: flex;
+    min-width: 1050px !important;
 
     box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     border-radius: 10px;
@@ -153,11 +146,11 @@ a:hover {
 
         .tag__item {
             display: inline-block;
-            background: rgba(83, 83, 83, 0.4);
-            border-radius: 3px;
+            background: rgba(0, 166, 255);
+            border-radius: 10px;
             padding: 2.5px 10px;
             margin: 0 5px 5px 0;
-            cursor: default;
+            cursor: pointer;
             user-select: none;
             transition: background-color 0.3s;
 

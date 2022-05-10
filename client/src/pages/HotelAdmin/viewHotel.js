@@ -44,15 +44,15 @@ function HotelRooms() {
     }
 
     function onDelete(modalDataDelete) {
-        
-            deleteRoom(modalDataDelete.hotelName, modalDataDelete.roomNo).then((response) => {
-                if(response.ok){
-                    alert("Successfully deleted").then(() =>{
-                        window.location.reload();
-                    })
-                }
-            })
-        }
+
+        deleteRoom(modalDataDelete.hotelName, modalDataDelete.roomNo).then((response) => {
+            if (response.ok) {
+                alert("Successfully deleted").then(() => {
+                    window.location.reload();
+                })
+            }
+        })
+    }
 
 
     const openModalUpdate = (data) => {
