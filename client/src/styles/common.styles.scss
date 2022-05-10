@@ -1,18 +1,22 @@
 body{
-    position:relative;
+    position: relative;
+    // min-height: 100vh;
 }
 .content-body{
     // padding: 5px;
+    padding-bottom: 2.5rem;
     min-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
-    // align-items: center;
+    align-items: center;
     justify-content: center;
     color:black;
 }
 
 footer {
+    // position: relative !important;
+    // margin-top: auto;
     position: relative;
     bottom: 0;
     width: 100%;

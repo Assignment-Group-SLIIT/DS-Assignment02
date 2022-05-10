@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
+import { IoBedOutline, IoKeyOutline, IoLayersOutline, IoPricetagsOutline } from "react-icons/io5";
+import { MdKayaking, MdDirectionsCar, MdWifi, MdOutlineEmojiTransportation, MdOutlineFitnessCenter, MdOutlineAcUnit } from "react-icons/md";
 
 import { HOTELS } from './utils/hotels'
 import { getAllAvailableRoomsOfAHotel } from '../services/RoomReservationServices'
@@ -26,6 +28,7 @@ const ViewHotel = () => {
                     if (response.ok)
                         setAvailableRoomsList(response.data);
                 }).catch((error) => {
+                    setAvailableRoomsList({}, {})
                     console.error(error)
                 })
         }
@@ -76,67 +79,89 @@ const ViewHotel = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             {/* <div class="col d-flex justify-content-center"> */}
                             <div class="col">
                                 <h2>
                                     {HOTELS[hotelId].hotelname}
                                 </h2>
                             </div>
-                            <div class="col">
-                                2 of 2
+
+                            <div class="row">
+                                <p class="lead">&nbsp;{HOTELS[hotelId].description}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                1 of 3
+                        <div class="row mt-3 border-bottom">
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdDirectionsCar /></span>&nbsp;Free parking</p>
                             </div>
-                            <div class="col">
-                                2 of 3
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdKayaking /></span>&nbsp;Pool</p>
                             </div>
-                            <div class="col">
-                                3 of 3
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdWifi /></span>&nbsp;Free WiFi</p>
+                            </div>
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdOutlineEmojiTransportation /></span>&nbsp;Airport transfer</p>
+                            </div>
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdOutlineFitnessCenter /></span>&nbsp;Gym</p>
+                            </div>
+                            <div class="col-2">
+                                <p class="h6"><span class="badge badge-secondary"><MdOutlineAcUnit /></span>&nbsp;Air conditioning</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                1 of 2
+                        <div class="row  mt-4">
+                            <h4>
+                                Property highlights
+                            </h4>
+                            <div class="col-4 mt-3">
+                                <strong>Main amenities</strong>
+                                <ul>
+                                    <li>&nbsp;80 smoke-free guestrooms</li>
+                                    <li>&nbsp;Daily housekeeping</li>
+                                    <li>&nbsp;Near the beach</li>
+                                    <li>&nbsp;Restaurants</li>
+                                    <li>&nbsp;Outdoor pool</li>
+                                    <li>&nbsp;Rooftop terrace</li>
+                                    <li>&nbsp;Airport shuttle</li>
+                                </ul>
                             </div>
-                            <div class="col">
-                                2 of 2
+                            <div class="col-4 mt-3">
+
+                                <strong>For families</strong>
+                                <ul>
+                                    <li>&nbsp;Free cots/infant beds</li>
+                                    <li>&nbsp;Rollaway/extra beds (surcharge)</li>
+                                    <li>&nbsp;Private bathroom</li>
+                                    <li>&nbsp;Television</li>
+                                    <li>&nbsp;Laundry facilities</li>
+                                </ul>
                             </div>
                         </div>
-                        <div>
-                            <table class="table table-hover">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>Room No</th>
-                                        <th>Floor</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Price Per day</th>
-                                        <th>Pre Payment Required</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {availableRoomsList.map((reservation) => {
-                                        return (
-                                            <tr>
-                                                <td >{reservation.roomNo}</td>
-                                                <td >{reservation.floor}</td>
-                                                <td >{reservation.type}</td>
-                                                <td >{reservation.status}</td>
-                                                <td >{reservation.reservationPrice}</td>
-                                                <td >{reservation.mustPayOnline == true ? "Yes" : "No"}</td>
-                                                <button onClick={() => {
+                        <div className="row  mt-4  border-top">
+                            <h4>
+                                Rooms available for reservation
+                            </h4>
+                            <div className="products-body">
+                                {availableRoomsList.map((reservation, key) => {
+                                    return (
+                                        <div className="card shadow" key={key}>
+                                            <img src={HOTELS[hotelId].images[key + 1]?.imgSrc} className="card-img" alt="..." />
+                                            <div className="card-body w-100">
+                                                <h6 className="card-title"><IoBedOutline />&nbsp;Room type: &emsp;{reservation.type} </h6>
+                                                <h6 className="card-title"><IoKeyOutline />&nbsp;Room no: &emsp;{reservation.roomNo} </h6>
+                                                <h6 className="card-title"><IoLayersOutline />&nbsp;Floor: &emsp;{reservation.floor} </h6>
+                                                <h6 className="card-title"><IoPricetagsOutline />&nbsp;Price: &emsp;Rs.{reservation.reservationPrice}.00 </h6>
+                                            </div>
+                                            <button className='btn btn-primary w-75 mb-4' disabled={reservation?.status !== 'Available'}
+                                                onClick={() => {
                                                     navigate("/addReservation", { state: { reservation: reservation } })
-                                                }}>Reserve</button>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                                                }}>Reserve now</button>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                 </div>

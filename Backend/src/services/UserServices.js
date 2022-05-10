@@ -1,7 +1,7 @@
 const User = require('../models/UserModels')
 const bcrypt = require('bcryptjs');
 const auth = require('../helpers/jwt.js')
-
+let moment = require("moment")
 
 async function login({ username, password }) {
     const user = await User.findOne({ username });
@@ -14,7 +14,6 @@ async function login({ username, password }) {
         return { ...user.toJSON(), token }
     } else {
         console.log("ERROR")
-        return res.status(500).send({ status: "Error with login ", error: err.message });
     }
 }
 
@@ -22,9 +21,9 @@ async function register(params) {
     // instantiate a user modal and save to mongoDB
     const user = new User(params)
     await user.save().then((res) => {
-        return res.status(200).send({ message: "User Successfully registered" })
+        console.log(res)
     }).catch((err) => {
-        return res.status(300).send({ status: "Could not make the paymnet", error: err.message });
+        console.log(err)
     })
 }
 
@@ -35,8 +34,33 @@ async function getById(id) {
     return user.toJSON()
 }
 
+async function updatePassword(email, newPassword) {
+    const user = await User.findOne({ email });
+
+    const salt = bcrypt.genSaltSync(10);
+    const updatePassword = bcrypt.hashSync(newPassword, salt);
+
+    const newUser = {
+        username: user.username,
+        email: user.email,
+        password: updatePassword,
+        role: user.role,
+        date: moment(new Date()).format("YYYY-MM-DD")
+
+    }
+
+    const update = await User.findOneAndUpdate({ email: email }, newUser)
+        .then(() => {
+            return user.toJSON()//sending details of the updated data back to front end
+        }).catch((err) => {
+            console.log(err);
+
+        })
+}
+
 module.exports = {
     login,
     register,
-    getById
+    getById,
+    updatePassword
 };

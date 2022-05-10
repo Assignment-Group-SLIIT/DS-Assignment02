@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-// import { registerUser } from '../services/UserServices';
-import { Dropdown, DropdownType, Row, Col } from 'react-bootstrap';
+import { registerUser } from '../../services/UserServices';
+
 
 const AdminSignup = () => {
 
-    let history = useNavigate();
+
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
     const [hotelName, setHotelName] = useState("")
-    const [role, setUser] = useState("")
-
-    console.log("roleee>>>", role);
-
-    const handleSelect = (e) => {
-        console.log(e);
-        setUser(e)
-    }
+    const [role, setRole] = useState("")
 
     const signUpFunc = (e) => {
         e.preventDefault()
@@ -32,20 +24,20 @@ const AdminSignup = () => {
                 role,
                 hotelName
             }
-            console.log("payload>>", payload);
 
-            // registerUser(payload).then((response) => {
-            //     console.log(response)
-            //     if (response.ok) {
-            //         history('/signin')
-            //     } else {
-            //         console.log(response)
-            //     }
-            // }).catch((error) => {
-            //     console.error(error)
-            // })
+            registerUser(payload).then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    alert("New User created successfully")
+                    window.location.reload();
+                } else {
+                    console.log(response)
+                }
+            }).catch((error) => {
+                console.error(error)
+            })
         } else {
-            console.log("Passwords mismatch")
+            alert("Passwords mismatch")
         }
 
 
@@ -82,19 +74,16 @@ const AdminSignup = () => {
                                             <label htmlFor="password" className="form-label mt-2">User</label>
                                         </div>
                                         <div class="col">
-                                            <Dropdown
-                                                onSelect={handleSelect}
+                                            <select class="form-select form-control"
+                                                name="role" id="role" required
+                                                value={role}
+                                                onChange={(e) => {
+                                                    setRole(e.target.value);
+                                                }}
                                             >
-                                                <Dropdown.Toggle id="dropdown-basic" className='signup-dropdown-btn'>
-                                                    Select
-                                                </Dropdown.Toggle>
-
-                                                <Dropdown.Menu >
-                                                    <Dropdown.Item eventKey="customer">Customer</Dropdown.Item>
-                                                    <Dropdown.Item eventKey="admin" >Admin</Dropdown.Item>
-
-                                                </Dropdown.Menu>
-                                            </Dropdown>
+                                                <option id="Customer" >Customer</option>
+                                                <option id="Hotel Admin">Hotel Admin</option>
+                                            </select>
                                         </div>
 
                                     </div>

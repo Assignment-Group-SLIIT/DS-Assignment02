@@ -1,7 +1,9 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import { createRoomReservation } from '../services/RoomReservationServices';
+import { createAPayment } from '../services/PaymentService';
+import { updateRoomReservationDetails } from '../services/RoomReservationServices';
+
 
 const AddReservation = () => {
     const [step, setStep] = useState(1)
@@ -17,7 +19,7 @@ const AddReservation = () => {
     const [dateTo, setDateTo] = useState(moment().format("YYYY-MM-DD"));
 
     //step two
-    const [paymentAmnt, setPaymentAmnt] = useState(0);
+    const [paymentAmnt, setPaymentAmnt] = useState("");
     const [cardOwner, setCardOwner] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [expiryMonth, setExpiryMonth] = useState(0);
@@ -26,7 +28,7 @@ const AddReservation = () => {
 
     //retrieve reserving hotel room data
     const [reservationRoom, setReservationRoom] = useState()
-
+    const [paymentStatus, setPaymentStatus] = useState('Pending')
 
     const increaseStepFunc = () => {
         if (reservationRoom.mustPayOnline == true && step == 2
@@ -68,13 +70,18 @@ const AddReservation = () => {
     useEffect(() => {
 
         setReservationRoom(location?.state?.reservation)
-
+        
 
     }, [])
 
+    
 
     const makeReservation = (e) => {
         e.preventDefault();
+
+        if (reservationRoom.mustPayOnline == true) {
+            setPaymentStatus('Completed')
+        }
 
         const reservationObject = {
             hotelName: reservationRoom.hotelName,
@@ -85,28 +92,46 @@ const AddReservation = () => {
             reservationStartDate: dateFrom,
             reservationEndDate: dateTo,
             reservationPrice: reservationRoom.reservationPrice,
-            paymentStatus: "Completed",
+            paymentStatus: paymentStatus,
             reserverName: firstName + " " + lastName,
             mustPayOnline: reservationRoom.mustPayOnline,
-            totalPayment: 786000
+            totalPayment: reservationRoom.reservationPrice * getDateDiff()
         }
 
         const paymentObject = {
             cardNo: cardNumber,
-            amount: 786000,
+            amount: reservationRoom.reservationPrice * getDateDiff(),
             CVC: cvv,
             cardHolder: cardOwner,
         }
 
 
-        createRoomReservation(reservationObject)
+        updateRoomReservationDetails(reservationRoom.hotelName, reservationRoom.roomNo, reservationObject)
             .then((response) => {
                 if (response.ok) {
-
+                    createAPayment(paymentObject)
+                        .then((response) => {
+                            if (response.ok) {
+                                alert("You have completed reserving of a room successfully")
+                            }
+                        })
                 }
+            }).catch((err) => {
+                console.log(err)
+                alert("Cannot continue system generates an error")
             })
 
     }
+
+    function getDateDiff() {
+        var startDate = moment(dateFrom).format('YYYY-MMMM-DD');
+        var endDate = moment(dateTo).format('YYYY-MMMM-DD');
+        var getStartDate = moment(startDate, 'YYYY-MMMM-DD');
+        var getEndDate = moment(endDate, 'YYYY-MMMM-DD');
+        const diffDuration = getEndDate.diff(getStartDate, 'days');
+        return (diffDuration);
+    }
+
 
     return (
         <>
@@ -181,7 +206,7 @@ const AddReservation = () => {
                                     <div id="credit-card">
                                         <div class="form-group">
                                             <label>Payment amount</label>
-                                            <h2>$100.00</h2>
+                                            <h2>{reservationRoom.reservationPrice * getDateDiff()}</h2>
                                         </div>
                                         <div class="form-group"> <label for="cardOwner">
                                             <h6>Card Owner</h6>
