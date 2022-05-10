@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../services/UserServices';
+// import { registerUser } from '../services/UserServices';
 import { Dropdown, DropdownType, Row, Col } from 'react-bootstrap';
 
-const Signup = () => {
+const AdminSignup = () => {
 
     let history = useNavigate();
 
@@ -13,8 +13,6 @@ const Signup = () => {
     const [repassword, setRepassword] = useState("")
     const [hotelName, setHotelName] = useState("")
     const [role, setUser] = useState("")
-
-    console.log("hotel Name", role)
 
     const handleSelect = (e) => {
         console.log(e);
@@ -34,16 +32,16 @@ const Signup = () => {
             }
             console.log("payload>>", payload);
 
-            registerUser(payload).then((response) => {
-                console.log(response)
-                if (response.ok) {
-                    history('/signin')
-                } else {
-                    console.log(response)
-                }
-            }).catch((error) => {
-                console.error(error)
-            })
+            // registerUser(payload).then((response) => {
+            //     console.log(response)
+            //     if (response.ok) {
+            //         history('/signin')
+            //     } else {
+            //         console.log(response)
+            //     }
+            // }).catch((error) => {
+            //     console.error(error)
+            // })
         } else {
             console.log("Passwords mismatch")
         }
@@ -54,12 +52,10 @@ const Signup = () => {
     return (
         <>
             <div className="content-body">
-                <div className="row m-5 no-gutters shadow-lg">
-                    <div className="col-md-6 d-none d-md-block">
-                        <img src="https://i.ibb.co/mcFfLCV/roberto-nickson-MA82m-PIZe-GI-unsplash.jpg" className="img-fluid-signup" />
-                    </div>
+                <div className="row m-5 no-gutters shadow-lg  justify-content-md-center">
+
                     <div className="col-md-6 bg-white p-5">
-                        <h3 className="pb-3">Sign-up Form</h3>
+                        <h3 className="pb-3">Admin Sign-up Form</h3>
                         <div className="form-style">
                             <>
                                 <div class="form-group pb-3 border-primary">
@@ -120,4 +116,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default AdminSignup
