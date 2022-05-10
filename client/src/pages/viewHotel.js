@@ -4,16 +4,39 @@ import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 import { HOTELS } from './utils/hotels'
+import { getAllAvailableRoomsOfAHotel } from '../services/RoomReservationServices'
 
 const ViewHotel = () => {
+
     const location = useLocation()
 
     const [hotelId, setHotelId] = useState(0)
+    const [hotelName, setHotelName] = useState("");
+    const [availableRoomsList, setAvailableRoomsList] = useState([])
 
     useEffect(() => {
         setHotelId(location?.state?.id);
-        console.log("hotels array>>>", HOTELS[0].images[0].imgSrc)
-    }, [])
+        setHotelName(HOTELS[hotelId].hotelname);
+
+
+        const loadHotelAvailableRooms = (hotelName) => {
+            getAllAvailableRoomsOfAHotel(hotelName)
+                .then((response) => {
+                    if (response.ok)
+                        setAvailableRoomsList(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        }
+
+        if (HOTELS[hotelId].hotelname != 'undefined') {
+            loadHotelAvailableRooms(HOTELS[hotelId].hotelname)
+        }
+
+    }, [hotelName])
+
+    console.log(availableRoomsList)
+
     return (
         <>
             <div className="content-body">
@@ -81,6 +104,36 @@ const ViewHotel = () => {
                             <div class="col">
                                 2 of 2
                             </div>
+                        </div>
+                        <div>
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Room No</th>
+                                        <th>Floor</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Price Per day</th>
+                                        <th>Pre Payment Required</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {availableRoomsList.map((reservation) => {
+                                        return (
+                                            <tr>
+                                                <td >{reservation.roomNo}</td>
+                                                <td >{reservation.floor}</td>
+                                                <td >{reservation.type}</td>
+                                                <td >{reservation.status}</td>
+                                                <td >{reservation.reservationPrice}</td>
+                                                <td >{reservation.mustPayOnline == true ? "Yes" : "No"}</td>
+
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

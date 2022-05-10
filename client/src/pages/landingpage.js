@@ -44,7 +44,9 @@ const Landingpage = () => {
                                         <div class="postcard__bar"></div>
                                         <div class="postcard__preview-txt">{HOTELS[0].description}</div>
                                         <ul class="postcard__tagbox">
-                                            <li class="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 0 } }) }}>View details</li>
+                                            <li class="tag__item" onClick={() => {
+                                                navigate("/viewHotel", { state: { id: 0 } })
+                                            }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
