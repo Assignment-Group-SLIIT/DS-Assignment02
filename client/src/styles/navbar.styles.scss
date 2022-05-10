@@ -1,15 +1,13 @@
 .navbar {
-    height: 10vh;
+    height: 15vh;
     // color:#053583;     
-    // color:#F7444E;     
+    color:#F7444E;     
     // color:#3399FF;     
-    color:#0076bd;     
+    // color:#0076bd;     
     // color:#78BCC4;     
     background-color: #FFF;
-    // background-color: #202020;
-    border-bottom: 1.5px solid #0076bd !important;
-    padding-right: 5rem;
-    padding-left: 5rem;
+    border-bottom: 1.5px solid #F7444E !important;
+    padding: 0 5rem 0 5rem !important;
 }
 
 .navbar-container{
@@ -25,7 +23,7 @@
 }
 
 .navbar-container>.sidetext>.sidetext-links{
-    color: #4a9abb;
+    color: #F7444E;
     font-weight: bold;
 }
 // .nav-bottom {

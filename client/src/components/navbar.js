@@ -1,13 +1,13 @@
 import React from 'react'
-
+import logo from '../assets/logo.png'
 const navbar = () => {
     return (
         <>
             <nav className="navbar">
                 <div className="container-fluid navbar-container">
                     <h5 className="navbar-brand">
-                        {/* <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> */}
-                        Galadhari - Uganda branch
+                        <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top" />
+                        {/* Galadhari - Uganda branch */}
                     </h5>
                     <div className="sidetext">
                         <label className='sidetext-links'>
