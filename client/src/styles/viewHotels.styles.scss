@@ -14,5 +14,44 @@
     .zoom-img{
         min-width: 274px !important;
     }
+
+    
+        .products-body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+    
+            @media only screen and (max-width: 992px) {
+                margin-top: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+        }
+    
+        .card {
+            flex: 0 0 15.13rem;
+            height: 30rem;
+            margin: 1em 20px;
+            // border-width: 2px;
+            border-color: rgb(110, 187, 255);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    
+        .card:hover,
+        .btn:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+            transition: transform 150ms ease-in-out;
+            border-color: #0076bd;
+        }
+    
+        .card-img {
+            width: 15rem;
+            height: 12rem;
+        }
 }
 
