@@ -9,7 +9,7 @@ router.post('/register', (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     req.body.password = bcrypt.hashSync(password, salt);
 
-    userServices.register(req.body).then(() => {
+    userServices.registe9r(req.body).then(() => {
         res.json({ success: true })
     }
     ).catch(err => {
