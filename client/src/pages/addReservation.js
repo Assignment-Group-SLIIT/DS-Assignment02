@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { createRoomReservation } from '../services/RoomReservationServices';
 
+
 const AddReservation = () => {
     const [step, setStep] = useState(1)
     const [progress, setProgress] = useState(0)
@@ -17,7 +18,7 @@ const AddReservation = () => {
     const [dateTo, setDateTo] = useState(moment().format("YYYY-MM-DD"));
 
     //step two
-    const [paymentAmnt, setPaymentAmnt] = useState(0);
+    const [paymentAmnt, setPaymentAmnt] = useState("");
     const [cardOwner, setCardOwner] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [expiryMonth, setExpiryMonth] = useState(0);
@@ -68,10 +69,11 @@ const AddReservation = () => {
     useEffect(() => {
 
         setReservationRoom(location?.state?.reservation)
-
+        
 
     }, [])
 
+    
 
     const makeReservation = (e) => {
         e.preventDefault();
@@ -88,12 +90,12 @@ const AddReservation = () => {
             paymentStatus: "Completed",
             reserverName: firstName + " " + lastName,
             mustPayOnline: reservationRoom.mustPayOnline,
-            totalPayment: 786000
+            totalPayment: totPayment()
         }
 
         const paymentObject = {
             cardNo: cardNumber,
-            amount: 786000,
+            amount: totPayment(),
             CVC: cvv,
             cardHolder: cardOwner,
         }
@@ -106,6 +108,26 @@ const AddReservation = () => {
                 }
             })
 
+    }
+
+    function getDateDiff() {
+        var startDate = moment(dateFrom).format('YYYY-MMMM-DD');
+        var endDate = moment(dateTo).format('YYYY-MMMM-DD');
+        var getStartDate = moment(startDate, 'YYYY-MMMM-DD');
+        var getEndDate = moment(endDate, 'YYYY-MMMM-DD');
+        const diffDuration = getEndDate.diff(getStartDate, 'days');
+        return (diffDuration);
+    }
+
+
+    function getTotalPayment() {
+        const totalPrice = parseInt(reservationRoom?.reservationPrice) * getDateDiff();
+        return totalPrice;
+    }
+
+    function totPayment() {
+        var value = getTotalPayment();
+        setPaymentAmnt(value);
     }
 
     return (
@@ -181,7 +203,7 @@ const AddReservation = () => {
                                     <div id="credit-card">
                                         <div class="form-group">
                                             <label>Payment amount</label>
-                                            <h2>$100.00</h2>
+                                            <h2>{paymentAmnt}</h2>
                                         </div>
                                         <div class="form-group"> <label for="cardOwner">
                                             <h6>Card Owner</h6>
