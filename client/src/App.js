@@ -33,7 +33,7 @@ function App() {
             {/* <Route path='/signup' element={<Signup />} /> */}
 
             {/* </Route> */}
-            <Route path='/addreservation' element={<Addreservation />} />
+            <Route path="/addreservation" element={<Addreservation />} />
             <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />

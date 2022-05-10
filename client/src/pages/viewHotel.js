@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
@@ -8,7 +8,8 @@ import { getAllAvailableRoomsOfAHotel } from '../services/RoomReservationService
 
 const ViewHotel = () => {
 
-    const location = useLocation()
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [hotelId, setHotelId] = useState(0)
     const [hotelName, setHotelName] = useState("");
@@ -128,7 +129,9 @@ const ViewHotel = () => {
                                                 <td >{reservation.status}</td>
                                                 <td >{reservation.reservationPrice}</td>
                                                 <td >{reservation.mustPayOnline == true ? "Yes" : "No"}</td>
-
+                                                <button onClick={() => {
+                                                    navigate("/addReservation", { state: { reservation: reservation } })
+                                                }}>Reserve</button>
                                             </tr>
                                         );
                                     })}

@@ -1,16 +1,20 @@
+import moment from 'moment';
 import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
+import { createRoomReservation } from '../services/RoomReservationServices';
 
 const AddReservation = () => {
     const [step, setStep] = useState(1)
     const [progress, setProgress] = useState(0)
+    const location = useLocation();
 
     //step one
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [contactNo, setContactNo] = useState("");
-    const [dateFrom, setDateFrom] = useState(new Date());
-    const [dateTo, setDateTo] = useState(new Date());
+    const [dateFrom, setDateFrom] = useState(moment().format("YYYY-MM-DD"));
+    const [dateTo, setDateTo] = useState(moment().format("YYYY-MM-DD"));
 
     //step two
     const [paymentAmnt, setPaymentAmnt] = useState(0);
@@ -20,9 +24,20 @@ const AddReservation = () => {
     const [expiryYear, setExpiryYear] = useState(0);
     const [cvv, setCvv] = useState("");
 
+    //retrieve reserving hotel room data
+    const [reservationRoom, setReservationRoom] = useState()
+
 
     const increaseStepFunc = () => {
-        setStep(step + 1)
+        if (reservationRoom.mustPayOnline == true && step == 2
+            && cardNumber && cardOwner && cvv && expiryYear && expiryMonth) {
+            setStep(step + 1)
+        } else if (reservationRoom.mustPayOnline == true && step == 2) {
+            alert('You cannot proceed this reservation requires prior payment')
+        } else if (step == 1 || step == 3) {
+            setStep(step + 1)
+        }
+
     }
     const decreaseStepFunc = () => {
         setStep(step - 1)
@@ -49,6 +64,49 @@ const AddReservation = () => {
         setProgress(100);
     }
 
+
+    useEffect(() => {
+
+        setReservationRoom(location?.state?.reservation)
+
+
+    }, [])
+
+
+    const makeReservation = (e) => {
+        e.preventDefault();
+
+        const reservationObject = {
+            hotelName: reservationRoom.hotelName,
+            roomNo: reservationRoom.roomNo,
+            floor: reservationRoom.floor,
+            type: reservationRoom.type,
+            status: "Reserved",
+            reservationStartDate: dateFrom,
+            reservationEndDate: dateTo,
+            reservationPrice: reservationRoom.reservationPrice,
+            paymentStatus: "Completed",
+            reserverName: firstName + " " + lastName,
+            mustPayOnline: reservationRoom.mustPayOnline,
+            totalPayment: 786000
+        }
+
+        const paymentObject = {
+            cardNo: cardNumber,
+            amount: 786000,
+            CVC: cvv,
+            cardHolder: cardOwner,
+        }
+
+
+        createRoomReservation(reservationObject)
+            .then((response) => {
+                if (response.ok) {
+
+                }
+            })
+
+    }
 
     return (
         <>
@@ -221,7 +279,7 @@ const AddReservation = () => {
                                 </div>
                                 <div className="col-md-3">
                                     <div className="form-group">
-                                        {/* <label for="company">{dateFrom}</label> */}
+                                        <label for="company">{dateFrom}</label>
                                     </div>
                                 </div>
 
@@ -232,7 +290,7 @@ const AddReservation = () => {
                                 </div>
                                 <div className="col-md-3">
                                     <div className="form-group">
-                                        {/* <label for="company">{dateTo}</label> */}
+                                        <label for="company">{dateTo}</label>
                                     </div>
                                 </div>
                             </div>
@@ -275,7 +333,7 @@ const AddReservation = () => {
                             <button class="btn btn-primary w-25" onClick={() => { increaseStepFunc() }}>Next</button>
                         }
                         {step === 3 &&
-                            <button class="btn btn-primary w-25" onClick={() => { increaseStepFunc(); addReservationFunc() }}>Submit </button>
+                            <button class="btn btn-primary w-25" onClick={(e) => { increaseStepFunc(); addReservationFunc(); makeReservation(e) }}>Submit </button>
                         }
                         {step === 4 &&
                             <button class="btn btn-primary w-25" onClick={() => { increaseStepFunc(); addReservationFunc() }}>View Details</button>
