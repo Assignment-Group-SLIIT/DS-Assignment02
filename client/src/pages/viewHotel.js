@@ -139,7 +139,7 @@ const ViewHotel = () => {
                             </table>
                         </div>
                         <div class="row">
-                            <div class="card-deck d-flex justify-contect-center bg-dark">
+                            <div class="card-deck bg-dark">
                                 <div class="card">
                                     <img src="..." class="card-img-top" alt="..." />
                                     <div class="card-body">

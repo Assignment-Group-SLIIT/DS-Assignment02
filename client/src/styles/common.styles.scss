@@ -1,8 +1,10 @@
 body{
-    position:relative;
+    position: relative;
+    // min-height: 100vh;
 }
 .content-body{
     // padding: 5px;
+    padding-bottom: 2.5rem;
     min-height: 100vh;
     position: relative;
     display: flex;
@@ -14,8 +16,9 @@ body{
 
 footer {
     // position: relative !important;
-    margin-top: auto;
-    // bottom: 0 !important;
+    // margin-top: auto;
+    position: relative;
+    bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
