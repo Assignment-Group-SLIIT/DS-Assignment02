@@ -21,6 +21,7 @@ import ForgetPassword from "./pages/forgetPassword";
 import AdminSignup from "./pages/HotelAdmin/AdminSignup"
 import AdminProfile from "./pages/HotelAdmin/AdminProfile";
 import ViewHotel from "./pages/viewHotel";
+import AddAdminReservation from "./pages/HotelAdmin/addReservationAdmin";
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
             <Route path='/adminSignup' element={<AdminSignup />} />
             <Route path='/adminProfile' element={<AdminProfile />} />
             <Route path='/viewHotel' element={<ViewHotel />} />
+            <Route path='/addReservation-admin' element={<AddAdminReservation />} />
           </Routes>
           <Footer />
 

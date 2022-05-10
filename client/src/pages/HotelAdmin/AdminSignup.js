@@ -14,6 +14,8 @@ const AdminSignup = () => {
     const [hotelName, setHotelName] = useState("")
     const [role, setUser] = useState("")
 
+    console.log("roleee>>>", role);
+
     const handleSelect = (e) => {
         console.log(e);
         setUser(e)
