@@ -9,11 +9,11 @@ const createReservation = ({ room }, res) => {
     const status = room.status;
     const reservationStartDate = moment(room.reservationStartDate).format('YYYY-MM-DD');
     const reservationEndDate = moment(room.reservationEndDate).format('YYYY-MM-DD');
-    const reservationPrice = room.reservationPrice;
+    const reservationPrice = Number(room.reservationPrice);
     const paymentStatus = room.paymentStatus;
     const reserverName = room.reserverName;
     const mustPayOnline = room.mustPayOnline;
-    const totalPayment = room.totalPayment;
+    const totalPayment = Number(room.totalPayment);
 
 
     const newReservation = new HotelRoom({
@@ -22,9 +22,9 @@ const createReservation = ({ room }, res) => {
         floor: floor,
         type: type,
         status: status,
-        reservationStartDate: reservationStartDate,
+        reservationStartDate: moment(reservationStartDate).format('YYYY-MM-DD'),
         reservationEndDate: moment(reservationEndDate).format('YYYY-MM-DD'),
-        reservationPrice: moment(reservationPrice).format('YYYY-MM-DD'),
+        reservationPrice: reservationPrice,
         paymentStatus: paymentStatus,
         reserverName: reserverName,
         mustPayOnline: mustPayOnline,
