@@ -90,12 +90,12 @@ const AddReservation = () => {
             paymentStatus: "Completed",
             reserverName: firstName + " " + lastName,
             mustPayOnline: reservationRoom.mustPayOnline,
-            totalPayment: totPayment()
+            totalPayment: reservationRoom.reservationPrice * getDateDiff()
         }
 
         const paymentObject = {
             cardNo: cardNumber,
-            amount: totPayment(),
+            amount: reservationRoom.reservationPrice * getDateDiff(),
             CVC: cvv,
             cardHolder: cardOwner,
         }
@@ -119,16 +119,6 @@ const AddReservation = () => {
         return (diffDuration);
     }
 
-
-    function getTotalPayment() {
-        const totalPrice = parseInt(reservationRoom?.reservationPrice) * getDateDiff();
-        return totalPrice;
-    }
-
-    function totPayment() {
-        var value = getTotalPayment();
-        setPaymentAmnt(value);
-    }
 
     return (
         <>
@@ -203,7 +193,7 @@ const AddReservation = () => {
                                     <div id="credit-card">
                                         <div class="form-group">
                                             <label>Payment amount</label>
-                                            <h2>{paymentAmnt}</h2>
+                                            <h2>{reservationRoom.reservationPrice * getDateDiff()}</h2>
                                         </div>
                                         <div class="form-group"> <label for="cardOwner">
                                             <h6>Card Owner</h6>
