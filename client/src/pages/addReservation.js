@@ -1,7 +1,8 @@
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
-import { createRoomReservation } from '../services/RoomReservationServices';
+import { createAPayment } from '../services/PaymentService';
+import { updateRoomReservationDetails } from '../services/RoomReservationServices';
 
 const AddReservation = () => {
     const [step, setStep] = useState(1)
@@ -26,7 +27,7 @@ const AddReservation = () => {
 
     //retrieve reserving hotel room data
     const [reservationRoom, setReservationRoom] = useState()
-
+    const [paymentStatus, setPaymentStatus] = useState('Pending')
 
     const increaseStepFunc = () => {
         if (reservationRoom.mustPayOnline == true && step == 2
@@ -76,6 +77,10 @@ const AddReservation = () => {
     const makeReservation = (e) => {
         e.preventDefault();
 
+        if (reservationRoom.mustPayOnline == true) {
+            setPaymentStatus('Completed')
+        }
+
         const reservationObject = {
             hotelName: reservationRoom.hotelName,
             roomNo: reservationRoom.roomNo,
@@ -85,7 +90,7 @@ const AddReservation = () => {
             reservationStartDate: dateFrom,
             reservationEndDate: dateTo,
             reservationPrice: reservationRoom.reservationPrice,
-            paymentStatus: "Completed",
+            paymentStatus: paymentStatus,
             reserverName: firstName + " " + lastName,
             mustPayOnline: reservationRoom.mustPayOnline,
             totalPayment: 786000
@@ -99,11 +104,19 @@ const AddReservation = () => {
         }
 
 
-        createRoomReservation(reservationObject)
+        updateRoomReservationDetails(reservationRoom.hotelName, reservationRoom.roomNo, reservationObject)
             .then((response) => {
                 if (response.ok) {
-
+                    createAPayment(paymentObject)
+                        .then((response) => {
+                            if (response.ok) {
+                                alert("You have completed reserving of a room successfully")
+                            }
+                        })
                 }
+            }).catch((err) => {
+                console.log(err)
+                alert("Cannot continue system generates an error")
             })
 
     }
