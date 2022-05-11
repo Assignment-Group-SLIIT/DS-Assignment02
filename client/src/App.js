@@ -22,6 +22,7 @@ import AdminSignup from "./pages/HotelAdmin/AdminSignup"
 import UserProfile from "./pages/userProfile";
 import ViewHotel from "./pages/viewHotel";
 
+
 function App() {
 
   return (

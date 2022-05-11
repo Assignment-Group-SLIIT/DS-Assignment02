@@ -1,6 +1,11 @@
 .main-container-spinner{
+    z-index: 9999;
+    top: 0rem;
     position: absolute;
-    width: 100vh;
-    height: 100vh;
-    background-color: aqua;
+    min-width: 100%;
+    min-height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
