@@ -154,7 +154,7 @@ const ViewHotel = () => {
                                                 <h6 className="card-title"><IoLayersOutline />&nbsp;Floor: &emsp;{reservation.floor} </h6>
                                                 <h6 className="card-title"><IoPricetagsOutline />&nbsp;Price: &emsp;Rs.{reservation.reservationPrice}.00 </h6>
                                             </div>
-                                            <button className='btn btn-primary w-75 mb-4' disabled={reservation?.status !== 'Available'}
+                                            <button className='btn w-75 mb-4' disabled={reservation?.status !== 'Available'}
                                                 onClick={() => {
                                                     navigate("/addReservation", { state: { reservation: reservation } })
                                                 }}>Reserve now</button>
