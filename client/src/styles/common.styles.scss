@@ -2,6 +2,14 @@ body{
     position: relative;
     // min-height: 100vh;
 }
+
+.body {
+    display: flex;
+    align-items: center;
+    padding-top: 2rem;
+    min-height: 100vh;
+}
+
 .content-body{
     // padding: 5px;
     padding-bottom: 2.5rem;
