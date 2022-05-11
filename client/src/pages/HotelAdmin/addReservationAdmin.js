@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ProgressBar } from 'react-bootstrap';
+import { createRoomReservation } from '../../services/RoomReservationServices';
 
 const AddAdminReservation = () => {
     const [step, setStep] = useState(1)
-    const [progress, setProgress] = useState(25)
+    const [progress, setProgress] = useState(20)
 
     const [hotelName, setHotelName] = useState("");
     const [roomNo, setroomNo] = useState("");
@@ -18,15 +19,27 @@ const AddAdminReservation = () => {
     const [mustPayOnline, setMustPayOnline] = useState("");
     const [totalPayment, setTotalPayment] = useState("");
 
+    //card details
+    const [paymentAmnt, setPaymentAmnt] = useState("");
+    const [cardOwner, setCardOwner] = useState("");
+    const [cardNumber, setCardNumber] = useState("");
+    const [expiryMonth, setExpiryMonth] = useState(0);
+    const [expiryYear, setExpiryYear] = useState(0);
+    const [cvv, setCvv] = useState("");
+
     const increaseStepFunc = () => {
         if (step == 1) {
             setStep(2)
-            setProgress(50)
+            setProgress(40)
         } else if (step == 2) {
             setStep(3)
-            setProgress(75)
+            setProgress(60)
         } else if (step == 3) {
             setStep(4)
+            setProgress(80)
+        }
+        else if (step == 4) {
+            setStep(5)
             setProgress(100)
         }
 
@@ -47,6 +60,25 @@ const AddAdminReservation = () => {
 
     }
 
+    const onSubmit = async () => {
+
+        let reservationData = {
+            hotelName,
+            roomNo,
+            floor,
+            type,
+            status,
+            reservationStartDate,
+            reservationEndDate,
+            paymentStatus,
+            reserverName,
+            mustPayOnline,
+            totalPayment
+        }
+
+        let response = await createRoomReservation(reservationData);
+    }
+
 
 
     return (
@@ -60,7 +92,7 @@ const AddAdminReservation = () => {
 
 
                             <ProgressBar>
-                                <ProgressBar striped animated variant="danger" now={progress} label={step == 1 ? "Step 1" : step == 2 ? "Step 2" : step == 3 ? "Step 3" : "Done"} key={1} />
+                                <ProgressBar striped animated variant="danger" now={progress} label={step == 1 ? "Step 1" : step == 2 ? "Step 2" : step == 3 ? "Step 3" : step == 4 ? "Step 4" : "Done"} key={1} />
 
                             </ProgressBar>
 
@@ -171,10 +203,11 @@ const AddAdminReservation = () => {
 
 
                         }
-                        {step === 2 &&
+                        {
+                            step === 2 &&
                             <div className='container step-container'>
                                 <h5 className='mb-5'>Payment details</h5>
-                                <div className="row">
+                                <div className="row mb-1">
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="first">Room Price</label>
@@ -228,6 +261,110 @@ const AddAdminReservation = () => {
 
                                     </div>
                                 </div>
+                                <div className="buttongroup">
+                                    <button class="btn btn-primary w-25 rounded-pill" onClick={() => { previouStepFunc() }}>Previous</button>
+                                    <button class="btn btn-primary w-25 rounded-pill" onClick={() => { increaseStepFunc() }}>Next</button>
+                                </div>
+                            </div>
+                        }
+                        {step === 3 &&
+                            <div className='container step-container'>
+                                <h5 className='mb-5'>Payment details</h5>
+                                {/* <div className="row mb-1">
+                                    <div className="col-md-6">
+                                        <div className="form-group">
+                                            <label for="first">Room Price</label>
+                                            <input type="text" className="form-control" placeholder="" id="first" value={reservationPrice}
+                                                onChange={(e) => {
+                                                    setReservationPrice(e.target.value);
+                                                }} />
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <div className="form-group">
+                                            <label for="last">Total Reserved Price</label>
+                                            <input type="text" className="form-control" placeholder="" id="last"
+                                                value={totalPayment}
+                                                onChange={(e) => {
+                                                    setTotalPayment(e.target.value);
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row pb-3">
+                                    <div class="col-6" >
+                                        <label for="type" class="form-label-emp">Room Type</label>
+                                        <select class="form-select form-control"
+                                            name="paymentStatus" id="paymentStatus" required
+                                            value={paymentStatus}
+                                            onChange={(e) => {
+                                                setPaymentStatus(e.target.value);
+                                            }}
+                                        >
+                                            <option id="Completed" >Completed</option>
+                                            <option id="Pending">Pending</option>
+                                        </select>
+
+                                    </div>
+                                    <div class="col-6" >
+                                        <label for="status" class="form-label-emp">Status</label>
+                                        <select class="form-select form-control"
+                                            name="mustPayOnline" id="mustPayOnline" required
+                                            value={mustPayOnline}
+                                            onChange={(e) => {
+                                                setMustPayOnline(e.target.value);
+                                            }}
+                                        >
+                                            <option id='true' >True</option>
+                                            <option id='false'>False</option>
+                                        </select>
+
+                                    </div>
+                                </div> */}
+
+                                <div class="row mb-2">
+                                    <div class="col-lg-12">
+                                        {/* <!-- credit card info--> */}
+                                        <div id="credit-card">
+                                            <div class="form-group">
+                                                <label>Payment amount</label>
+                                                {/* <h2>{reservationRoom.reservationPrice * getDateDiff()}</h2> */}
+                                            </div>
+                                            <div class="form-group"> <label for="cardOwner">
+                                                <h6>Card Owner</h6>
+                                            </label>
+                                                <input type="text" name="cardOwner" placeholder="Card Owner Name" required class="form-control " value={cardOwner} onChange={(e) => { setCardOwner(e.target.value) }} /> </div>
+                                            <div class="form-group"> <label for="cardNumber">
+                                                <h6>Card number</h6>
+                                            </label>
+                                                <div class="input-group">
+                                                    <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <div class="form-group"> <label><span class="hidden-xs">
+                                                        <h6>Expiration Date</h6>
+                                                    </span></label>
+                                                        <div class="input-group">
+                                                            <input type="number" placeholder="MM" name="" class="form-control" required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
+                                                            <input type="number" placeholder="YY" name="" class="form-control" required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                                        <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                                    </label>
+                                                        <input type="text" required class="form-control" value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div className="buttongroup">
                                     <button class="btn btn-primary w-25 rounded-pill" onClick={() => { previouStepFunc() }}>Previous</button>
@@ -237,7 +374,7 @@ const AddAdminReservation = () => {
 
 
                         }
-                        {step === 3 && (
+                        {step === 4 && (
                             <div className="container step-container-step03">
                                 <h5 className='mb-2'>Review</h5>
                                 <div className="row mb-2">
@@ -403,7 +540,7 @@ const AddAdminReservation = () => {
                             </div>
                         )}
                         {
-                            step === 4 &&
+                            step === 5 &&
                             (<div>Step 4</div>)
                         }
                     </div>
