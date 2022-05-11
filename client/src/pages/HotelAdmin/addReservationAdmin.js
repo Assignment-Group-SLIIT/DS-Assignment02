@@ -19,14 +19,29 @@ const AddAdminReservation = () => {
     const [totalPayment, setTotalPayment] = useState("");
 
     const increaseStepFunc = () => {
-        setStep(2)
-        setProgress(100)
+        if (step == 1) {
+            setStep(2)
+            setProgress(25)
+        } else if (step == 2) {
+            setStep(3)
+        } else if (step == 3) {
+            setStep(4)
+        }
+
+
+
 
     }
 
     const previouStepFunc = () => {
         setStep(1)
         setProgress(50)
+        if (step == 2) {
+            setStep(1)
+            setProgress(25)
+        } else if (step == 3) {
+            setStep(2)
+        }
 
     }
 
@@ -42,8 +57,14 @@ const AddAdminReservation = () => {
 
 
                         <ProgressBar>
-                            <ProgressBar striped animated now={50} key={1} />
-                            <ProgressBar striped animated variant="info" now={step == 1 ? 0 : step == 2 ? 50 : null} key={2} />
+                            <ProgressBar striped animated now={(step == 1 || step == 2 || step == 3 || step == 4) ? 25 : 0} label="25%" key={1} />
+                            <ProgressBar striped animated variant="info" now={(step == 2) ? 25 : 0} key={2} />
+                            <ProgressBar striped animated now={(step == 3) ? 25 : 0} key={3} />
+                            <ProgressBar striped animated variant="info" now={step == 4 ? 25 : 0} key={4} />
+
+                            {/* <ProgressBar striped animated variant="danger" now={step == 1 ? 0 : step == 2 ? 0 : step == 3 ? 25 : null} key={3} /> */}
+                            {/* <ProgressBar striped animated variant="success" now={step == 3 ? 25 : null} key={3} />
+                            <ProgressBar striped animated variant="info" now={step == 4 && 25} key={4} /> */}
                         </ProgressBar>
 
 
@@ -208,6 +229,95 @@ const AddAdminReservation = () => {
                         </div>
 
 
+                    }
+                    {step === 3 && (
+                        <div className="container step-container-step03">
+                            <h2 className='mb-3'>Summary</h2>
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="first">Hotel Name</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{hotelName}</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="last">Room Number</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{roomNo}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="company">Floor</strong>
+                                    </div>
+
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{floor}</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="phone">Room Type</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{type}</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation from</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{reservationStartDate}</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation to</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{reservationEndDate}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="buttongroup">
+                                <button class="btn btn-primary w-25 rounded-pill" onClick={() => { previouStepFunc() }}>Previous</button>
+                                <button class="btn btn-primary w-25 rounded-pill" onClick={() => { increaseStepFunc() }}>Next</button>
+                            </div>
+
+
+                        </div>
+                    )}
+                    {
+                        step === 4 &&
+                        (<div>Step 4</div>)
                     }
                 </div>
             </div>
