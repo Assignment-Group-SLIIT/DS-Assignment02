@@ -44,7 +44,7 @@ const Landingpage = () => {
                                         <div className="postcard__bar"></div>
                                         <div className="postcard__preview-txt">{HOTELS[0].description}</div>
                                         <ul className="postcard__tagbox">
-                                            <li className="tag__item" onClick={() => {
+                                            <li className="btn" onClick={() => {
                                                 navigate("/viewHotel", { state: { id: 0 } })
                                             }}>View details</li>
                                         </ul>
@@ -67,7 +67,7 @@ const Landingpage = () => {
                                         <div className="postcard__bar"></div>
                                         <div className="postcard__preview-txt">{HOTELS[1].description}</div>
                                         <ul className="postcard__tagbox">
-                                            <li className="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 1 } }) }}>View details</li>
+                                            <li className="btn" onClick={() => { navigate("/viewHotel", { state: { id: 1 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
@@ -88,7 +88,7 @@ const Landingpage = () => {
                                         <div className="postcard__bar"></div>
                                         <div className="postcard__preview-txt">{HOTELS[2].description}</div>
                                         <ul className="postcard__tagbox">
-                                            <li className="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 2 } }) }}>View details</li>
+                                            <li className="btn" onClick={() => { navigate("/viewHotel", { state: { id: 2 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
@@ -109,7 +109,7 @@ const Landingpage = () => {
                                         <div className="postcard__bar"></div>
                                         <div className="postcard__preview-txt">{HOTELS[3].description}</div>
                                         <ul className="postcard__tagbox">
-                                            <li className="tag__item" onClick={() => { navigate("/viewHotel", { state: { id: 3 } }) }}>View details</li>
+                                            <li className="btn" onClick={() => { navigate("/viewHotel", { state: { id: 3 } }) }}>View details</li>
                                         </ul>
                                     </div>
                                 </article>
