@@ -5,6 +5,13 @@
     justify-content: space-around;
 }
 
+.body{
+    display: flex;
+    align-items: center;
+    padding-top: 2rem;
+    min-height: 100vh;
+}
+
 .addReservation-container{
     position: absolute;
     width: 60%;
@@ -14,7 +21,7 @@
     display: flex;
     flex-direction: column;
     border-radius: 30px;
-    border: 0.1rem solid #0076bd;
+    border: 0.1rem solid #F7444E;
 }
 
 .step-container{
@@ -46,7 +53,7 @@
 //summary
 .title {
     margin-bottom: 30px;
-    color: #162969;
+    color: #000000;
 }
 
 
