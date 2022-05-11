@@ -307,6 +307,31 @@ const AddAdminReservation = () => {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation from</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{reservationStartDate}</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <strong for="email">Reservation to</strong>
+                                    </div>
+                                </div>
+                                <div className="col-md-3">
+                                    <div className="form-group">
+                                        <label for="company">{reservationEndDate}</label>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="buttongroup">
                                 <button class="btn btn-primary w-25 rounded-pill" onClick={() => { previouStepFunc() }}>Previous</button>
                                 <button class="btn btn-primary w-25 rounded-pill" onClick={() => { increaseStepFunc() }}>Next</button>
