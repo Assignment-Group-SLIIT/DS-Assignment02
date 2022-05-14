@@ -1,11 +1,11 @@
-.buttongroup{
+.buttongroup {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-around;
 }
 
-.addReservation-container{
+.addReservation-container {
     position: absolute;
     width: 60%;
     right: 20%;
@@ -17,29 +17,35 @@
     border: 0.1rem solid #F7444E;
 }
 
-.step-container{
+.step-container {
     min-height: 60vh;
+
     // background-color: red ;
     .row {
         margin-bottom: 2rem;
     }
-    *{
+
+    * {
         color: black !important;
     }
 }
-.step-container-step03{
+
+.step-container-step03 {
     min-height: 60vh;
+
     // background-color: red ;
     .row {
         margin-bottom: 0.5rem;
     }
-    *{
+
+    * {
         color: black !important;
     }
-    .payment-card{
+
+    .payment-card {
         display: flex;
-            flex-direction: column;
-            align-items: center;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -209,3 +215,18 @@
     -moz-transform: rotateY(0deg);
 }
 
+//final step
+.step-four {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-bar {
+    color: #ffffff !important;
+    background-color: #F7444E !important;
+}

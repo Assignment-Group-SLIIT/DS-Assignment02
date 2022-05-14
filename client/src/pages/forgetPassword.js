@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const forgetPassword = () => {
+const ForgetPassword = () => {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [reEnteredPassword, setEnteredPassword] = useState();
     return (
         <div>
             <div className="content-body">
@@ -12,6 +15,10 @@ const forgetPassword = () => {
                         <h3 className="pb-3">Forget Password ?</h3>
                         <div className="form-style">
                             <>
+                                <div class="form-group pb-3 border-primary">
+                                    <label htmlFor="username" className="form-label">Email</label>
+                                    <input type="email" placeholder="Email" className="form-control" id="email" required />
+                                </div>
                                 <div class="form-group pb-3 border-primary">
                                     <label htmlFor="username" className="form-label">New Password</label>
                                     <input type="password" placeholder="New Password" className="form-control" id="username" required />
@@ -32,4 +39,4 @@ const forgetPassword = () => {
     )
 }
 
-export default forgetPassword
+export default ForgetPassword
