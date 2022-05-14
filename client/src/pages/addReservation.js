@@ -9,7 +9,7 @@ import erroLogo from '../assets/error.png'
 const AddReservation = () => {
     const navigate = useNavigate()
 
-    const [step, setStep] = useState(4)
+    const [step, setStep] = useState(1)
     const [progress, setProgress] = useState(0)
     const location = useLocation();
 
@@ -111,6 +111,7 @@ const AddReservation = () => {
             amount: reservationRoom.reservationPrice * getDateDiff(),
             CVC: cvv,
             cardHolder: cardOwner,
+            email
         }
 
 

@@ -43,7 +43,7 @@ const ViewHotel = () => {
             loadHotelAvailableRooms(HOTELS[hotelId].hotelname)
         }
 
-    }, [hotelName])
+    }, [hotelName, hotelId, location?.state?.id])
 
     console.log(availableRoomsList)
 
