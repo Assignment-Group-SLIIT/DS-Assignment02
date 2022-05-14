@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { getAllRoomsOfAReserver, updateRoomReservationDetails } from '../services/RoomReservationServices';
 import { Modal } from "react-bootstrap";
 import ViewReservation from './HotelAdmin/modal/viewModal';
+import { getRoomDetailsByDate } from '../services/RoomReservationServices';
 
 const UserProfile = () => {
 
+    const [search, setSearch] = useState("");
     const [hotelReservations, setHotelReservations] = useState([]);
+    const [hotelName, setHotelName] = useState("");
+    const [roomId, setRoomId] = useState("");
 
     //view a single hotel reservation details
     const [modalData, setData] = useState([]);
@@ -15,9 +19,11 @@ const UserProfile = () => {
     const [modalReservationCancel, setReservationCancel] = useState([]);
     const [modalCancelConfirm, setModalCancelConfirm] = useState(false);
 
+
     useEffect(() => {
         getAllRoomsOfAReserver('Malki')
             .then((response) => {
+                console.log("data", response.data)
                 setHotelReservations(response.data);
             }).catch((err) => {
                 console.error(err)
@@ -75,7 +81,19 @@ const UserProfile = () => {
 
     }
 
+    const searchRooms = (e) => {
+        e.preventDefault();
+        if (!isNaN(search.charAt(0))) {
+            getRoomDetailsByDate(hotelName, roomId, search)
+                .then((response) => {
+                    console.log("data", response.data)
 
+                    setHotelReservations(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        }
+    }
 
     return (
         <div className='page-component-body"'>
@@ -103,17 +121,30 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div class="row table-head-search">
-                        <div className="col-md-8"></div>
-
+                        {/* <div className="col-md-8"></div> */}
+                        <div className="col">
+                            <select className="form-control"
+                                value={hotelName}
+                                onChange={(e) => { setHotelName(e.target.value) }}>
+                                <option>Select Hotel</option>
+                                <option>Amagi Aria</option>
+                                <option>Mandarina Colombo</option>
+                                <option>Negombo New Queen's Palace</option>
+                                <option>Residence by Uga Escapes</option>
+                            </select>
+                        </div>
+                        <div className="col">
+                            <input type="text" placeholder="Room ID" className="form-control"
+                                value={roomId}
+                                onChange={(e) => { setRoomId(e.target.value) }} />
+                        </div>
                         <div className="col">
                             <div class="input-group input-group-search">
                                 <div class="searchbar">
-                                    <form
-                                    // onSubmit={(e) => searchRooms(e)}
-                                    >
-                                        <input class="search_input" type="text" name="search" placeholder="Search..."
-                                            // value={search}
-                                            // onChange={(event) => { setSearch(event.target.value) }}
+                                    <form onSubmit={(e) => searchRooms(e)}>
+                                        <input class="search_input" type="text" name="search" placeholder="Reserve Date"
+                                            value={search}
+                                            onChange={(event) => { setSearch(event.target.value) }}
                                             require />
                                         <button class="btn search_icon" type="submit" id="submit" name="submit">
                                             <i class="fa fa-search"></i></button>

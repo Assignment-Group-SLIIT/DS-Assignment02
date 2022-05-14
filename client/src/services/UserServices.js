@@ -35,6 +35,22 @@ export const loginUser = async (user) => {
             error: error
         }
     }
+}
 
+    export const forgetPassword = async (email, newPassword, updatepayload) => {
 
-} 
+        try {
+            const response = await axios.post(`${BASE_URL}/${email}/${newPassword}`, updatepayload)
+    
+            return {
+                ok: true,
+                data: response.data,
+            }
+    
+        } catch (error) {
+            return {
+                ok: false,
+                error: error
+            }
+        }
+    }
