@@ -22,6 +22,7 @@ import AdminSignup from "./pages/HotelAdmin/AdminSignup"
 import UserProfile from "./pages/userProfile";
 import ViewHotel from "./pages/viewHotel";
 import AddAdminReservation from "./pages/HotelAdmin/addReservationAdmin";
+import AddTaxiReservation from "./pages/addTaxi";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
             <Route path='/userProfile' element={<UserProfile />} />
             <Route path='/viewHotel' element={<ViewHotel />} />
             <Route path='/addReservation-admin' element={<AddAdminReservation />} />
+            <Route path='/addTaxi' element={<AddTaxiReservation /> } />
           </Routes>
           <Footer />
 
