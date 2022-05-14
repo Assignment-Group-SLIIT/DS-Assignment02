@@ -8,6 +8,8 @@ const UserProfile = () => {
 
     const [search, setSearch] = useState("");
     const [hotelReservations, setHotelReservations] = useState([]);
+    const [hotelName , setHotelName] = useState("");
+    const [roomId , setRoomId] = useState("");
 
     //view a single hotel reservation details
     const [modalData, setData] = useState([]);
@@ -82,7 +84,7 @@ const UserProfile = () => {
     const searchRooms = (e) => {
         e.preventDefault();
             if (!isNaN(search.charAt(0))) {
-                getRoomDetailsByDate("Amagi Aria","B244",search)
+                getRoomDetailsByDate(hotelName,roomId,search)
                 .then((response) => {
                     console.log("data",response.data)
 
@@ -120,18 +122,30 @@ const UserProfile = () => {
                     </div>
                     <div class="row table-head-search">
                         <div className="col-md-8"></div>
-
                         <div className="col">
                             <div class="input-group input-group-search">
                                 <div class="searchbar">
                                     <form onSubmit={(e) => searchRooms(e)}>
-                                        <input class="search_input" type="text" name="search" placeholder="Search..."
+                                        <input class="search_input" type="text" name="search" placeholder="Reserve Date"
                                             value={search}
                                             onChange={(event) => { setSearch(event.target.value) }}
                                             require />
                                         <button class="btn search_icon" type="submit" id="submit" name="submit">
                                             <i class="fa fa-search"></i></button>
                                     </form>
+                                    <select className="form-control"
+                                     value={hotelName}
+                                     onChange={(e) => { setHotelName(e.target.value) }}>  
+                                        <option>Select Hotel</option>
+                                        <option>Amagi Aria</option>
+                                        <option>Mandarina Colombo</option>
+                                        <option>Negombo New Queen's Palace</option>
+                                        <option>Residence by Uga Escapes</option>
+                                    </select>
+                                    <input type="text" placeholder="Room ID" className="form-control" 
+                                     value={roomId}
+                                     onChange={(e) => { setRoomId(e.target.value) }}/>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -118,7 +118,8 @@ function HotelRooms() {
                             <div class="searchbar">
                                 <form onSubmit={(e) => searchRooms(e)}>
                                     <input class="search_input" type="text" name="search" placeholder="Search..."
-                                        value={search} onChange={(event) => { setSearch(event.target.value) }}
+                                        value={search} 
+                                        onChange={(event) => { setSearch(event.target.value) }}
                                         require />
                                     <button class="btn search_icon" type="submit" id="submit" name="submit">
                                         <i class="fa fa-search"></i></button>
