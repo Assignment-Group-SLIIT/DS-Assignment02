@@ -111,7 +111,8 @@ const AddReservation = () => {
             amount: reservationRoom.reservationPrice * getDateDiff(),
             CVC: cvv,
             cardHolder: cardOwner,
-            email
+            email,
+            receriverNo: contactNo
         }
 
 
