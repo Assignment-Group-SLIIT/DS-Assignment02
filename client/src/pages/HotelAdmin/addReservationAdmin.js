@@ -115,21 +115,27 @@ const AddAdminReservation = () => {
 
 
         let response = await createRoomReservation(reservationData);
-        console.log(response)
 
-        // if (response.ok) {
-        //     let response = await createAPayment(paymentData);
-        //     if (response.ok) {
-        //         setIsSuccess(true)
-        //         alert("You have completed reserving of a room successfully")
-        //         setStep(5)
+        if (response.ok) {
+            if (cardNumber && cvv && cardOwner) {
+                let response = await createAPayment(paymentData);
+                if (response.ok) {
+                    setIsSuccess(true)
+                    alert("You have completed reserving of a room successfully")
+                    setStep(5)
 
-        //     } else {
-        //         alert("somthing went wrong !! Check payment Details")
-        //     }
-        // } else {
-        //     alert("somthing went wrong !!! Check reservation Details")
-        // }
+                } else {
+                    alert("somthing went wrong !! Check payment Details")
+                }
+
+            } else {
+                alert("You successfully added a room for reservation")
+            }
+
+
+        } else {
+            alert("somthing went wrong with reservation Details")
+        }
     }
 
 
