@@ -29,6 +29,7 @@ const AddReservation = () => {
     const [expiryMonth, setExpiryMonth] = useState(0);
     const [expiryYear, setExpiryYear] = useState(0);
     const [cvv, setCvv] = useState("");
+    let payment = '';
 
     //retrieve reserving hotel room data
     const [reservationRoom, setReservationRoom] = useState()
@@ -84,12 +85,16 @@ const AddReservation = () => {
 
 
 
+
+
     const makeReservation = (e) => {
         e.preventDefault();
-
         if (reservationRoom.mustPayOnline == true) {
-            setPaymentStatus('Completed')
+            payment = 'Completed'
+        } else {
+            payment = 'Pending'
         }
+
 
         const reservationObject = {
             hotelName: reservationRoom.hotelName,
