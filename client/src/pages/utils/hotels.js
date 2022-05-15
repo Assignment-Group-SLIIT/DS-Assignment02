@@ -13,7 +13,10 @@ export const HOTELS = [
             { imgSrc: 'https://images.trvl-media.com/hotels/7000000/6160000/6153200/6153159/cd200a45.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/7000000/6160000/6153200/6153159/c0ddf4ac.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/7000000/6160000/6153200/6153159/08b5d522.jpg?impolicy=resizecrop&rw=1200&ra=fit' }
-        ]
+        ],
+        address: "Amagi Aria, 640/82 Suhada Mawatha, Puttalam - Colombo Rd, Negombo 11500",
+        lat: 7.20032,
+        lng: 79.85272,
     },
     {
         hotelname: "Mandarina Colombo",
@@ -29,7 +32,10 @@ export const HOTELS = [
             { imgSrc: 'https://images.trvl-media.com/hotels/18000000/17400000/17399600/17399512/64672c6d.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/18000000/17400000/17399600/17399512/eeeeaf3d.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/18000000/17400000/17399600/17399512/01aff67d.jpg?impolicy=resizecrop&rw=1200&ra=fit' }
-        ]
+        ],
+        address: "Mandarina Colombo, A2, Colombo",
+        lat: 6.9002995220619345,
+        lng: 79.85358922413825,
     },
     {
         hotelname: "Negombo New Queen's Palace",
@@ -45,7 +51,10 @@ export const HOTELS = [
             { imgSrc: 'https://images.trvl-media.com/hotels/35000000/34360000/34351100/34351088/defacbe0.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/35000000/34360000/34351100/34351088/fc10bf41.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/35000000/34360000/34351100/34351088/f6e20463.jpg?impolicy=resizecrop&rw=1200&ra=fit' }
-        ]
+        ],
+        address: "Negombo New Queen's Palace, Negombo",
+        lat: 7.250002269862357,
+        lng: 79.84632588366338,
     },
     {
         hotelname: "Residence by Uga Escapes",
@@ -61,6 +70,9 @@ export const HOTELS = [
             { imgSrc: 'https://images.trvl-media.com/hotels/10000000/9090000/9082700/9082652/63ffdaac.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/10000000/9090000/9082700/9082652/1bdc3f84.jpg?impolicy=resizecrop&rw=1200&ra=fit' },
             { imgSrc: 'https://images.trvl-media.com/hotels/10000000/9090000/9082700/9082652/d3a8db0f.jpg?impolicy=resizecrop&rw=1200&ra=fit' }
-        ]
+        ],
+        address: "Residence by Uga Escapes",
+        lat: 6.917456511289146,
+        lng: 79.8582401124986,
     },
 ]
