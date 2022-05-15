@@ -44,6 +44,12 @@ const AddReservation = () => {
             alert('You cannot proceed this reservation requires prior payment')
         } else if (step == 1 || step == 3) {
             setStep(step + 1)
+        } else if (reservationRoom.mustPayOnline == false) {
+            if (step == 2) {
+                setStep(step + 1)
+            } else if (step == 3) {
+                setStep(step + 1)
+            }
         }
 
     }

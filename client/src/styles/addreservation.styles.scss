@@ -74,7 +74,7 @@
     display: inline-block;
     width: 320px;
     height: 190px;
-    background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), linear-gradient(to right bottom, #699dfd, #618ffa, #58a7f6, #509bf1, #4887ec);
+    background-image: url('https://image.ibb.co/bVnMrc/g3095.png'), linear-gradient(to right bottom, #666666, #4f4f4f, #6c6c6c, #404040, #5a5a5a);
     /*linear-gradient(to right bottom, #fd8369, #fc7870, #f96e78, #f56581, #ee5d8a)*/
     background-repeat: no-repeat;
     background-position: center;
@@ -131,7 +131,7 @@
     word-spacing: 4px;
     font-size: 20px;
     letter-spacing: 2px;
-    color: #fff;
+    color: #fff !important;
     text-align: center;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -150,7 +150,7 @@
 .card__label {
     font-size: 10px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8) !important;
     letter-spacing: 1px;
 }
 
@@ -159,7 +159,7 @@
     margin-top: 5px;
     font-size: 16px;
     line-height: 18px;
-    color: #fff;
+    color: #fff !important;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
