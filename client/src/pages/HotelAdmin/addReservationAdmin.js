@@ -291,7 +291,7 @@ const AddAdminReservation = () => {
                             </div>
                             <div class="row pb-3">
                                 <div class="col-6" >
-                                    <label for="type" class="form-label-emp">Room Type</label>
+                                    <label for="type" class="form-label-emp">Payment Status</label>
                                     <select class="form-select form-control"
                                         name="paymentStatus" id="paymentStatus" required
                                         value={paymentStatus}

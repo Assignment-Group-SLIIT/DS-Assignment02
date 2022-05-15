@@ -2,6 +2,7 @@ import { useState } from "react";
 import moment from 'moment';
 import { createTaxiReservation } from "../services/TaxiServices";
 import { useNavigate } from "react-router-dom";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
 const AddTaxiReservation = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AddTaxiReservation = () => {
     const [user, setUser] = useState("");
     const [type, setType] = useState("");
     const [distance, setDistance] = useState("");
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState(0);
     const [paymentStatus, setPaymentStatus] = useState("");
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
@@ -19,8 +20,8 @@ const AddTaxiReservation = () => {
             user,
             type,
             distance,
-            amount,
-            paymentStatus,
+            amount: distance * 1000,
+            paymentStatus: 'Pending',
             date
         }
         createTaxiReservation(taxiPayload).then((response) => {
@@ -36,6 +37,11 @@ const AddTaxiReservation = () => {
             console.log(error)
         })
     }
+
+    const calculate = () => {
+        setAmount(distance * 1000)
+    }
+
 
     return (
         <>
@@ -99,13 +105,14 @@ const AddTaxiReservation = () => {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="distance">Distance</label>
-                                            <input type="text"
+                                            <input type="number"
                                                 className="form-control"
                                                 id="distance"
-                                                placeholder="Distance"
+                                                placeholder="km"
                                                 value={distance}
                                                 onChange={(e) => {
                                                     setDistance(e.target.value)
+                                                    calculate()
                                                 }}
                                             />
                                         </div>
@@ -121,14 +128,14 @@ const AddTaxiReservation = () => {
                                                 className="form-control"
                                                 id="payment"
                                                 placeholder="Payment"
-                                                value={amount}
+                                                value={distance * 1000}
                                                 onChange={(e) => {
                                                     setAmount(e.target.value)
                                                 }} />
                                         </div>
                                     </div>
 
-                                    <div className="col-md-6">
+                                    {/* <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="email">Payment Status</label>
                                             <select class="form-select form-control"
@@ -143,7 +150,7 @@ const AddTaxiReservation = () => {
                                                 <option id="completed" >Completed</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                 </div>
                                 <div className="row">
