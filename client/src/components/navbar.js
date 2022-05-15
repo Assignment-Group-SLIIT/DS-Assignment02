@@ -1,12 +1,17 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
-const navbar = () => {
+const Navbar = () => {
+    const navigate = useNavigate();
+
     return (
         <>
             <nav className="navbar">
                 <div className="container-fluid navbar-container">
                     <h5 className="navbar-brand">
-                        <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top" />
+                        <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top nav-logo" onClick={() => {
+                            navigate("/")
+                        }} />
                         {/* Galadhari - Uganda branch */}
                     </h5>
                     <div className="sidetext">
@@ -38,4 +43,4 @@ const navbar = () => {
     )
 }
 
-export default navbar
+export default Navbar
