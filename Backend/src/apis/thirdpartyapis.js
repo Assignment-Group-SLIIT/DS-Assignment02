@@ -48,7 +48,7 @@ const sendSms = (receriverNo) => {
         .create({
             body: 'Dear valuable customer, Your reservation is now confirmed. Thanks for choosing us. Best regards, Rezerve.com',
             messagingServiceSid: 'MGc1f278c17b174e50396f7c20c5465802',
-            to: receriverNo
+            to: `${receriverNo}`
         })
         .then(message => console.log("SMS was sent!>>", message.sid))
         .catch(err => console.log("error while sending SMS>>", err));
