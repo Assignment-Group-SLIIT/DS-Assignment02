@@ -4,26 +4,22 @@ import LocationPin from './LocationPin'
 import '../styles/map.styles.scss'
 
 
-const location = {
-    address: '1600 Amphitheatre Parkway, Mountain View, california.',
-    lat: 37.42216,
-    lng: -122.08427,
-}
 
-const GoogleMaps = () => (
+
+const GoogleMaps = (props) => (
     <div className="map">
-        <h2 className="map-h2">Come Visit Us At Our Campus</h2>
+        <h4 className="mb-4">Find the location on Google map</h4>
 
         <div className="google-map">
             <GoogleMapReact
                 bootstrapURLKeys={{ key: 'AIzaSyDJAz5Xc-ZQtQ8ZQUe9nfyZsTmAt7rT1v4' }}
-                defaultCenter={location}
+                defaultCenter={props}
                 defaultZoom={17}
             >
                 <LocationPin
-                    lat={location.lat}
-                    lng={location.lng}
-                    text={location.address}
+                    lat={props.lat}
+                    lng={props.lng}
+                    text={props.address}
                 />
             </GoogleMapReact>
         </div>

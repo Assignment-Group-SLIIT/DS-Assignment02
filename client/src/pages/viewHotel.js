@@ -8,6 +8,7 @@ import { MdKayaking, MdDirectionsCar, MdWifi, MdOutlineEmojiTransportation, MdOu
 import { HOTELS } from './utils/hotels'
 import { getAllAvailableRoomsOfAHotel } from '../services/RoomReservationServices'
 import Spinner from '../components/spinner';
+import GoogleMaps from './googleMaps';
 
 const ViewHotel = () => {
 
@@ -172,6 +173,9 @@ const ViewHotel = () => {
                                         );
                                     })}
                                 </div>
+                            </div>
+                            <div class="row  mt-4 border-top">
+                                <GoogleMaps address={HOTELS[hotelId].address} lat={HOTELS[hotelId].lat} lng={HOTELS[hotelId].lng} />
                             </div>
                         </div>
                     </div>
