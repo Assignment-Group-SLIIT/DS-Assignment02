@@ -23,6 +23,7 @@ import UserProfile from "./pages/userProfile";
 import ViewHotel from "./pages/viewHotel";
 import AddAdminReservation from "./pages/HotelAdmin/addReservationAdmin";
 import AddTaxiReservation from "./pages/addTaxi";
+import GoogleMaps from "./pages/googleMaps";
 
 
 function App() {
@@ -39,12 +40,11 @@ function App() {
             {/* <Route path='/signup' element={<Signup />} /> */}
 
             {/* </Route> */}
+            <Route path='/' element={<Landingpage />} />
             <Route path="/addreservation" element={<Addreservation />} />
             <Route path='/test' element={<Test />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/' element={<Landingpage />} />
-            <Route path='*' element={<NotFound />} />
             <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/forgetPassword' element={<ForgetPassword />} />
             <Route path='/adminSignup' element={<AdminSignup />} />
@@ -52,6 +52,8 @@ function App() {
             <Route path='/viewHotel' element={<ViewHotel />} />
             <Route path='/addReservation-admin' element={<AddAdminReservation />} />
             <Route path='/addTaxi' element={<AddTaxiReservation />} />
+            <Route path='/maps' element={<GoogleMaps />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
           <Footer />
 
