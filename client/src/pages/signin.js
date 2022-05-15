@@ -25,11 +25,12 @@ const Signin = () => {
                 setUserName('')
                 setPassword('')
                 const user = getUser();
-                if (user.role = 'Hotel Admin') {
+                console.log(user)
+                if (user.role == 'Hotel Admin') {
                     history("/viewRooms")
-                } else if (user.role = 'Customer') {
+                } else if (user.role == 'Customer') {
                     history("/")
-                } else if (user.role = 'System Admin') {
+                } else if (user.role == 'System Admin') {
                     history("/viewRooms")
                 }
 
