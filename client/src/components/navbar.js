@@ -2,6 +2,8 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
 import { getToken, removeUserSession } from '../utils/token';
+
+import { IoPersonCircleOutline } from "react-icons/io5";
 const Navbar = () => {
     const navigate = useNavigate();
 
@@ -25,23 +27,32 @@ const Navbar = () => {
                     </h5>
 
                     <div className="sidetext">
-                        {token ? (<button className="sidetext-links" onClick={logout}>
-                            <label>
-                                logout
-                            </label>
-                        </button>) : (
-                            <Link to="/signin" className="sidetext-links">
-                                <label>
-                                    login
+
+
+                        {token ? (
+                            <div className="navbar-group w-100">
+                                <label className="sidetext-links mr-4" onClick={logout}>
+                                    logout
                                 </label>
-                            </Link>
+                                <IoPersonCircleOutline className="sidetext-links" size={30} onClick={() => {
+                                    navigate("/userProfile")
+                                }} />
+                            </div>
+                        ) : (
+                            <>
+                                <Link to="/signup" className="sidetext-links mr-4">
+                                    <label>
+                                        signup
+                                    </label>
+                                </Link>
+                                <Link to="/signin" className="sidetext-links">
+                                    <label>
+                                        login
+                                    </label>
+                                </Link>
+                            </>
                         )}
 
-                        <Link to="/signup" className="sidetext-links">
-                            <label>
-                                signup
-                            </label>
-                        </Link>
                     </div>
                 </div>
                 {/* <div className="container-fluid">

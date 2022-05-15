@@ -89,7 +89,7 @@ function HotelRooms() {
     }
 
     return (
-        <div className="page-component-body">
+        <div className="page-component-body-user">
             <Modal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
@@ -105,7 +105,7 @@ function HotelRooms() {
                 />
             </Modal>
             <br />
-            <div className="table-emp ">
+            <div className="table-emp">
                 <div class="row table-head mt-3">
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
