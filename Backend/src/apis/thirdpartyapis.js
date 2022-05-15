@@ -1,5 +1,5 @@
 const mailjet = require('node-mailjet')
-    .connect('24f46a5d8ea3c662b1ec4620f230c25e', 'ca4d466b9b472a29ec3b1a6d513aab52')
+    .connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE)
 
 const sendReceipt = (email, cardHolder, amount, date) => {
     const request = mailjet
@@ -39,4 +39,19 @@ const sendReceipt = (email, cardHolder, amount, date) => {
         })
 }
 
-module.exports = sendReceipt
+const sendSms = (receriverNo) => {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const client = require('twilio')(accountSid, authToken);
+
+    client.messages
+        .create({
+            body: 'Dear valuable customer, Your reservation is now confirmed. Thanks for choosing us. Best regards, Rezerve.com',
+            messagingServiceSid: 'MGc1f278c17b174e50396f7c20c5465802',
+            to: `${receriverNo}`
+        })
+        .then(message => console.log("SMS was sent!>>", message.sid))
+        .catch(err => console.log("error while sending SMS>>", err));
+}
+
+module.exports = { sendReceipt, sendSms }
