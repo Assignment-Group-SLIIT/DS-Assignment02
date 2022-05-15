@@ -11,14 +11,23 @@ const Landingpage = () => {
             <div className="content-body">
                 <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div className="carousel-inner">
-                        <div className="carousel-item active" data-bs-interval="2500">
+                        <div className="carousel-item active" data-bs-interval="2000">
                             <img className="d-block w-100" src="https://images6.alphacoders.com/349/349835.jpg" alt="First slide" />
                         </div>
-                        <div className="carousel-item" data-bs-interval="2500">
+                        <div className="carousel-item" data-bs-interval="2000">
                             <img className="d-block w-100" src="https://wallpaperaccess.com/full/902478.jpg" alt="Second slide" />
                         </div>
-                        <div className="carousel-item" data-bs-interval="2500">
+                        <div className="carousel-item" data-bs-interval="2000">
                             <img className="d-block w-100" src="https://images7.alphacoders.com/362/362619.jpg" alt="Third slide" />
+                        </div>
+                        <div className="carousel-item " data-bs-interval="2000">
+                            <img className="d-block w-100" src="https://images.trvl-media.com/hotels/18000000/17400000/17399600/17399512/a0d1e025.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="fourth slide" />
+                        </div>
+                        <div className="carousel-item" data-bs-interval="2000">
+                            <img className="d-block w-100" src="https://images.trvl-media.com/hotels/35000000/34360000/34351100/34351088/aac03ea1.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="fifth slide" />
+                        </div>
+                        <div className="carousel-item" data-bs-interval="2000">
+                            <img className="d-block w-100" src="https://images.trvl-media.com/hotels/10000000/9090000/9082700/9082652/faead15b.jpg?impolicy=resizecrop&rw=1200&ra=fit" alt="sixth slide" />
                         </div>
                     </div>
                 </div>
