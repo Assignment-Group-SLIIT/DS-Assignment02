@@ -105,7 +105,7 @@ const AddReservation = () => {
             reservationStartDate: dateFrom,
             reservationEndDate: dateTo,
             reservationPrice: reservationRoom.reservationPrice,
-            paymentStatus: paymentStatus,
+            paymentStatus: payment,
             reserverName: firstName + " " + lastName,
             mustPayOnline: reservationRoom.mustPayOnline,
             totalPayment: reservationRoom.reservationPrice * getDateDiff()
