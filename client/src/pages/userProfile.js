@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getAllRoomsOfAReserver, updateRoomReservationDetails } from '../services/RoomReservationServices';
 import { Modal } from "react-bootstrap";
 import ViewReservation from './HotelAdmin/modal/viewModal';
@@ -7,6 +8,8 @@ import { deleteTaxiReservation, getOneTaxiReservation, getUserAllTaxiReservation
 import { getUser } from '../utils/token'
 
 const UserProfile = () => {
+
+    const navigate = useNavigate();
 
     //view room reservation detail
     const [search, setSearch] = useState("");
@@ -231,8 +234,6 @@ const UserProfile = () => {
                                         <td >{reservation.totalPayment}</td>
                                         <td >{reservation.paymentStatus}</td>
                                         <td>
-
-
                                             <button onClick={() => openModalUpdate(reservation)}>Cancel</button>
                                         </td>
                                     </tr>
@@ -269,11 +270,14 @@ const UserProfile = () => {
 
                     </Modal>
 
-                    <div class="row table-head mt-3">
-                        <div class="col">
-                            {/* <h3 className="float-left" >List of Hotel Room Reservation</h3> */}
-                            <hr className='mt-5'></hr>
+                    <div class="row table-head mt-5">
+                        <div class="col mb-3">
+                            <h3 className="float-left" >List of Taxi Reservation</h3>
+                            <button className="btn float-right" onClick={() => { navigate('/addTaxi') }}>+Book a Taxi</button>
+                            {/* <hr className='mt-5'></hr> */}
                         </div>
+                        <hr></hr>
+
                     </div>
                     <div class="row table-head-search">
                         <div className="col-md-8"></div>
