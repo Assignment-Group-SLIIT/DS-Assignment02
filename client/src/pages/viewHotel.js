@@ -174,6 +174,11 @@ const ViewHotel = () => {
                                                 </div>
                                             );
                                         })}
+                                        {availableRoomsList.length == 0 ? (
+                                            <div className="d-flex align-items-center justify-content-center w-100">
+                                                <label>Sorry, all rooms are reserved :(</label>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
