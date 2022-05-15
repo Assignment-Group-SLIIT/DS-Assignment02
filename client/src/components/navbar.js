@@ -1,8 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
+import { getToken } from '../utils/token';
 const Navbar = () => {
     const navigate = useNavigate();
+
+    const token = getToken();
 
     return (
         <>
@@ -15,9 +18,12 @@ const Navbar = () => {
                         {/* Galadhari - Uganda branch */}
                     </h5>
                     <div className="sidetext">
-                        <label className='sidetext-links'>
+                        {token ? (<label className='sidetext-links'>
+                            logout
+                        </label>) : (<label className='sidetext-links'>
                             login
-                        </label>
+                        </label>)}
+
                         <label className='sidetext-links'>
                             signup
                         </label>
