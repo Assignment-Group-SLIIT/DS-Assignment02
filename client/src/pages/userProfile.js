@@ -271,12 +271,13 @@ const UserProfile = () => {
                     </Modal>
 
                     <div class="row table-head mt-5">
-                        <hr></hr>
                         <div class="col mb-3">
                             <h3 className="float-left" >List of Taxi Reservation</h3>
                             <button className="btn float-right" onClick={() => { navigate('/addTaxi') }}>+Book a Taxi</button>
                             {/* <hr className='mt-5'></hr> */}
                         </div>
+                        <hr></hr>
+
                     </div>
                     <div class="row table-head-search">
                         <div className="col-md-8"></div>
