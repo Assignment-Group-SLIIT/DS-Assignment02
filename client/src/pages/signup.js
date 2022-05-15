@@ -11,15 +11,7 @@ const Signup = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [repassword, setRepassword] = useState("")
-    const [hotelName, setHotelName] = useState("")
-    const [role, setUser] = useState("")
 
-    console.log("hotel Name", role)
-
-    const handleSelect = (e) => {
-        console.log(e);
-        setUser(e)
-    }
 
     const signUpFunc = (e) => {
         e.preventDefault()
@@ -29,8 +21,7 @@ const Signup = () => {
                 username,
                 email,
                 password,
-                role,
-                hotelName
+                role: 'Customer',
             }
             console.log("payload>>", payload);
 
@@ -78,7 +69,7 @@ const Signup = () => {
                                     <label htmlFor="password" className="form-label">Re-enter the Password</label>
                                     <input type="password" placeholder="Password" className="form-control" id="password" value={repassword} onChange={(e) => { setRepassword(e.target.value) }} required />
                                 </div>
-                                <div class="form-group pb-3">
+                                {/* <div class="form-group pb-3">
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <label htmlFor="password" className="form-label mt-2">User</label>
@@ -104,7 +95,7 @@ const Signup = () => {
                                 <div class="form-group pb-3">
                                     <label htmlFor="HotelName" className="form-label">Hotel Name</label>
                                     <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} required />
-                                </div>
+                                </div> */}
                                 <div class="pb-2">
                                     <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
                                 </div>

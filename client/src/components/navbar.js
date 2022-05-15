@@ -1,8 +1,17 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
+import { getToken, removeUserSession } from '../utils/token';
 const Navbar = () => {
     const navigate = useNavigate();
+
+    const token = getToken();
+
+    const logout = () => {
+        removeUserSession();
+        navigate("/signin");
+        window.location.reload();
+    }
 
     return (
         <>
@@ -12,14 +21,22 @@ const Navbar = () => {
                         <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top nav-logo" onClick={() => {
                             navigate("/")
                         }} />
-                        {/* Galadhari - Uganda branch */}
+
                     </h5>
+
                     <div className="sidetext">
-                        <Link to="/signin" className="sidetext-links">
+                        {token ? (<button className="sidetext-links" onClick={logout}>
                             <label>
-                                login
+                                logout
                             </label>
-                        </Link>
+                        </button>) : (
+                            <Link to="/signin" className="sidetext-links">
+                                <label>
+                                    login
+                                </label>
+                            </Link>
+                        )}
+
                         <Link to="/signup" className="sidetext-links">
                             <label>
                                 signup
