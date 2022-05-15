@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { loginUser } from '../services/UserServices'
-import { setUserSession } from '../utils/token'
+import { getUser, setUserSession } from '../utils/token'
 import { useNavigate } from 'react-router-dom'
 
 const Signin = () => {
@@ -24,7 +24,15 @@ const Signin = () => {
                 setUserSession(response.data.token, response.data)
                 setUserName('')
                 setPassword('')
-                history("/")
+                const user = getUser();
+                if (user.role = 'Hotel Admin') {
+                    history("/viewRooms")
+                } else if (user.role = 'Customer') {
+                    history("/")
+                } else if (user.role = 'System Admin') {
+                    history("/viewRooms")
+                }
+
             } else {
                 // console.log(response.error.response.data.status)
             }
