@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { ProgressBar } from 'react-bootstrap';
 import { createRoomReservation } from '../../services/RoomReservationServices';
-import { createAPayment } from '../../services/PaymentService';
+import { createAPayment, getPaymentDetails } from '../../services/PaymentService';
 import successLogo from '../../assets/success.png'
 import erroLogo from '../../assets/error.png'
-
+import { getUser } from '../../utils/token';
+import moment from 'moment';
 
 const AddAdminReservation = () => {
+    const user = getUser();
     const [step, setStep] = useState(1)
     const [progress, setProgress] = useState(20)
 
-    const [hotelName, setHotelName] = useState("");
+    const [hotelName, setHotelName] = useState(user.hotelName);
     const [roomNo, setroomNo] = useState("");
     const [floor, setFloor] = useState("");
     const [type, setType] = useState("");
     const [status, setStatus] = useState("");
+    const [email, setEmail] = useState("");
+    const [contactNo, setContactNo] = useState("");
     const [reservationStartDate, setReservationStartDate] = useState("");
     const [reservationEndDate, setReservationEndDate] = useState("");
     const [reservationPrice, setReservationPrice] = useState("");
@@ -33,6 +37,8 @@ const AddAdminReservation = () => {
 
     const [isSuccess, setIsSuccess] = useState(true)
 
+
+
     const increaseStepFunc = () => {
         if (step == 1) {
             setStep(2)
@@ -48,10 +54,6 @@ const AddAdminReservation = () => {
             setStep(5)
             setProgress(100)
         }
-
-
-
-
     }
 
     const previouStepFunc = () => {
@@ -63,8 +65,24 @@ const AddAdminReservation = () => {
         } else if (step == 3) {
             setStep(2)
         }
-
     }
+
+    function getDateDiff() {
+        var startDate = moment(reservationStartDate).format('YYYY-MMMM-DD');
+        var endDate = moment(reservationEndDate).format('YYYY-MMMM-DD');
+        var getStartDate = moment(startDate, 'YYYY-MMMM-DD');
+        var getEndDate = moment(endDate, 'YYYY-MMMM-DD');
+        const diffDuration = getEndDate.diff(getStartDate, 'days');
+        return (diffDuration);
+    }
+
+
+
+    const settlePayments = () => {
+        setPaymentAmnt(reservationPrice * getDateDiff())
+        setTotalPayment(reservationPrice * getDateDiff())
+    }
+
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -83,33 +101,44 @@ const AddAdminReservation = () => {
             paymentStatus,
             reserverName,
             mustPayOnline: mustPayOnlineBoolean,
-            totalPayment
+            totalPayment: reservationPrice * getDateDiff()
         }
 
         let paymentData = {
             cardNo: cardNumber,
-            amount: paymentAmnt,
+            amount: reservationPrice * getDateDiff(),
             CVC: cvv,
-            cardHolder: cardOwner
+            cardHolder: cardOwner,
+            email,
+            receriverNo: contactNo
         }
 
 
         let response = await createRoomReservation(reservationData);
 
         if (response.ok) {
-            let response = await createAPayment(paymentData);
-            if (response.ok) {
-                setIsSuccess(true)
-                alert("You have completed reserving of a room successfully")
-                setStep(5)
+            if (cardNumber && cvv && cardOwner) {
+                let response = await createAPayment(paymentData);
+                if (response.ok) {
+                    setIsSuccess(true)
+                    alert("You have completed reserving of a room successfully")
+                    setStep(5)
+
+                } else {
+                    alert("somthing went wrong !! Check payment Details")
+                }
 
             } else {
-                alert("somthing went wrong !! Check payment Details")
+                alert("You successfully added a room for reservation")
             }
+
+
         } else {
-            alert("somthing went wrong !!! Check reservation Details")
+            alert("somthing went wrong with reservation Details")
         }
     }
+
+
 
 
 
@@ -119,25 +148,17 @@ const AddAdminReservation = () => {
                 {/* <div className="body"> */}
                 <div className="addReservation-admin-container shadow">
                     <div className="mb-5">
-                        {/* <div class="progress-bar" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="99">{progress}%</div> */}
-
-
 
                         <ProgressBar>
                             <ProgressBar striped animated variant="danger" now={progress} label={step == 1 ? "Step 1" : step == 2 ? "Step 2" : step == 3 ? "Step 3" : step == 4 ? "Step 4" : "Done"} key={1} />
 
                         </ProgressBar>
 
-
-                        {/* <ProgressBar striped now={35} key={1} />
-                            <ProgressBar striped variant="info" now={20} key={2} />
-                            <ProgressBar striped variant="danger" now={10} key={3} /> */}
-
                     </div>
                     <h2 className='mb-5'>Reservation</h2>
                     {step === 1 &&
                         <div className='container step-container'>
-                            <h5 className='mb-5'>Add Reservation</h5>
+                            <h5 className='mb-4'>Room Reservation</h5>
                             <div className="row mb-2">
                                 <div className="col">
                                     <div className="form-group">
@@ -149,10 +170,27 @@ const AddAdminReservation = () => {
                             </div>
 
                             <div className="row mb-2">
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label for="email">Email Address </label>
+                                        <input type="email" className="form-control" placeholder="" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                    </div>
+                                </div>
+
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label for="contactno">Contact No </label>
+                                        <input type="number" className="form-control" placeholder="" id="contactno" value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div className="row mb-2">
                                 <div className="col-md-4">
                                     <div className="form-group">
                                         <label for="first">Hotel Name</label>
-                                        <input type="text" className="form-control" placeholder="" id="first" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} />
+                                        <input type="text" className="form-control" placeholder="" id="first" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} disabled />
                                     </div>
                                 </div>
 
@@ -235,6 +273,7 @@ const AddAdminReservation = () => {
                                         <input type="text" className="form-control" placeholder="" id="first" value={reservationPrice}
                                             onChange={(e) => {
                                                 setReservationPrice(e.target.value);
+                                                settlePayments()
                                             }} />
                                     </div>
                                 </div>
@@ -243,10 +282,8 @@ const AddAdminReservation = () => {
                                     <div className="form-group">
                                         <label for="last">Total Reserved Price</label>
                                         <input type="text" className="form-control" placeholder="" id="last"
-                                            value={totalPayment}
-                                            onChange={(e) => {
-                                                setTotalPayment(e.target.value);
-                                            }}
+                                            value={reservationPrice * getDateDiff()}
+                                            disabled
                                         />
                                     </div>
                                 </div>
@@ -254,7 +291,7 @@ const AddAdminReservation = () => {
                             </div>
                             <div class="row pb-3">
                                 <div class="col-6" >
-                                    <label for="type" class="form-label-emp">Room Type</label>
+                                    <label for="type" class="form-label-emp">Payment Status</label>
                                     <select class="form-select form-control"
                                         name="paymentStatus" id="paymentStatus" required
                                         value={paymentStatus}
@@ -300,7 +337,7 @@ const AddAdminReservation = () => {
                                     <div id="credit-card">
                                         <div class="form-group">
                                             <label>Payment amount</label>
-                                            <h2>{paymentAmnt}</h2>
+                                            <h2>{reservationPrice * getDateDiff()}</h2>
                                         </div>
                                         <div class="form-group"> <label for="cardOwner">
                                             <h6>Card Owner</h6>
@@ -453,7 +490,7 @@ const AddAdminReservation = () => {
                                 <div className="row mt-5">
                                     <div className="col-md-3">
                                         <div className="form-group">
-                                            <strong for="email">Room Prices</strong>
+                                            <strong for="email">Room Price</strong>
                                         </div>
                                     </div>
                                     <div className="col-md-3">
@@ -493,7 +530,7 @@ const AddAdminReservation = () => {
                                     </div>
                                     <div className="col-md-3">
                                         <div className="form-group">
-                                            <label for="company">{totalPayment}</label>
+                                            <label for="company">{reservationPrice * getDateDiff()}</label>
                                         </div>
                                     </div>
                                 </div>

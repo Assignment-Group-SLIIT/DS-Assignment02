@@ -8,6 +8,7 @@ import { MdKayaking, MdDirectionsCar, MdWifi, MdOutlineEmojiTransportation, MdOu
 import { HOTELS } from './utils/hotels'
 import { getAllAvailableRoomsOfAHotel } from '../services/RoomReservationServices'
 import Spinner from '../components/spinner';
+import GoogleMaps from './googleMaps';
 
 const ViewHotel = () => {
 
@@ -43,7 +44,7 @@ const ViewHotel = () => {
             loadHotelAvailableRooms(HOTELS[hotelId].hotelname)
         }
 
-    }, [hotelName])
+    }, [hotelName, hotelId, location?.state?.id])
 
     console.log(availableRoomsList)
 
@@ -149,28 +150,42 @@ const ViewHotel = () => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="row  mt-4  border-top">
-                                <h4>
-                                    Rooms available for reservation
-                                </h4>
-                                <div className="products-body">
-                                    {availableRoomsList.map((reservation, key) => {
-                                        return (
-                                            <div className="card shadow" key={key}>
-                                                <img src={HOTELS[hotelId].images[key + 1]?.imgSrc} className="card-img" alt="..." />
-                                                <div className="card-body w-100">
-                                                    <h6 className="card-title"><IoBedOutline />&nbsp;Room type: &emsp;{reservation.type} </h6>
-                                                    <h6 className="card-title"><IoKeyOutline />&nbsp;Room no: &emsp;{reservation.roomNo} </h6>
-                                                    <h6 className="card-title"><IoLayersOutline />&nbsp;Floor: &emsp;{reservation.floor} </h6>
-                                                    <h6 className="card-title"><IoPricetagsOutline />&nbsp;Price: &emsp;Rs.{reservation.reservationPrice}.00 </h6>
+
+                            <div data-aos="fade-up">
+                                <div className="row  mt-4  border-top">
+                                    <h4>
+                                        Rooms available for reservation
+                                    </h4>
+                                    <div className="products-body">
+                                        {availableRoomsList.map((reservation, key) => {
+                                            return (
+                                                <div className="card shadow" key={key}>
+                                                    <img src={HOTELS[hotelId].images[key + 1]?.imgSrc} className="card-img" alt="..." />
+                                                    <div className="card-body w-100">
+                                                        <h6 className="card-title"><IoBedOutline />&nbsp;Room type: &emsp;{reservation.type} </h6>
+                                                        <h6 className="card-title"><IoKeyOutline />&nbsp;Room no: &emsp;{reservation.roomNo} </h6>
+                                                        <h6 className="card-title"><IoLayersOutline />&nbsp;Floor: &emsp;{reservation.floor} </h6>
+                                                        <h6 className="card-title"><IoPricetagsOutline />&nbsp;Price: &emsp;Rs.{reservation.reservationPrice}.00 </h6>
+                                                    </div>
+                                                    <button className='btn w-75 mb-4' disabled={reservation?.status !== 'Available'}
+                                                        onClick={() => {
+                                                            navigate("/addReservation", { state: { reservation: reservation } })
+                                                        }}>Reserve now</button>
                                                 </div>
-                                                <button className='btn w-75 mb-4' disabled={reservation?.status !== 'Available'}
-                                                    onClick={() => {
-                                                        navigate("/addReservation", { state: { reservation: reservation } })
-                                                    }}>Reserve now</button>
+                                            );
+                                        })}
+                                        {availableRoomsList.length == 0 ? (
+                                            <div className="d-flex align-items-center justify-content-center w-100">
+                                                <label>Sorry, all rooms are reserved :(</label>
                                             </div>
-                                        );
-                                    })}
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-aos="fade-up">
+                                <div class="row  mt-4 border-top">
+                                    <GoogleMaps address={HOTELS[hotelId].address} lat={HOTELS[hotelId].lat} lng={HOTELS[hotelId].lng} />
                                 </div>
                             </div>
                         </div>

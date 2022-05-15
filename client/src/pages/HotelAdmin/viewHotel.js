@@ -3,6 +3,7 @@ import UpdateReservation from "./modal/updateModal";
 import ViewReservation from "./modal/viewModal";
 import { deleteRoom, getAllAvailableRoomsOfAHotel, getAllReservedRoomsOfAHotel, getAllRoomofAHotelByDate, getAllRoomsOfAHotel, getRoomDetailsByDate } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
+import { getUser } from "../../utils/token";
 
 function HotelRooms() {
     const [search, setSearch] = useState("");
@@ -17,9 +18,10 @@ function HotelRooms() {
     const [modalDataDelete, setModalDataDelete] = useState([]);
     const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
 
+    const user = getUser();
 
     useEffect(() => {
-        getAllRoomsOfAHotel("Little Star").then((response) => {
+        getAllRoomsOfAHotel(user.hotelName).then((response) => {
             console.log("data", response)
             if (response.ok) {
                 setHandleReserveHotel(response.data);
@@ -56,7 +58,6 @@ function HotelRooms() {
 
 
     const openModalUpdate = (data) => {
-        console.log("request came for modal updateeeeeee", data);
         setModalDataUpdate(data);
         setModalUpdate(true);
     }
@@ -64,21 +65,21 @@ function HotelRooms() {
     const searchRooms = (e) => {
         e.preventDefault();
         if (search == 'Available') {
-            getAllAvailableRoomsOfAHotel("Little Star")
+            getAllAvailableRoomsOfAHotel(user.hotelName)
                 .then((response) => {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
                     console.error(error)
                 })
         } else if (search == 'Reserved') {
-            getAllReservedRoomsOfAHotel("Little Star")
+            getAllReservedRoomsOfAHotel(user.hotelName)
                 .then((response) => {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
                     console.error(error)
                 })
         } else if (!isNaN(search.charAt(0))) {
-            getAllRoomofAHotelByDate("Little Star", search)
+            getAllRoomofAHotelByDate(user.hotelName, search)
                 .then((response) => {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
@@ -88,7 +89,7 @@ function HotelRooms() {
     }
 
     return (
-        <div className="page-component-body">
+        <div className="page-component-body-user">
             <Modal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
@@ -104,7 +105,7 @@ function HotelRooms() {
                 />
             </Modal>
             <br />
-            <div className="table-emp ">
+            <div className="table-emp">
                 <div class="row table-head mt-3">
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
@@ -118,7 +119,8 @@ function HotelRooms() {
                             <div class="searchbar">
                                 <form onSubmit={(e) => searchRooms(e)}>
                                     <input class="search_input" type="text" name="search" placeholder="Search..."
-                                        value={search} onChange={(event) => { setSearch(event.target.value) }}
+                                        value={search}
+                                        onChange={(event) => { setSearch(event.target.value) }}
                                         require />
                                     <button class="btn search_icon" type="submit" id="submit" name="submit">
                                         <i class="fa fa-search"></i></button>

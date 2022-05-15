@@ -25,6 +25,11 @@
 .navbar-container>.sidetext>.sidetext-links{
     color: #F7444E;
     font-weight: bold;
+    :hover{
+        cursor: pointer;
+        color: rgb(0, 0, 0);
+    }
+    
 }
 // .nav-bottom {
 //     width: 100%;

@@ -96,9 +96,6 @@ const AdminSignup = () => {
                                     <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
                                 </div>
                             </>
-                            <div className="pt-4 text-center">
-                                Already have an account? <a href='/signin'>Sign in</a>
-                            </div>
                         </div>
                     </div>
                 </div>

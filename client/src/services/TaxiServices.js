@@ -72,33 +72,33 @@ export const getOneTaxiReservation = async (user, date) => {
 
 }
 
-export const updateTaxiReservation = async (user, date) => {
+// export const updateTaxiReservation = async (user, date) => {
 
-    try {
-        const response = await axios.put(`${BASE_URL}/${user}/${date}`, updatePayload, {
-            headers: {
-                'Access-Control-Allow-Origin': "*",
-                'Access-Control-Allow-Headers': "Content-Type",
-                'Authorization': 'Bearer ' + getToken()
-            }
-        });
+//     try {
+//         const response = await axios.put(`${BASE_URL}/${user}/${date}`, updatePayload, {
+//             headers: {
+//                 'Access-Control-Allow-Origin': "*",
+//                 'Access-Control-Allow-Headers': "Content-Type",
+//                 'Authorization': 'Bearer ' + getToken()
+//             }
+//         });
 
-        return {
-            ok: true,
-            data: response.data
-        }
-    } catch (error) {
-        return {
-            ok: false,
-            error: error
-        }
-    }
-}
+//         return {
+//             ok: true,
+//             data: response.data
+//         }
+//     } catch (error) {
+//         return {
+//             ok: false,
+//             error: error
+//         }
+//     }
+// }
 
 export const deleteTaxiReservation = async (user, date) => {
 
     try {
-        const response = await axios.delete(`${BASE_URL}/${user}/${date}`, updatePayload, {
+        const response = await axios.delete(`${BASE_URL}/${user}/${date}`, {
             headers: {
                 'Access-Control-Allow-Origin': "*",
                 'Access-Control-Allow-Headers': "Content-Type",

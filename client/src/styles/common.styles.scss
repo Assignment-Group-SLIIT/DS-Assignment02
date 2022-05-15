@@ -22,16 +22,16 @@ body {
     color: black;
 }
 
-footer {
+footer{
     // position: relative !important;
     // margin-top: auto;
     position: relative;
     bottom: 0;
     width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    background-color: #202020 !important;
-    color: #4a9abb !important;
+    height: 100%;
+    border-top: 1.5px solid #F7444E !important;
+    background-color: #ffffff !important;
+    color: #F7444E;
 }
 
 .btn {
@@ -46,4 +46,13 @@ footer {
     background-color: #FFF !important;
     color: #F7444E !important;
     border: 2px solid #F7444E !important;
+}
+
+.nav-logo:hover{
+    cursor: pointer;
+}
+
+IoPersonCircleOutline{
+    width: 50px;
+    height: 50px;
 }

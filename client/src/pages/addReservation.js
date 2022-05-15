@@ -9,7 +9,7 @@ import erroLogo from '../assets/error.png'
 const AddReservation = () => {
     const navigate = useNavigate()
 
-    const [step, setStep] = useState(4)
+    const [step, setStep] = useState(1)
     const [progress, setProgress] = useState(0)
     const location = useLocation();
 
@@ -29,6 +29,7 @@ const AddReservation = () => {
     const [expiryMonth, setExpiryMonth] = useState(0);
     const [expiryYear, setExpiryYear] = useState(0);
     const [cvv, setCvv] = useState("");
+    let payment = '';
 
     //retrieve reserving hotel room data
     const [reservationRoom, setReservationRoom] = useState()
@@ -43,6 +44,12 @@ const AddReservation = () => {
             alert('You cannot proceed this reservation requires prior payment')
         } else if (step == 1 || step == 3) {
             setStep(step + 1)
+        } else if (reservationRoom.mustPayOnline == false) {
+            if (step == 2) {
+                setStep(step + 1)
+            } else if (step == 3) {
+                setStep(step + 1)
+            }
         }
 
     }
@@ -84,12 +91,16 @@ const AddReservation = () => {
 
 
 
+
+
     const makeReservation = (e) => {
         e.preventDefault();
-
         if (reservationRoom.mustPayOnline == true) {
-            setPaymentStatus('Completed')
+            payment = 'Completed'
+        } else {
+            payment = 'Pending'
         }
+
 
         const reservationObject = {
             hotelName: reservationRoom.hotelName,
@@ -100,8 +111,8 @@ const AddReservation = () => {
             reservationStartDate: dateFrom,
             reservationEndDate: dateTo,
             reservationPrice: reservationRoom.reservationPrice,
-            paymentStatus: paymentStatus,
-            reserverName: firstName + " " + lastName,
+            paymentStatus: payment,
+            reserverName: firstName,
             mustPayOnline: reservationRoom.mustPayOnline,
             totalPayment: reservationRoom.reservationPrice * getDateDiff()
         }
@@ -111,6 +122,8 @@ const AddReservation = () => {
             amount: reservationRoom.reservationPrice * getDateDiff(),
             CVC: cvv,
             cardHolder: cardOwner,
+            email,
+            receriverNo: contactNo
         }
 
 
@@ -334,7 +347,7 @@ const AddReservation = () => {
                                 <div className="payment-card">
                                     <div className='card'>
                                         <div className="card__front card__part">
-                                            <p className="card_numer">**** **** **** 6258</p>
+                                            <p className="card_numer">{cardNumber}</p>
                                             <div className="card__space-75">
                                                 <span className="card__label">Card holder</span>
                                                 <p className="card__info">{cardOwner}</p>
