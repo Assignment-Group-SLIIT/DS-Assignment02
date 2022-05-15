@@ -3,13 +3,19 @@ import { getAllRoomsOfAReserver, updateRoomReservationDetails } from '../service
 import { Modal } from "react-bootstrap";
 import ViewReservation from './HotelAdmin/modal/viewModal';
 import { getRoomDetailsByDate } from '../services/RoomReservationServices';
+import { deleteTaxiReservation, getOneTaxiReservation, getUserAllTaxiReservations } from '../services/TaxiServices';
 
 const UserProfile = () => {
 
+    //view room reservation detail
     const [search, setSearch] = useState("");
     const [hotelReservations, setHotelReservations] = useState([]);
     const [hotelName, setHotelName] = useState("");
     const [roomId, setRoomId] = useState("");
+
+    //view taxi reservation details
+    const [taxiReservations, setTaxiReservations] = useState([]);
+    const [searchTaxi, setSearchTaxi] = useState("");
 
     //view a single hotel reservation details
     const [modalData, setData] = useState([]);
@@ -19,12 +25,25 @@ const UserProfile = () => {
     const [modalReservationCancel, setReservationCancel] = useState([]);
     const [modalCancelConfirm, setModalCancelConfirm] = useState(false);
 
+    const [modalDataDelete, setModalDataDelete] = useState([]);
+    const [modalDeleteConfirm, setModalDeleteConfirm] = useState(false);
+
 
     useEffect(() => {
         getAllRoomsOfAReserver('Malki')
             .then((response) => {
                 console.log("data", response.data)
                 setHotelReservations(response.data);
+            }).catch((err) => {
+                console.error(err)
+            })
+    }, [])
+
+    useEffect(() => {
+        getUserAllTaxiReservations("Malki")
+            .then((response) => {
+                console.log("data", response.data)
+                setTaxiReservations(response.data);
             }).catch((err) => {
                 console.error(err)
             })
@@ -94,6 +113,37 @@ const UserProfile = () => {
                 })
         }
     }
+
+    const openModalDelete = (data) => {
+        setModalDataDelete(data);
+        setModalDeleteConfirm(true);
+    }
+
+    function onDelete(modalDataDelete) {
+
+        deleteTaxiReservation(modalDataDelete.user, modalDataDelete.date).then((response) => {
+            if (response.ok) {
+                alert("Successfully deleted")
+                    window.location.reload();
+              
+            }
+        })
+    }
+
+    const searchTaxis = (e) => {
+        e.preventDefault();
+        if (!isNaN(search.charAt(0))) {
+            getOneTaxiReservation("Malki",searchTaxi)
+                .then((response) => {
+                    console.log("data", response.data)
+
+                    setTaxiReservations(response.data);
+                }).catch((error) => {
+                    console.error(error)
+                })
+        }
+    }
+
 
     return (
         <div className='page-component-body"'>
@@ -229,12 +279,10 @@ const UserProfile = () => {
                         <div className="col">
                             <div class="input-group input-group-search">
                                 <div class="searchbar">
-                                    <form
-                                    // onSubmit={(e) => searchRooms(e)}
-                                    >
-                                        <input class="search_input" type="text" name="search" placeholder="Search..."
-                                            // value={search}
-                                            // onChange={(event) => { setSearch(event.target.value) }}
+                                <form onSubmit={(e) => searchTaxis(e)}>
+                                        <input class="search_input" type="text" name="searchTaxi" placeholder="Reserve Date"
+                                            value={searchTaxi}
+                                            onChange={(event) => { setSearchTaxi(event.target.value) }}
                                             require />
                                         <button class="btn search_icon" type="submit" id="submit" name="submit">
                                             <i class="fa fa-search"></i></button>
@@ -251,33 +299,57 @@ const UserProfile = () => {
                                 <th>Amount</th>
                                 <th>Payment Status</th>
                                 <th>Date</th>
-
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        {/* <tbody>
-                            {handleReserveHote.map((reservation) => {
+                        <tbody>
+                            {taxiReservations.map((reservation) => {
                                 return (
                                     <tr>
-                                        <td onClick={() => openModal(reservation)}>{reservation.roomNo}</td>
-                                        <td >{reservation.reservationStartDate}</td>
-                                        <td >{reservation.reservationEndDate}</td>
-                                        <td >{reservation.reserverName}</td>
+
+                                        <td >{reservation.type}</td>
+                                        <td >{reservation.distance}</td>
+                                        <td >{reservation.amount}</td>
                                         <td >{reservation.paymentStatus}</td>
-                                        <td >{reservation.status}</td>
+                                        <td >{reservation.date}</td>
                                         <td>
-                                            <button
-                                                class="btn btn-light btn-sm"
-                                                onClick={() => openModalUpdate(reservation)}
-                                            >
-                                                update
-                                            </button>
-                                            <button onClick={() => openModalDelete(reservation)}>remove</button>
+                                            <button 
+                                             onClick={() => openModalDelete(reservation)}
+                                            >Remove</button>
                                         </td>
                                     </tr>
                                 );
                             })}
-                        </tbody> */}
+                        </tbody>
                     </table>
+                    <Modal show={modalDeleteConfirm} size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <div className="modal-delete">
+                    <Modal.Header>
+                        <Modal.Title>Confirm Deletion</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you want to remove this room from being reserved?</p>
+                    </Modal.Body>
+                </div>
+
+                <Modal.Footer>
+                    <div className="row">
+                        <div className="col -6">
+                            <button type="submit" className="btn btn-delete" onClick={() => { onDelete(modalDataDelete); }}>
+                                Confirm
+                            </button>
+                        </div>
+                        <div className="col-6   text-right" onClick={() => setModalDeleteConfirm(false)}>
+                            <button type="reset" className="btn btn-reset">
+                                cancel
+                            </button>
+                        </div>
+                    </div>
+                </Modal.Footer>
+
+            </Modal>
                 </div>
 
             </div>
