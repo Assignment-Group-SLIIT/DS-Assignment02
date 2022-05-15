@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="navbar">
+            <nav className="navbar shadow">
                 <div className="container-fluid navbar-container">
                     <h5 className="navbar-brand">
                         <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top nav-logo" onClick={() => {
