@@ -1,5 +1,5 @@
 const mailjet = require('node-mailjet')
-    .connect('24f46a5d8ea3c662b1ec4620f230c25e', 'ca4d466b9b472a29ec3b1a6d513aab52')
+    .connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE)
 
 const sendReceipt = (email, cardHolder, amount, date) => {
     const request = mailjet
