@@ -37,4 +37,19 @@ export const loginUser = async (user) => {
     }
 
 
-} 
+}
+
+export const forgetPassword = async (email, newPassword) => {
+    try {
+        const response = await axios.put(BASE_URL + "/" + email + "/" + newPassword)
+        return {
+            ok: true,
+            data: response.data
+        }
+    } catch (error) {
+        return {
+            ok: false,
+            error: error
+        }
+    }
+}
