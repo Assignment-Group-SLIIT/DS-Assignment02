@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
 const Navbar = () => {
     const navigate = useNavigate();
@@ -15,12 +15,16 @@ const Navbar = () => {
                         {/* Galadhari - Uganda branch */}
                     </h5>
                     <div className="sidetext">
-                        <label className='sidetext-links'>
-                            login
-                        </label>
-                        <label className='sidetext-links'>
-                            signup
-                        </label>
+                        <Link to="/signin" className="sidetext-links">
+                            <label>
+                                login
+                            </label>
+                        </Link>
+                        <Link to="/signup" className="sidetext-links">
+                            <label>
+                                signup
+                            </label>
+                        </Link>
                     </div>
                 </div>
                 {/* <div className="container-fluid">
