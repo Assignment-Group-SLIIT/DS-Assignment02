@@ -217,7 +217,7 @@ const AddReservation = () => {
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label for="company">Email</label>
-                                            <input type="email" className="form-control" placeholder="email" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                            <input type="email" className="form-control" placeholder="rezerve***@gmail.com" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                                         </div>
 
 
@@ -270,7 +270,7 @@ const AddReservation = () => {
                                                 <h6>Card number</h6>
                                             </label>
                                                 <div className="input-group">
-                                                    <input type="text" name="cardNumber" placeholder="Valid card number" className="form-control " required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
+                                                    <input type="text" name="cardNumber" maxLength={16} minLength={16} placeholder="**** **** **** ****" className=" form-control " required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -279,8 +279,8 @@ const AddReservation = () => {
                                                         <h6>Expiration Date</h6>
                                                     </span></label>
                                                         <div className="input-group">
-                                                            <input type="number" placeholder="MM" name="" className="form-control" required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
-                                                            <input type="number" placeholder="YY" name="" className="form-control" required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
+                                                            <input type="number" placeholder="MM" name="" className="form-control" max={12} min={1} required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
+                                                            <input type="number" placeholder="YY" name="" className="form-control" min={22} required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -288,7 +288,7 @@ const AddReservation = () => {
                                                     <div className="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
                                                         <h6>CVV <i className="fa fa-question-circle d-inline"></i></h6>
                                                     </label>
-                                                        <input type="text" required className="form-control" value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
+                                                        <input type="number" required className="form-control" max={999} min={1} value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
                                                 </div>
                                             </div>
                                         </div>

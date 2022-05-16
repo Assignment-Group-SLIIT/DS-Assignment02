@@ -34,24 +34,30 @@ function App() {
           <Navbar />
 
           <Routes>
-            {/* <Route path='/' element={<PrivateRoute />} > */}
 
-            {/* <Route path='/signup' element={<Signup />} /> */}
 
-            {/* </Route> */}
-            <Route path='/' element={<Landingpage />} />
-            <Route path="/addreservation" element={<Addreservation />} />
-            <Route path='/test' element={<Test />} />
+            <Route path='/' element={<PrivateRoute />} >
+
+
+              <Route path="/addreservation" element={<Addreservation />} />
+              <Route path='/viewRooms' element={<HotelRooms />} />
+
+              <Route path='/adminSignup' element={<AdminSignup />} />
+              <Route path='/userProfile' element={<UserProfile />} />
+
+              <Route path='/addReservation-admin' element={<AddAdminReservation />} />
+              <Route path='/addTaxi' element={<AddTaxiReservation />} />
+
+            </Route>
+
+            <Route path='/home' element={<Landingpage />} />
+            <Route path='/viewHotel' element={<ViewHotel />} />
+
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/viewRooms' element={<HotelRooms />} />
             <Route path='/forgetPassword' element={<ForgetPassword />} />
-            <Route path='/adminSignup' element={<AdminSignup />} />
-            <Route path='/userProfile' element={<UserProfile />} />
-            <Route path='/viewHotel' element={<ViewHotel />} />
-            <Route path='/addReservation-admin' element={<AddAdminReservation />} />
-            <Route path='/addTaxi' element={<AddTaxiReservation />} />
             <Route path='*' element={<NotFound />} />
+
           </Routes>
           <Footer />
 

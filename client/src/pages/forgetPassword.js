@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { forgetPassword } from '../services/UserServices';
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
+
 
 
 const ForgetPassword = () => {
@@ -11,6 +13,8 @@ const ForgetPassword = () => {
     const [emailError, setEmailError] = useState();
     const [passwordError, setPasswordError] = useState()
     const [rePasswordError, setRePasswordError] = useState()
+
+    const navigate = useNavigate()
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -41,6 +45,8 @@ const ForgetPassword = () => {
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 2000
+                    }).then(() => {
+                        navigate("/signin")
                     })
                 } else {
                     Swal.fire({

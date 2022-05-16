@@ -54,77 +54,57 @@ function UpdateReservation(reservation) {
 
     const sendData = (e) => {
         e.preventDefault();
-        if (!hName
-            || !roomNo
-            || !floor
-            || !type
-            || !reservationStartDate
-            || !reservationEndDate
-            || !reservationPrice
-            || !paymentStatus
-            || !reserverName
-            || !status
-            || !mustPayOnline
-            || !priorPay
-        ) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Required',
-                text: 'Complete all required  fields!!',
-                confirmButtonColor: '#F7444E',
-            })
 
-        } else {
 
-            if (mustPayOnline == 'true') {
-                setPriorPay(true)
-            }
+        if (mustPayOnline == 'true') {
+            setPriorPay(true)
+        }
 
-            const updatedReservation = {
-                hName,
-                roomNo,
-                floor,
-                type,
-                status,
-                reservationStartDate,
-                reservationEndDate,
-                reservationPrice,
-                paymentStatus,
-                reserverName,
-                mustPayOnline: priorPay,
-                totalPayment: totalPayment
-            }
+        const updatedReservation = {
+            hName,
+            roomNo,
+            floor,
+            type,
+            status,
+            reservationStartDate,
+            reservationEndDate,
+            reservationPrice,
+            paymentStatus,
+            reserverName,
+            mustPayOnline: priorPay,
+            totalPayment: totalPayment
+        }
 
-            updateRoomReservationDetails(hName, roomNo, updatedReservation).
-                then((response) => {
-                    if (response.ok) {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Password reset succesfully !!!',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(() => {
-                            window.location.reload();
-                        })
+        updateRoomReservationDetails(hName, roomNo, updatedReservation).
+            then((response) => {
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Updated Successfully !!!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.reload();
+                    })
 
-                    } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Oops...',
-                            text: 'something went wrong!!',
-                            confirmButtonColor: '#F7444E',
-                        })
-                    }
-                }).catch((error) => {
+                } else {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
                         text: 'something went wrong!!',
                         confirmButtonColor: '#F7444E',
                     })
+                }
+            }).catch((error) => {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'something went wrong!!',
+                    confirmButtonColor: '#F7444E',
                 })
-        }
+            })
+
     }
 
     function getDateDiff() {

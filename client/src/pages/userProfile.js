@@ -6,6 +6,7 @@ import ViewReservation from './HotelAdmin/modal/viewModal';
 import { getRoomDetailsByDate } from '../services/RoomReservationServices';
 import { deleteTaxiReservation, getOneTaxiReservation, getUserAllTaxiReservations } from '../services/TaxiServices';
 import { getUser } from '../utils/token'
+import Swal from 'sweetalert2'
 
 const UserProfile = () => {
 
@@ -38,7 +39,7 @@ const UserProfile = () => {
         getAllRoomsOfAReserver(user.username)
             .then((response) => {
                 console.log("data", response.data)
-                setHotelReservations(response.data);
+                setHotelReservations(response.data.reverse());
             }).catch((err) => {
                 console.error(err)
             })
@@ -48,7 +49,7 @@ const UserProfile = () => {
         getUserAllTaxiReservations(user.username)
             .then((response) => {
                 console.log("data", response.data)
-                setTaxiReservations(response.data);
+                setTaxiReservations(response.data.reverse());
             }).catch((err) => {
                 console.error(err)
             })
@@ -87,15 +88,22 @@ const UserProfile = () => {
             totalPayment: 0
         }
 
-        if (modalReservationCancel.paymentStatus == 'Completed') {
-            alert("You have completed the payment so money will not be refounded")
-        }
+
 
         updateRoomReservationDetails(modalReservationCancel.hotelName, modalReservationCancel.roomNo, UpdateReservation)
             .then((response) => {
                 if (response.ok) {
-                    alert("Successfully Cancelled Your Reservation at hotel " + modalReservationCancel.hotelName)
-                    window.location.reload();
+
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Successfully Cancelled Your Reservation at hotel' + `${modalReservationCancel.hotelName}`,
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        window.location.reload();
+                    })
+
                 } else {
                     console.log(response)
                 }
@@ -114,7 +122,8 @@ const UserProfile = () => {
 
                     setHotelReservations(response.data);
                 }).catch((error) => {
-                    console.error(error)
+                    // setHotelReservations([]);
+                    window.location.reload();
                 })
         }
     }
@@ -128,8 +137,17 @@ const UserProfile = () => {
 
         deleteTaxiReservation(modalDataDelete.user, modalDataDelete.date).then((response) => {
             if (response.ok) {
-                alert("Successfully deleted")
-                window.location.reload();
+
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Successfully deleted!!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.reload();
+
+                })
 
             }
         })
@@ -153,7 +171,7 @@ const UserProfile = () => {
     return (
         <div className='page-component-body"'>
 
-            <div className="content-body">
+            <div className="content-body-admin-reservation mt-5">
                 <Modal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
@@ -234,7 +252,7 @@ const UserProfile = () => {
                                         <td >{reservation.totalPayment}</td>
                                         <td >{reservation.paymentStatus}</td>
                                         <td>
-                                            <button onClick={() => openModalUpdate(reservation)}>Cancel</button>
+                                            <button className='btn float-left' onClick={() => openModalUpdate(reservation)}>Cancel</button>
                                         </td>
                                     </tr>
                                 );
@@ -250,6 +268,7 @@ const UserProfile = () => {
                             </Modal.Header>
                             <Modal.Body>
                                 <p>Are you sure that you want cancel the reservation?</p>
+                                <p><strong className='text-danger'>*Please note that completed payments will not be refunded</strong></p>
                             </Modal.Body>
                         </div>
 
@@ -269,6 +288,10 @@ const UserProfile = () => {
                         </Modal.Footer>
 
                     </Modal>
+                </div>
+
+                <div className="table-emp mt-5">
+
 
                     <div class="row table-head mt-5">
                         <div class="col mb-3">
@@ -305,21 +328,25 @@ const UserProfile = () => {
                                 <th>Amount</th>
                                 <th>Payment Status</th>
                                 <th>Date</th>
+                                <th></th>
+                                <th></th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {taxiReservations.map((reservation) => {
                                 return (
-                                    <tr>
+                                    <tr >
 
                                         <td >{reservation.type}</td>
                                         <td >{reservation.distance}</td>
                                         <td >{reservation.amount}</td>
                                         <td >{reservation.paymentStatus}</td>
                                         <td >{reservation.date}</td>
-                                        <td>
-                                            <button
+                                        <td></td>
+                                        <td></td>
+                                        <td >
+                                            <button className='btn '
                                                 onClick={() => openModalDelete(reservation)}
                                             >Remove</button>
                                         </td>
@@ -328,6 +355,7 @@ const UserProfile = () => {
                             })}
                         </tbody>
                     </table>
+
                     <Modal show={modalDeleteConfirm} size="md"
                         aria-labelledby="contained-modal-title-vcenter"
                         centered>
@@ -336,7 +364,7 @@ const UserProfile = () => {
                                 <Modal.Title>Confirm Deletion</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
-                                <p>Are you want to remove this room from being reserved?</p>
+                                <p>Are you sure you want to remove this taxi reservation?</p>
                             </Modal.Body>
                         </div>
 
@@ -359,7 +387,7 @@ const UserProfile = () => {
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -42,9 +42,9 @@ const Signin = () => {
                     if (user.role == 'Hotel Admin') {
                         history("/viewRooms")
                     } else if (user.role == 'Customer') {
-                        history("/")
+                        history("/home")
                     } else if (user.role == 'System Admin') {
-                        history("/viewRooms")
+                        history("/adminSignup")
                     }
 
                 } else {

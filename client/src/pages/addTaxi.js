@@ -37,8 +37,17 @@ const AddTaxiReservation = () => {
             createTaxiReservation(taxiPayload).then((response) => {
                 console.log(response)
                 if (response.ok) {
-                    alert("Taxi Reserved")
-                    navigate('/userProfile')
+
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Taxi Reserved !!!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        navigate('/userProfile')
+                    })
+
                     // window.location.reload();
                 } else {
                     Swal.fire({
@@ -119,6 +128,7 @@ const AddTaxiReservation = () => {
                                                     setType(e.target.value);
                                                 }}
                                             >
+                                                <option  >Choose Type</option>
                                                 <option id="car" >Car</option>
                                                 <option id="van">Van</option>
                                             </select>

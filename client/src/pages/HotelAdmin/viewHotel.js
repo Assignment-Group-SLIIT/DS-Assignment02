@@ -5,8 +5,12 @@ import { deleteRoom, getAllAvailableRoomsOfAHotel, getAllReservedRoomsOfAHotel, 
 import { Modal } from "react-bootstrap";
 import { getUser } from "../../utils/token";
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 function HotelRooms() {
+
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState("");
     const [handleReserveHote, setHandleReserveHotel] = useState([]);
 
@@ -50,7 +54,13 @@ function HotelRooms() {
 
         deleteRoom(modalDataDelete.hotelName, modalDataDelete.roomNo).then((response) => {
             if (response.ok) {
-                alert("Successfully deleted").then(() => {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Succesfully Deleted!!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
                     window.location.reload();
                 })
             }
@@ -128,6 +138,7 @@ function HotelRooms() {
                 <div class="row table-head mt-3">
                     <div class="col">
                         <h3 className="float-left" >List of Hotel Room Reservation</h3>
+                        <button className="btn float-right" onClick={() => { navigate('/addReservation-admin') }}> + Add a reservation</button>
                     </div>
                 </div>
                 <div class="row table-head-search">
@@ -172,12 +183,12 @@ function HotelRooms() {
                                     <td >{reservation.status}</td>
                                     <td>
                                         <button
-                                            class="btn btn-light btn-sm"
+                                            class="btn btn-light "
                                             onClick={() => openModalUpdate(reservation)}
                                         >
                                             update
                                         </button>
-                                        <button onClick={() => openModalDelete(reservation)}>remove</button>
+                                        <button className="btn ml-2" onClick={() => openModalDelete(reservation)}>remove</button>
                                     </td>
                                 </tr>
                             );

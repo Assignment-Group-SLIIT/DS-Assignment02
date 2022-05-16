@@ -101,7 +101,7 @@ const Signup = () => {
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="email" className="form-label">Email address</label>
-                                    <input type="email" placeholder="email" className="form-control" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} required />
+                                    <input type="email" placeholder="rezerve***@gmail.com" className="form-control" id="email" value={email} onChange={(e) => { setEmail(e.target.value) }} required />
                                 </div>
                                 <div class="form-group pb-3">
                                     <label htmlFor="password" className="form-label">Password</label>

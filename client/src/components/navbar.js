@@ -21,7 +21,7 @@ const Navbar = () => {
                 <div className="container-fluid navbar-container">
                     <h5 className="navbar-brand">
                         <img src={logo} alt="" width="300" height="100" class="d-inline-block align-text-top nav-logo" onClick={() => {
-                            navigate("/")
+                            navigate("/home")
                         }} />
 
                     </h5>

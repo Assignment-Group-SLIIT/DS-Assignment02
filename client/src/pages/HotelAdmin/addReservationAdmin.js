@@ -8,6 +8,9 @@ import { getUser } from '../../utils/token';
 import Swal from 'sweetalert2'
 import moment from 'moment';
 
+import { useNavigate } from 'react-router-dom';
+
+
 
 const AddAdminReservation = () => {
     const user = getUser();
@@ -21,8 +24,8 @@ const AddAdminReservation = () => {
     const [status, setStatus] = useState("");
     const [email, setEmail] = useState("");
     const [contactNo, setContactNo] = useState("");
-    const [reservationStartDate, setReservationStartDate] = useState("");
-    const [reservationEndDate, setReservationEndDate] = useState("");
+    const [reservationStartDate, setReservationStartDate] = useState(moment().format("YYYY-MM-DD"));
+    const [reservationEndDate, setReservationEndDate] = useState(moment().format("YYYY-MM-DD"));
     const [reservationPrice, setReservationPrice] = useState("");
     const [paymentStatus, setPaymentStatus] = useState("");
     const [reserverName, setReserverName] = useState("");
@@ -40,7 +43,7 @@ const AddAdminReservation = () => {
     const [isSuccess, setIsSuccess] = useState(true)
 
 
-
+    const navigate = useNavigate()
 
 
 
@@ -258,6 +261,7 @@ const AddAdminReservation = () => {
                                             setType(e.target.value);
                                         }}
                                     >
+                                        <option  >Choose</option>
                                         <option id="Single" >Single</option>
                                         <option id="Double">Double</option>
                                         <option id="Family" >Family</option>
@@ -274,6 +278,7 @@ const AddAdminReservation = () => {
                                             setStatus(e.target.value);
                                         }}
                                     >
+                                        <option  >Choose</option>
                                         <option id="Available" >Available</option>
                                         <option id="Reserved">Reserved</option>
                                     </select>
@@ -340,6 +345,7 @@ const AddAdminReservation = () => {
                                             setPaymentStatus(e.target.value);
                                         }}
                                     >
+                                        <option  >Choose</option>
                                         <option id="Completed" >Completed</option>
                                         <option id="Pending">Pending</option>
                                     </select>
@@ -354,6 +360,7 @@ const AddAdminReservation = () => {
                                             setMustPayOnline(e.target.value);
                                         }}
                                     >
+                                        <option  >Choose</option>
                                         <option id='true' >True</option>
                                         <option id='false'>False</option>
                                     </select>
@@ -388,7 +395,7 @@ const AddAdminReservation = () => {
                                             <h6>Card number</h6>
                                         </label>
                                             <div class="input-group">
-                                                <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
+                                                <input type="text" name="cardNumber" class="form-control " maxLength={16} minLength={16} placeholder="**** **** **** ****" required value={cardNumber} onChange={(e) => { setCardNumber(e.target.value) }} />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -397,8 +404,8 @@ const AddAdminReservation = () => {
                                                     <h6>Expiration Date</h6>
                                                 </span></label>
                                                     <div class="input-group">
-                                                        <input type="number" placeholder="MM" name="" class="form-control" required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
-                                                        <input type="number" placeholder="YY" name="" class="form-control" required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
+                                                        <input type="number" placeholder="MM" name="" class="form-control" max={12} min={1} required value={expiryMonth} onChange={(e) => { setExpiryMonth(e.target.value) }} />
+                                                        <input type="number" placeholder="YY" name="" class="form-control" min={22} required value={expiryYear} onChange={(e) => { setExpiryYear(e.target.value) }} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -406,7 +413,7 @@ const AddAdminReservation = () => {
                                                 <div class="form-group mb-4"> <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
                                                     <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
                                                 </label>
-                                                    <input type="text" required class="form-control" value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
+                                                    <input type="text" required class="form-control" max={999} min={1} value={cvv} onChange={(e) => { setCvv(e.target.value) }} /> </div>
                                             </div>
                                         </div>
                                     </div>
@@ -673,6 +680,7 @@ const AddAdminReservation = () => {
                                 <>
                                     <img src={successLogo} width={200} height={200} alt='success logo' />
                                     <h4>Your reservation has been added successfully!</h4>
+                                    <button className="btn w-25" onClick={() => { navigate('/viewRooms') }}>View Details</button>
                                 </>
 
                             ) :
