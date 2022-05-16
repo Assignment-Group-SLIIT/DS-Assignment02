@@ -6,6 +6,9 @@ import { updateRoomReservationDetails } from '../services/RoomReservationService
 import successLogo from '../assets/success.png'
 import erroLogo from '../assets/error.png'
 
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+
 const AddReservation = () => {
     const navigate = useNavigate()
 
@@ -126,7 +129,6 @@ const AddReservation = () => {
             receriverNo: contactNo
         }
 
-
         updateRoomReservationDetails(reservationRoom.hotelName, reservationRoom.roomNo, reservationObject)
             .then((response) => {
                 if (response.ok) {
@@ -198,7 +200,8 @@ const AddReservation = () => {
 
                                         <div className="form-group">
                                             <label for="phone">Phone Number</label>
-                                            <input type="tel" className="form-control" id="phone" placeholder="phone" value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} />
+                                            {/* <input type="tel" className="form-control" id="phone" placeholder="phone" value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} /> */}
+                                            <PhoneInput inputStyle={{ width: "100%" }} country={'lk'} value={contactNo} onChange={(e) => { setContactNo(e) }} />
                                         </div>
                                     </div>
                                 </div>
