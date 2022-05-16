@@ -5,7 +5,9 @@ import { createAPayment, getPaymentDetails } from '../../services/PaymentService
 import successLogo from '../../assets/success.png'
 import erroLogo from '../../assets/error.png'
 import { getUser } from '../../utils/token';
+import Swal from 'sweetalert2'
 import moment from 'moment';
+
 
 const AddAdminReservation = () => {
     const user = getUser();
@@ -39,10 +41,22 @@ const AddAdminReservation = () => {
 
 
 
+
+
+
     const increaseStepFunc = () => {
         if (step == 1) {
-            setStep(2)
-            setProgress(40)
+            if (!hotelName || !roomNo || !floor || !type || !status || !reservationStartDate || !reservationEndDate || !reservationPrice || !paymentStatus || !mustPayOnline) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Required',
+                    text: 'Please fill the required fileds',
+                    confirmButtonColor: '#F7444E',
+                })
+            } else {
+                setStep(2)
+                setProgress(40)
+            }
         } else if (step == 2) {
             setStep(3)
             setProgress(60)
@@ -87,6 +101,8 @@ const AddAdminReservation = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
+
+
         let mustPayOnlineBoolean = Boolean(mustPayOnline);
 
         let reservationData = {
@@ -121,20 +137,45 @@ const AddAdminReservation = () => {
                 let response = await createAPayment(paymentData);
                 if (response.ok) {
                     setIsSuccess(true)
-                    alert("You have completed reserving of a room successfully")
-                    setStep(5)
+                    // alert("You have completed reserving of a room successfully")
+                    increaseStepFunc()
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'You have completed reserving of a room successfully !!!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
 
                 } else {
-                    alert("somthing went wrong !! Check payment Details")
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'somthing went wrong !! Check payment Details!!',
+                        confirmButtonColor: '#F7444E',
+                    })
                 }
 
             } else {
-                alert("You successfully added a room for reservation")
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'You successfully added a room for reservation',
+                    confirmButtonColor: '#F7444E',
+                })
             }
 
 
         } else {
-            alert("somthing went wrong with reservation Details")
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'somthing went wrong with reservation Details',
+                confirmButtonColor: '#F7444E',
+            })
         }
     }
 

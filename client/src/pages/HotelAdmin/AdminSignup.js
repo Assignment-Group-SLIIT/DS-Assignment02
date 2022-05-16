@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { registerUser } from '../../services/UserServices';
-
+import Swal from 'sweetalert2';
 
 const AdminSignup = () => {
 
@@ -13,31 +13,75 @@ const AdminSignup = () => {
     const [hotelName, setHotelName] = useState("")
     const [role, setRole] = useState("")
 
-    const signUpFunc = (e) => {
-        e.preventDefault()
+    const [ReqErr, setRequiredErr] = useState()
 
-        if (password === repassword) {
-            const payload = {
-                username,
-                email,
-                password,
-                role,
-                hotelName
-            }
-
-            registerUser(payload).then((response) => {
-                console.log(response)
-                if (response.ok) {
-                    alert("New User created successfully")
-                    window.location.reload();
-                } else {
-                    console.log(response)
-                }
-            }).catch((error) => {
-                console.error(error)
+    const validation = () => {
+        if (!username || !email || !password || !repassword || !hotelName || !role) {
+            setRequiredErr(true)
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required',
+                text: 'Complete all required  fields!!',
+                confirmButtonColor: '#F7444E',
             })
         } else {
-            alert("Passwords mismatch")
+            setRequiredErr(false)
+        }
+    }
+
+    const signUpFunc = (e) => {
+        validation();
+        e.preventDefault()
+        if (ReqErr) {
+
+            if (password === repassword) {
+                const payload = {
+                    username,
+                    email,
+                    password,
+                    role,
+                    hotelName
+                }
+
+                registerUser(payload).then((response) => {
+                    console.log(response)
+                    if (response.ok) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Create New User Successfuly !!!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.reload();
+                        })
+
+                    } else {
+                        console.log(response)
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Oops...',
+                            text: 'something went wrong!!',
+                            confirmButtonColor: '#F7444E',
+                        })
+                    }
+                }).catch((error) => {
+                    console.error(error)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'something went wrong!!',
+                        confirmButtonColor: '#F7444E',
+                    })
+                })
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Password didnt Match Try again!!',
+                    confirmButtonColor: '#F7444E',
+                })
+            }
         }
 
 
@@ -93,7 +137,7 @@ const AdminSignup = () => {
                                     <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} required />
                                 </div>
                                 <div class="pb-2">
-                                    <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e) }}>Submit</button>
+                                    <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e); validation() }}>Submit</button>
                                 </div>
                             </>
                         </div>

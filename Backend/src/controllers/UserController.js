@@ -21,7 +21,7 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
     userServices.login({ username, password }).then(user => {
-        user ? res.json(user) : res.json({ error: 'Username or password is incorrect' });
+        user ? res.json(user) : res.status(401).send({ status: "Error upon login", error: 'Username or password is incorrect' });
     }
     ).catch(err => {
         res.status(500).send({ status: "Error upon login", error: err.message });

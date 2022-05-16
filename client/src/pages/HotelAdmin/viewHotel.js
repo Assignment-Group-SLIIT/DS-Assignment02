@@ -4,6 +4,7 @@ import ViewReservation from "./modal/viewModal";
 import { deleteRoom, getAllAvailableRoomsOfAHotel, getAllReservedRoomsOfAHotel, getAllRoomofAHotelByDate, getAllRoomsOfAHotel, getRoomDetailsByDate } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 import { getUser } from "../../utils/token";
+import Swal from 'sweetalert2'
 
 function HotelRooms() {
     const [search, setSearch] = useState("");
@@ -70,6 +71,12 @@ function HotelRooms() {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
                     console.error(error)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'something went wrong!!',
+                        confirmButtonColor: '#F7444E',
+                    })
                 })
         } else if (search == 'Reserved') {
             getAllReservedRoomsOfAHotel(user.hotelName)
@@ -77,6 +84,12 @@ function HotelRooms() {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
                     console.error(error)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'something went wrong!!',
+                        confirmButtonColor: '#F7444E',
+                    })
                 })
         } else if (!isNaN(search.charAt(0))) {
             getAllRoomofAHotelByDate(user.hotelName, search)
@@ -84,6 +97,12 @@ function HotelRooms() {
                     setHandleReserveHotel(response.data);
                 }).catch((error) => {
                     console.error(error)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'something went wrong!!',
+                        confirmButtonColor: '#F7444E',
+                    })
                 })
         }
     }

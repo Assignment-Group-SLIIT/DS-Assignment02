@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import moment from 'moment'
 import { updateRoomReservationDetails } from "../../../services/RoomReservationServices";
-
+import Swal from 'sweetalert2';
 
 
 function UpdateReservation(reservation) {
@@ -12,7 +12,12 @@ function UpdateReservation(reservation) {
             setRetrievedValues();
 
         } catch (error) {
-            console.log(error)
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'something went wrong!!',
+                confirmButtonColor: '#F7444E',
+            })
         }
     }, [])
 
@@ -46,41 +51,80 @@ function UpdateReservation(reservation) {
 
     const [totalPayment, setTotalPayment] = useState("");
 
-    // console.log(reservationStartDate)
 
     const sendData = (e) => {
         e.preventDefault();
-
-        if (mustPayOnline == 'true') {
-            setPriorPay(true)
-        }
-
-        const updatedReservation = {
-            hName,
-            roomNo,
-            floor,
-            type,
-            status,
-            reservationStartDate,
-            reservationEndDate,
-            reservationPrice,
-            paymentStatus,
-            reserverName,
-            mustPayOnline: priorPay,
-            totalPayment: totalPayment
-        }
-
-        updateRoomReservationDetails(hName, roomNo, updatedReservation).
-            then((response) => {
-                if (response.ok) {
-                    alert("Successfully Updated the Room Reservation Details")
-                    window.location.reload();
-                } else {
-                    console.log(response)
-                }
-            }).catch((error) => {
-                console.error(error)
+        if (!hName
+            || !roomNo
+            || !floor
+            || !type
+            || !reservationStartDate
+            || !reservationEndDate
+            || !reservationPrice
+            || !paymentStatus
+            || !reserverName
+            || !status
+            || !mustPayOnline
+            || !priorPay
+        ) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required',
+                text: 'Complete all required  fields!!',
+                confirmButtonColor: '#F7444E',
             })
+
+        } else {
+
+            if (mustPayOnline == 'true') {
+                setPriorPay(true)
+            }
+
+            const updatedReservation = {
+                hName,
+                roomNo,
+                floor,
+                type,
+                status,
+                reservationStartDate,
+                reservationEndDate,
+                reservationPrice,
+                paymentStatus,
+                reserverName,
+                mustPayOnline: priorPay,
+                totalPayment: totalPayment
+            }
+
+            updateRoomReservationDetails(hName, roomNo, updatedReservation).
+                then((response) => {
+                    if (response.ok) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Password reset succesfully !!!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+                            window.location.reload();
+                        })
+
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Oops...',
+                            text: 'something went wrong!!',
+                            confirmButtonColor: '#F7444E',
+                        })
+                    }
+                }).catch((error) => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'something went wrong!!',
+                        confirmButtonColor: '#F7444E',
+                    })
+                })
+        }
     }
 
     function getDateDiff() {

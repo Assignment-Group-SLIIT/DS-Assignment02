@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { loginUser } from '../services/UserServices'
 import { getUser, setUserSession } from '../utils/token'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const Signin = () => {
 
@@ -9,6 +10,8 @@ const Signin = () => {
 
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
+
+
 
     const signInFunc = (e) => {
         e.preventDefault()
@@ -18,28 +21,51 @@ const Signin = () => {
             password,
         }
 
-        loginUser(payload).then((response) => {
+        if (!username || !password) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required',
+                text: 'Complete all required  fields!!',
+                confirmButtonColor: '#F7444E',
+            })
+        } else {
 
-            if (response.ok) {
-                setUserSession(response.data.token, response.data)
-                setUserName('')
-                setPassword('')
-                const user = getUser();
-                console.log(user)
-                if (user.role == 'Hotel Admin') {
-                    history("/viewRooms")
-                } else if (user.role == 'Customer') {
-                    history("/")
-                } else if (user.role == 'System Admin') {
-                    history("/viewRooms")
+            loginUser(payload).then((response) => {
+
+                if (response.ok) {
+
+                    setUserSession(response.data.token, response.data)
+                    setUserName('')
+                    setPassword('')
+                    const user = getUser();
+                    console.log(user)
+                    if (user.role == 'Hotel Admin') {
+                        history("/viewRooms")
+                    } else if (user.role == 'Customer') {
+                        history("/")
+                    } else if (user.role == 'System Admin') {
+                        history("/viewRooms")
+                    }
+
+                } else {
+                    // console.log(response.error.response.data.status)
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'User name or passwrd is incorrect!!',
+                        confirmButtonColor: '#F7444E',
+                    })
                 }
-
-            } else {
-                // console.log(response.error.response.data.status)
-            }
-        }).catch((error) => {
-            console.error(error)
-        })
+            }).catch((error) => {
+                console.error(error)
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'something went wrong1111!!',
+                    confirmButtonColor: '#F7444E',
+                })
+            })
+        }
 
     }
 

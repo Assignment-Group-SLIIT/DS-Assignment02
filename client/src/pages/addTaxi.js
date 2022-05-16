@@ -3,6 +3,7 @@ import moment from 'moment';
 import { createTaxiReservation } from "../services/TaxiServices";
 import { useNavigate } from "react-router-dom";
 import { calculateNewValue } from "@testing-library/user-event/dist/utils";
+import Swal from 'sweetalert2'
 
 const AddTaxiReservation = () => {
     const navigate = useNavigate();
@@ -14,28 +15,49 @@ const AddTaxiReservation = () => {
     const [paymentStatus, setPaymentStatus] = useState("");
     const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
+
     const taxiReserve = (e) => {
         e.preventDefault();
-        const taxiPayload = {
-            user,
-            type,
-            distance,
-            amount: distance * 1000,
-            paymentStatus: 'Pending',
-            date
-        }
-        createTaxiReservation(taxiPayload).then((response) => {
-            console.log(response)
-            if (response.ok) {
-                alert("Taxi Reserved")
-                navigate('/userProfile')
-                // window.location.reload();
-            } else {
-                console.log(response)
+        if (!user || !type || !distance || !date) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Required',
+                text: 'Please fill the required fileds',
+                confirmButtonColor: '#F7444E',
+            })
+        } else {
+            const taxiPayload = {
+                user,
+                type,
+                distance,
+                amount: distance * 1000,
+                paymentStatus: 'Pending',
+                date
             }
-        }).catch((error) => {
-            console.log(error)
-        })
+            createTaxiReservation(taxiPayload).then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    alert("Taxi Reserved")
+                    navigate('/userProfile')
+                    // window.location.reload();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Required',
+                        text: 'Something went wrong!!!',
+                        confirmButtonColor: '#F7444E',
+                    })
+                }
+            }).catch((error) => {
+                console.log(error)
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Required',
+                    text: 'Something went wrong!!!',
+                    confirmButtonColor: '#F7444E',
+                })
+            })
+        }
     }
 
     const calculate = () => {
