@@ -5,7 +5,7 @@ import { createAPayment } from '../services/PaymentService';
 import { updateRoomReservationDetails } from '../services/RoomReservationServices';
 import successLogo from '../assets/success.png'
 import erroLogo from '../assets/error.png'
-
+import Swal from 'sweetalert2'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
@@ -46,7 +46,22 @@ const AddReservation = () => {
         } else if (reservationRoom.mustPayOnline == true && step == 2) {
             alert('You cannot proceed this reservation requires prior payment')
         } else if (step == 1 || step == 3) {
-            setStep(step + 1)
+            if (step == 1 && (!firstName
+                || !lastName
+                || !email
+                || !contactNo
+                || !dateFrom
+                || !dateTo)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Required',
+                    text: 'Please fill the required fileds',
+                    confirmButtonColor: '#F7444E',
+                })
+            } else {
+                setStep(step + 1)
+            }
+
         } else if (reservationRoom.mustPayOnline == false) {
             if (step == 2) {
                 setStep(step + 1)
@@ -136,14 +151,26 @@ const AddReservation = () => {
                         .then((response) => {
                             if (response.ok) {
                                 setIsSuccess(true)
-                                alert("You have completed reserving of a room successfully")
+
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'You have completed reserving of a room successfully !!!',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                })
                             }
                         })
                 }
             }).catch((err) => {
                 console.log(err)
                 setIsSuccess(false)
-                alert("Cannot continue system generates an error")
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Something Went Wrong!!',
+                    confirmButtonColor: '#F7444E',
+                })
             })
 
     }

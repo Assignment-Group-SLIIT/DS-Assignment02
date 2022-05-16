@@ -4,7 +4,7 @@ import ViewReservation from "./modal/viewModal";
 import { deleteRoom, getAllAvailableRoomsOfAHotel, getAllReservedRoomsOfAHotel, getAllRoomofAHotelByDate, getAllRoomsOfAHotel, getRoomDetailsByDate } from "../../services/RoomReservationServices";
 import { Modal } from "react-bootstrap";
 import { getUser } from "../../utils/token";
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 function HotelRooms() {
     const [search, setSearch] = useState("");

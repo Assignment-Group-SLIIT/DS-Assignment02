@@ -162,7 +162,7 @@ const AddAdminReservation = () => {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Oops...',
-                    text: 'You successfully added a room for reservation',
+                    text: 'Something Went Wrong!!',
                     confirmButtonColor: '#F7444E',
                 })
             }

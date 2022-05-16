@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { forgetPassword } from '../services/UserServices';
+import Swal from 'sweetalert2'
 
 
 const ForgetPassword = () => {
