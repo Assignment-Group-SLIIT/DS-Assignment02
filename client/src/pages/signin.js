@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { loginUser } from '../services/UserServices'
 import { getUser, setUserSession } from '../utils/token'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const Signin = () => {
@@ -94,7 +94,8 @@ const Signin = () => {
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center"></div>
-                                    <div><a href="/forgetPassword">Forget Password?</a></div>
+
+                                    <div><Link to="/forgetPassword">Forget Password?</Link></div>
                                 </div>
                                 <div class="pb-2">
                                     <button class="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signInFunc(e) }}>Submit</button>
