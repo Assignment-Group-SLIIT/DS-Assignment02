@@ -215,7 +215,7 @@ const UserProfile = () => {
                             <div class="input-group input-group-search">
                                 <div class="searchbar">
                                     <form onSubmit={(e) => searchRooms(e)}>
-                                        <input class="search_input" type="text" name="search" placeholder="Reserve Date"
+                                        <input class="search_input" type="text" name="search" placeholder="Reserve From Date"
                                             value={search}
                                             onChange={(event) => { setSearch(event.target.value) }}
                                             require />

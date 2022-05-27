@@ -148,7 +148,7 @@ function HotelRooms() {
                         <div class="input-group input-group-search">
                             <div class="searchbar">
                                 <form onSubmit={(e) => searchRooms(e)}>
-                                    <input class="search_input" type="text" name="search" placeholder="Search..."
+                                    <input class="search_input" type="text" name="search" placeholder="Search by Reserved From / Status"
                                         value={search}
                                         onChange={(event) => { setSearch(event.target.value) }}
                                         require />

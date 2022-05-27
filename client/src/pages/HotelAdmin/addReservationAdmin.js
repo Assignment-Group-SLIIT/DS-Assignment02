@@ -133,6 +133,7 @@ const AddAdminReservation = () => {
         }
 
 
+
         let response = await createRoomReservation(reservationData);
 
         if (response.ok) {
@@ -645,7 +646,7 @@ const AddAdminReservation = () => {
                                         <div className="payment-card">
                                             <div className='card'>
                                                 <div className="card__front card__part">
-                                                    <p className="card_numer">**** **** **** 6258</p>
+                                                    <p className="card_numer">{cardNumber}</p>
                                                     <div className="card__space-75">
                                                         <span className="card__label">Card holder</span>
                                                         <p className="card__info">{cardOwner}</p>
