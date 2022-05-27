@@ -52,7 +52,7 @@ const Signin = () => {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
-                        text: 'User name or passwrd is incorrect!!',
+                        text: 'User name or password is incorrect!!',
                         confirmButtonColor: '#F7444E',
                     })
                 }
@@ -94,7 +94,7 @@ const Signin = () => {
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center"></div>
-                                    <div><a href="#">Forget Password?</a></div>
+                                    <div><a href="/forgetPassword">Forget Password?</a></div>
                                 </div>
                                 <div class="pb-2">
                                     <button class="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signInFunc(e) }}>Submit</button>

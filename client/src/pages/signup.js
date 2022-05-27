@@ -49,7 +49,7 @@ const Signup = () => {
                     if (response.ok) {
                         Swal.fire({
                             title: 'Success!',
-                            text: 'Password reset succesfully !!!',
+                            text: 'Registered Successfully !!',
                             icon: 'success',
                             showConfirmButton: false,
                             timer: 2000
