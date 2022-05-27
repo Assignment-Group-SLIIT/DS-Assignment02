@@ -8,7 +8,7 @@ const sendReceipt = (email, cardHolder, amount, date) => {
             "Messages": [
                 {
                     "From": {
-                        "Email": "kmklaksitha@gmail.com",
+                        "Email": "finance.rezerve@yopmail.com",
                         "Name": "Rezerve.com"
                     },
                     "To": [
