@@ -15,8 +15,10 @@ const Signup = () => {
 
     const [ReqErr, setRequiredErr] = useState()
 
-    const validation = () => {
-        if (!username || !email || !password || !repassword) {
+    const validation = (e) => {
+        e.preventDefault()
+
+        if (username === "" || email === "" || password === "" || repassword === "") {
             setRequiredErr(true)
             Swal.fire({
                 icon: 'warning',
@@ -26,60 +28,61 @@ const Signup = () => {
             })
         } else {
             setRequiredErr(false)
+            signUpFunc(e)
         }
     }
 
 
     const signUpFunc = (e) => {
         e.preventDefault()
-        validation()
-        if (ReqErr) {
+        // validation()
+        // if (!ReqErr) {
 
-            if (password === repassword) {
-                const payload = {
-                    username,
-                    email,
-                    password,
-                    role: 'Customer',
-                }
-                console.log("payload>>", payload);
+        if (password === repassword) {
+            const payload = {
+                username,
+                email,
+                password,
+                role: 'Customer',
+            }
+            console.log("payload>>", payload);
 
-                registerUser(payload).then((response) => {
-                    console.log(response)
-                    if (response.ok) {
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Registered Successfully !!',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(() => { history('/signin') })
+            registerUser(payload).then((response) => {
+                console.log(response)
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Registered Successfully !!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => { history('/signin') })
 
-                    } else {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Oops...',
-                            text: 'something went wrong!!',
-                            confirmButtonColor: '#F7444E',
-                        })
-                    }
-                }).catch((error) => {
+                } else {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
                         text: 'something went wrong!!',
                         confirmButtonColor: '#F7444E',
                     })
-                })
-            } else {
+                }
+            }).catch((error) => {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Oops...',
-                    text: 'Password didnt Match Try again!!',
+                    text: 'something went wrong!!',
                     confirmButtonColor: '#F7444E',
                 })
-            }
+            })
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Password didnt Match Try again!!',
+                confirmButtonColor: '#F7444E',
+            })
         }
+        // }
 
 
     }
@@ -139,7 +142,7 @@ const Signup = () => {
                                     <input type="text" placeholder="Hotel Name" className="form-control" id="hotelName" value={hotelName} onChange={(e) => { setHotelName(e.target.value) }} required />
                                 </div> */}
                                 <div class="pb-2">
-                                    <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { signUpFunc(e); validation() }}>Submit</button>
+                                    <button className="btn btn-primary w-100 font-weight-bold mt-2 rounded-pill" onClick={(e) => { validation(e) }}>Submit</button>
                                 </div>
                             </>
                             <div className="pt-4 text-center">
